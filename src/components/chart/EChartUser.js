@@ -5,17 +5,23 @@ import useDashboard from "../../hooks/UseDashboard";
 
 function EChartUser() {
   const { Title } = Typography;
-  const { userStatisticsMonth } = useDashboard();
+  const { userStatisticsMonth, monthStatistics } = useDashboard();
 
-  console.log(userStatisticsMonth)
   const eChart = {
     series: [
       {
-        name: "Sales",
+        name: "Users",
         data: userStatisticsMonth
           ? userStatisticsMonth.map((total) => Number(total.user_count))
           : [],
         color: "#fff",
+      },
+      {
+        name: "Payed users",
+        data: monthStatistics
+          ? monthStatistics.map((total) => Number(total.user_count))
+          : [],
+        color: "#000",
       },
     ],
 

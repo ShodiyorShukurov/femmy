@@ -4,6 +4,7 @@ import { Form } from "antd";
 
 const useUserList = () => {
   const [userListData, setUserListData] = React.useState([]);
+  const [sourceData, setSourceData] = React.useState([]);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [next, setNext] = React.useState(1);
   const [isTransactionModalVisible, setIsTransactionModalVisible] =
@@ -63,8 +64,22 @@ const useUserList = () => {
     }
   };
 
+  const fetchSourceData = async () => {
+    try {
+      const res = await Api.get(`/users/source/list`);
+      setSourceData(res.data.data);
+    } catch (error) {
+      console.error(error);
+      if (error.message === "Request failed with status code 404") {
+        setSourceData([]);
+      }
+      // throw error;
+    }
+  };
+
   React.useEffect(() => {
     fetchUserListData();
+    fetchSourceData()
   }, [next]);
 
   return {
@@ -83,6 +98,7 @@ const useUserList = () => {
     showUserInfoModal,
     isModalUserInfo,
     setIsModalUserInfo,
+    sourceData
   };
 };
 

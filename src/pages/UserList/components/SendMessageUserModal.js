@@ -13,6 +13,7 @@ const SendMessageUserModal = ({
   handleCancel,
   selectedUser,
   setSelectedUser,
+  sourceData,
 }) => {
   const [fileList, setFileList] = useState([]);
   const [form] = Form.useForm();
@@ -128,7 +129,10 @@ const SendMessageUserModal = ({
               { required: true, message: "Please select a user account" },
             ]}
           >
-            <Select placeholder="Please select a user account">
+            <Select
+              placeholder="Please select a user account"
+              style={{ textTransform: "capitalize" }}
+            >
               <Option key="all" value="all">
                 All
               </Option>
@@ -138,6 +142,15 @@ const SendMessageUserModal = ({
               <Option key="false" value="false">
                 Channel non-subscribers
               </Option>
+              {sourceData.map((item) => (
+                <Option
+                  key={item.source}
+                  value={item.source}
+                  style={{ textTransform: "capitalize" }}
+                >
+                  {item.source}
+                </Option>
+              ))}
             </Select>
           </Form.Item>
         )}

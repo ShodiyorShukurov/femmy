@@ -1,28 +1,104 @@
-/*!
-  =========================================================
-  * Muse Ant Design Dashboard - v1.0.0
-  =========================================================
-  * Product Page: https://www.creative-tim.com/product/muse-ant-design-dashboard
-  * Copyright 2021 Creative Tim (https://www.creative-tim.com)
-  * Licensed under MIT (https://github.com/creativetimofficial/muse-ant-design-dashboard/blob/main/LICENSE.md)
-  * Coded by Creative Tim
-  =========================================================
-  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
 import ReactApexChart from "react-apexcharts";
 import { Typography } from "antd";
 import { MinusOutlined } from "@ant-design/icons";
-import lineChart from "./configs/lineChart";
+import useDashboard from "../../hooks/UseDashboard";
 
 function LineChart() {
   const { Title, Paragraph } = Typography;
+  const { userStatisticsSource } = useDashboard();
+
+  // Process data to organize by source and month
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  // Initialize a map to collect data per source
+  const dataBySource = {};
+
+  userStatisticsSource?.forEach((entry,) => {
+    const monthIndex = months.indexOf(entry.month.trim());
+    const source = entry.source || "N/A";
+    const count = Number(entry.count);
+
+    if (!dataBySource[source]) {
+      dataBySource[source] = Array(12).fill(0);
+    }
+
+    dataBySource[source][monthIndex] = count;
+  });
+
+  // Convert dataBySource into series format for ApexCharts
+  const series = Object.keys(dataBySource).map((source) => ({
+    name: source,
+    data: dataBySource[source],
+    offsetY: 0,
+  }));
+
+  const lineChart = {
+    series: series,
+    options: {
+      chart: {
+        width: "100%",
+        height: 350,
+        type: "area",
+        toolbar: {
+          show: false,
+        },
+      },
+      legend: {
+        show: true,
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      stroke: {
+        curve: "smooth",
+      },
+      yaxis: {
+        labels: {
+          style: {
+            fontSize: "14px",
+            fontWeight: 600,
+            colors: ["#8c8c8c"],
+          },
+        },
+      },
+      xaxis: {
+        categories: months,
+        labels: {
+          style: {
+            fontSize: "14px",
+            fontWeight: 600,
+            colors: Array(12).fill("#8c8c8c"),
+          },
+        },
+      },
+      tooltip: {
+        y: {
+          formatter: function (val) {
+            return `${val} users`;
+          },
+        },
+      },
+    },
+  };
 
   return (
     <>
       <div className="linechart">
         <div>
-          <Title level={5}>Active Users</Title>
+          <Title level={5}>Active Users by Source</Title>
           <Paragraph className="lastweek">
             than last week <span className="bnb2">+30%</span>
           </Paragraph>

@@ -36,6 +36,7 @@ const useTransactionList = () => {
       console.log(error);
       if (error.message === "Request failed with status code 404") {
         setTransactionListData([]);
+        setTotal([])
       }
     }
   };

@@ -6,9 +6,8 @@ import LoginPage from "./components/layout/Login";
 import UsersListTable from "./pages/UserList/UsersListTable";
 import TransactionListTable from "./pages/TransactionList/TransactionListTable";
 import PrivateRoute from "./utils/PrivateRoute";
-import PriceTable from "./pages/PriceTable";
-import ChannelAdmin from "./pages/ChannelAdmin";
 import Home from "./pages/Home";
+import BotSettings from "./pages/BotSettings/BotSettings";
 
 function App() {
   return (
@@ -25,8 +24,7 @@ function App() {
           <Route path="dashboard" element={<Home />} />
           <Route path="user-list" element={<UsersListTable />} />
           <Route path="transaction-list" element={<TransactionListTable />} />
-          <Route path="price" element={<PriceTable />} />
-          <Route path="channel-admin" element={<ChannelAdmin />} />
+          <Route path="bot-settings" element={<BotSettings />} />
         </Route>
       </Routes>
     </div>

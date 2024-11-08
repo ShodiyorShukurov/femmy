@@ -1,19 +1,19 @@
 import ReactApexChart from "react-apexcharts";
 import { Typography } from "antd";
 import useDashboard from "../../hooks/UseDashboard";
-// import eChart from "./configs/eChart";
 
 function EChartTransaction() {
   const { Title } = Typography;
   const { monthStatistics } = useDashboard();
+  console.log(monthStatistics);
 
   const eChart = {
     series: [
       {
-        name: "Sales",
+        name: "",
         data: monthStatistics
-          ? monthStatistics.map((total) =>
-              Number(total.total_amount / 100).toFixed(2)
+          ? monthStatistics.map((data) =>
+              (Number(data.total_amount) / 100).toFixed(2)
             )
           : [],
         color: "#fff",
@@ -25,7 +25,6 @@ function EChartTransaction() {
         type: "bar",
         width: "100%",
         height: "auto",
-
         toolbar: {
           show: false,
         },
@@ -52,61 +51,31 @@ function EChartTransaction() {
       },
       xaxis: {
         categories: monthStatistics
-          ? monthStatistics.map((month) => month.month.slice(0, 3))
+          ? monthStatistics.map((data, index) => index + 1)
           : [],
-
         labels: {
           show: true,
-          align: "left",
-          minWidth: 0,
-          maxWidth: 160,
           style: {
-            colors: [
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-            ],
+            colors: Array(12).fill("#fff"),
           },
         },
       },
       yaxis: {
         labels: {
           show: true,
-          align: "left",
-          minWidth: 0,
-          maxWidth: 160,
           style: {
-            colors: [
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-              "#fff",
-            ],
+            colors: Array(12).fill("#fff"),
           },
         },
       },
-
       tooltip: {
         y: {
-          formatter: function (val) {
-            return "" + val + " so'm";
+          formatter: function (val, { dataPointIndex }) {
+            const monthData = monthStatistics[dataPointIndex];
+            return `
+              Total Amount: ${val} so'm<br/>
+              Percentage Increase: ${monthData.percentage_increase + " %" ?? "N/A"}
+            `;
           },
         },
       },
@@ -115,8 +84,7 @@ function EChartTransaction() {
 
   return (
     <>
-      <Title level={5}>Transactions statistics</Title>
-
+      <Title level={5}>Transactions Statistics</Title>
       <div id="chart">
         <ReactApexChart
           className="bar-chart"

@@ -24,6 +24,7 @@ function UsersListTable() {
     showUserInfoModal,
     isModalUserInfo,
     setIsModalUserInfo,
+    sourceData,
   } = useUserList();
 
   const [phoneNumber, setPhoneNumber] = React.useState();
@@ -127,6 +128,7 @@ function UsersListTable() {
           handleCancel={handleCancel}
           selectedUser={selectedUser}
           setSelectedUser={setSelectedUser}
+          sourceData={sourceData}
         />
 
         {/*Transaction modal*/}

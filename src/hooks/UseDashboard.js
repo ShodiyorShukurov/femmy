@@ -2,21 +2,10 @@ import React from "react";
 import Api from "../api";
 
 const useDashboard = () => {
+  const [userStatisticsSource, setUserStatisticsSource] = React.useState([]);
 
-  const [monthStatistics, setMonthStatistics] = React.useState([])
-  const [userStatistics, setUserStatistics] = React.useState([])
-  const [userStatisticsMonth, setUserStatisticsMonth] = React.useState([])
-  const [userStatisticsSource, setUserStatisticsSource] = React.useState([])
-
-  const getMonthlyData = async () => {
-    try {
-      const res = await Api.get("/transactions/statistics/month");
-      setMonthStatistics(res.data.data);
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
-  };
+  /*User data start*/
+  const [userStatistics, setUserStatistics] = React.useState([]);
 
   const getUserStatisticsData = async () => {
     try {
@@ -27,17 +16,37 @@ const useDashboard = () => {
       throw error;
     }
   };
+  /*User data end*/
 
-  const getUserStatisticsMonthData = async () => {
+  /*Transaction Monthly data start*/
+  const [monthStatistics, setMonthStatistics] = React.useState([]);
+
+  const getMonthlyTransactionData = async () => {
     try {
       const res = await Api.get("/transactions/statistics/increase");
-      console.log(res.data.data);
+      setMonthStatistics(res.data.data);
     } catch (error) {
       console.log(error);
       throw error;
     }
   };
+  /*Transaction Monthly data end*/
 
+  /*User Month Data start*/
+  const [userStatisticsMonth, setUserStatisticsMonth] = React.useState([]);
+
+  const getUserStatisticsMonthData = async () => {
+    try {
+      const res = await Api.get("/users/statistics/increase");
+      setUserStatisticsMonth(res.data.data);
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+  /*User Month Data end*/
+
+  /*User Source start*/
   const getUserStatisticsSouce = async () => {
     try {
       const res = await Api.get("/users/statistics/source");
@@ -46,15 +55,22 @@ const useDashboard = () => {
       console.log(error);
       throw error;
     }
-  }
+  };
+  /*User Source end*/
 
   React.useEffect(() => {
-    getMonthlyData();
-    getUserStatisticsData()
-    getUserStatisticsMonthData();
-    getUserStatisticsSouce()
-  }, []);
+    /*User data*/
+    getUserStatisticsData();
 
+    /*Transaction Monthly data */
+    getMonthlyTransactionData();
+
+    /* User Month Data */
+    getUserStatisticsMonthData();
+
+    /*User Source Data*/ 
+    getUserStatisticsSouce();
+  }, []);
 
   return {
     monthStatistics,
@@ -62,7 +78,6 @@ const useDashboard = () => {
     userStatisticsMonth,
     userStatisticsSource,
   };
-
 };
 
 export default useDashboard;

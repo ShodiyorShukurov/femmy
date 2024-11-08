@@ -90,7 +90,7 @@ function TransactionListTable() {
                 </Form.Item>
               </Form>
 
-              {total ? (
+              {total?.sum ? (
                 <div
                   style={{
                     marginBottom: "16px",

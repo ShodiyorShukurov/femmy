@@ -1,12 +1,4 @@
-
-
-import {
-  Card,
-  Col,
-  Row,
-  Typography,
-} from "antd";
-
+import { Card, Col, Row, Typography } from "antd";
 
 import EChartTransaction from "../components/chart/EChartTransaction";
 import LineChart from "../components/chart/LineChart";
@@ -14,13 +6,10 @@ import Main from "../components/layout/Main";
 import useDashboard from "../hooks/UseDashboard";
 import EChartUser from "../components/chart/EChartUser";
 
-
-
 function Home() {
   const { Title } = Typography;
 
   const { userStatistics, userStatisticsSource } = useDashboard();
-
 
   const dollor = [
     <svg
@@ -93,6 +82,7 @@ function Home() {
       ></path>
     </svg>,
   ];
+
   const cart = [
     <svg
       width="22"
@@ -125,7 +115,7 @@ function Home() {
       bnb: "bnb2",
     },
     {
-      today: "Payet Users",
+      today: "Payed Users",
       title: userStatistics?.payed_user,
       icon: profile,
       bnb: "bnb2",
@@ -152,8 +142,6 @@ function Home() {
     //   bnb: "bnb2",
     // },
   ];
-
-
 
   return (
     <Main>

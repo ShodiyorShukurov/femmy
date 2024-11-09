@@ -7,35 +7,28 @@ function LineChart() {
   const { Title, Paragraph } = Typography;
   const { userStatisticsSource } = useDashboard();
 
-  // Process data to organize by source and month
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  // Months as numbers for x-axis
+  const months = Array.from({ length: 12 }, (_, i) => i + 1); // [1, 2, 3, ..., 12]
 
-  // Initialize a map to collect data per source
+  // Initialize a map to collect data per source, excluding "N/A"
   const dataBySource = {};
 
-  userStatisticsSource?.forEach((entry,) => {
-    const monthIndex = months.indexOf(entry.month.trim());
-    const source = entry.source || "N/A";
-    const count = Number(entry.count);
+  userStatisticsSource?.forEach((entry) => {
+    const monthIndex = new Date(entry.month.trim() + " 1, 2020").getMonth(); // Get index of month
+    const source = entry.source.trim();
 
-    if (!dataBySource[source]) {
-      dataBySource[source] = Array(12).fill(0);
+    // Skip entries where the source is "N/A"
+    if (source !== "N/A") {
+      const count = Number(entry.count);
+
+      // Initialize the array for each source if it doesn't exist
+      if (!dataBySource[source]) {
+        dataBySource[source] = Array(12).fill(0);
+      }
+
+      // Populate count data
+      dataBySource[source][monthIndex] = count;
     }
-
-    dataBySource[source][monthIndex] = count;
   });
 
   // Convert dataBySource into series format for ApexCharts
@@ -45,6 +38,7 @@ function LineChart() {
     offsetY: 0,
   }));
 
+  // Define ApexCharts options
   const lineChart = {
     series: series,
     options: {
@@ -105,8 +99,11 @@ function LineChart() {
         </div>
         <div className="sales">
           <ul>
-            <li>{<MinusOutlined />} Traffic</li>
-            <li>{<MinusOutlined />} Sales</li>
+            {Object.keys(dataBySource).map((source) => (
+              <li key={source}>
+                <MinusOutlined /> {source}
+              </li>
+            ))}
           </ul>
         </div>
       </div>

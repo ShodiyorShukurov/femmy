@@ -5,7 +5,6 @@ import useDashboard from "../../hooks/UseDashboard";
 function EChartTransaction() {
   const { Title } = Typography;
   const { monthStatistics } = useDashboard();
-  console.log(monthStatistics);
 
   const eChart = {
     series: [

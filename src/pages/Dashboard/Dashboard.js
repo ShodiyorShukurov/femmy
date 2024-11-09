@@ -1,15 +1,15 @@
 import { Card, Col, Row, Typography } from "antd";
 
-import EChartTransaction from "../components/chart/EChartTransaction";
-import LineChart from "../components/chart/LineChart";
-import Main from "../components/layout/Main";
-import useDashboard from "../hooks/UseDashboard";
-import EChartUser from "../components/chart/EChartUser";
+import EChartTransaction from "../../components/chart/EChartTransaction";
+import LineChart from "../../components/chart/LineChart";
+import Main from "../../components/layout/Main";
+import useDashboard from "../../hooks/UseDashboard";
+import EChartUser from "../../components/chart/EChartUser";
 
 function Home() {
   const { Title } = Typography;
 
-  const { userStatistics, userStatisticsSource } = useDashboard();
+  const { userStatistics } = useDashboard();
 
   const dollor = [
     <svg

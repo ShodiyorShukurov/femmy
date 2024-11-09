@@ -5,7 +5,6 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Api from "../../../api";
 
-
 const { Option } = Select;
 
 const SendMessageUserModal = ({
@@ -47,6 +46,7 @@ const SendMessageUserModal = ({
     formData.append("text", values.text);
     formData.append("photo", values?.photo ? values?.photo.file : null);
     formData.append("user_subcribe", values.user_subcribe);
+    formData.append("source", values.source);
 
     try {
       await Api.post("/news/all/users", formData);
@@ -64,6 +64,9 @@ const SendMessageUserModal = ({
 
   const handleUploadChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
+     if (newFileList.length === 0) {
+       form.setFieldsValue({ photo: null });
+     }
   };
 
   const beforeUpload = (file) => {
@@ -142,6 +145,20 @@ const SendMessageUserModal = ({
               <Option key="false" value="false">
                 Channel non-subscribers
               </Option>
+            </Select>
+          </Form.Item>
+        )}
+
+        {selectedUser?.chat_id ? null : (
+          <Form.Item
+            name="source"
+            label="User Source"
+            rules={[{ required: true, message: "Please source" }]}
+          >
+            <Select
+              placeholder="Please select source"
+              style={{ textTransform: "capitalize" }}
+            >
               {sourceData.map((item) => (
                 <Option
                   key={item.source}

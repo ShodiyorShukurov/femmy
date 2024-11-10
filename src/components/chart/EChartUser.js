@@ -57,7 +57,7 @@ function EChartUser() {
       },
       xaxis: {
         categories: userStatisticsMonth
-          ? userStatisticsMonth.map((month) => month.month.slice(0, 3))
+          ? userStatisticsMonth.map((month, index) => index + 1)
           : [],
 
         labels: {

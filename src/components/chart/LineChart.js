@@ -8,7 +8,7 @@ function LineChart() {
   const { userStatisticsSource } = useDashboard();
 
   // Months as numbers for x-axis
-  const months = Array.from({ length: 12 }, (_, i) => i + 1); // [1, 2, 3, ..., 12]
+  const months = Array.from({ length: 12 }, (_, i) => i + 1); 
 
   // Initialize a map to collect data per source, excluding "N/A"
   const dataBySource = {};

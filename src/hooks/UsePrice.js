@@ -5,6 +5,7 @@ import { Form } from "antd";
 const usePrice = () => {
   const [data, setData] = React.useState([]);
   const [editData, setEditData] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [selectItem, setSelectItem] = React.useState({});
   const [form] = Form.useForm();
@@ -20,13 +21,17 @@ const usePrice = () => {
   };
 
   const fetchPriceData = async () => {
+    setIsLoading(true);
     try {
       const res = await Api.get("/prices");
-      setEditData(false);
       setData([res.data.data]);
     } catch (error) {
       console.log(error);
-      throw error;
+      if (error.message === "Request failed with status code 404") {
+        setData([]);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -41,6 +46,7 @@ const usePrice = () => {
     selectItem,
     showModal,
     handleCancel,
+    isLoading
   };
 };
 

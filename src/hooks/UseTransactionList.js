@@ -8,6 +8,7 @@ const useTransactionList = () => {
   const [total, setTotal] = React.useState();
   const [isModalUserInfo, setIsModalUserInfo] = React.useState(false);
   const [selectedUser, setSelectedUser] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const showUserInfoModal = (record) => {
     setSelectedUser(record);
@@ -15,17 +16,24 @@ const useTransactionList = () => {
   };
 
   const fetchTransactionData = async () => {
+    setIsLoading(true);
     try {
       const res = await Api.get(`/transactions/list?limit=50&page=${next}`);
       setTransactionListData(res.data.data);
     } catch (error) {
       console.log(error);
-      throw error;
+      if (error.message === "Request failed with status code 404") {
+        setTransactionListData([]);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const fetchTransactionMonthData = async (year, month) => {
     if (!month) return;
+
+    setIsLoading(true);
     try {
       const res = await Api.get(
         `/transactions/filter?limit=50&page=${next}&month=${month}&year=${year}`
@@ -36,14 +44,38 @@ const useTransactionList = () => {
       console.log(error);
       if (error.message === "Request failed with status code 404") {
         setTransactionListData([]);
-        setTotal([])
+        setTotal([]);
       }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchTransactionSortData = async (method) => {
+    if (!method) return;
+    console.log(method);
+    setIsLoading(true);
+    try {
+      const res = await Api.get(
+        `transactions/list?limit=50&page=${next}&method=${method}`
+      );
+      setTransactionListData(res.data.data);
+      setTotal(res.data.total);
+    } catch (error) {
+      console.log(error);
+      if (error.message === "Request failed with status code 404") {
+        setTransactionListData([]);
+        setTotal([]);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   React.useEffect(() => {
     fetchTransactionData();
     fetchTransactionMonthData();
+    fetchTransactionSortData();
   }, [next, addData]);
 
   return {
@@ -58,6 +90,8 @@ const useTransactionList = () => {
     setIsModalUserInfo,
     selectedUser,
     setSelectedUser,
+    isLoading,
+    fetchTransactionSortData,
   };
 };
 

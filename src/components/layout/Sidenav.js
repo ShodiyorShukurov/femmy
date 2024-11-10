@@ -140,7 +140,7 @@ function Sidenav({ color }) {
         </Menu.Item>
 
         <Menu.Item key="6">
-          <NavLink to="/trail-list">
+          <NavLink to="/trial-list">
             <span
               className="icon"
               style={{
@@ -162,7 +162,7 @@ function Sidenav({ color }) {
                 <path d="M13 5h-1.5v6.25a1.25 1.25 0 1 0 2.5 0V6a1 1 0 0 0-1-1Z" />
               </svg>
             </span>
-            <span className="label">Trail List</span>
+            <span className="label">Trial List</span>
           </NavLink>
         </Menu.Item>
       </Menu>

@@ -33,7 +33,7 @@ const [userData, setUserData]= React.useState([])
       align: "center",
     },
     {
-      title: "Transaction ID",
+      title: "Name",
       dataIndex: "name",
       key: "name",
       align: "center",

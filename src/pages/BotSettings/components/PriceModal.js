@@ -5,7 +5,6 @@ import React from "react";
 const PriceModal = ({
   setEditData,
   isModalVisible,
-  setIsModalVisible,
   selectItem,
   handleCancel,
 }) => {
@@ -20,6 +19,7 @@ const PriceModal = ({
   }, [isModalVisible, selectItem, form]);
 
   const handleEditPrice = async (values) => {
+    setEditData(true);
     const data = {
       id: Number(selectItem.id),
       price: Math.round(values.price * 100),
@@ -27,13 +27,14 @@ const PriceModal = ({
 
     try {
       await Api.put("/price/edit", data);
-      setEditData(true);
       message.success("Price edit successfully!");
       handleCancel();
       form.resetFields();
     } catch (error) {
       console.error(error);
       message.error("Failed to edit price.");
+    } finally {
+      setEditData(false);
     }
   };
 

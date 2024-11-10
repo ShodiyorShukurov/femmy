@@ -159,6 +159,9 @@ const SendMessageUserModal = ({
               placeholder="Please select source"
               style={{ textTransform: "capitalize" }}
             >
+              <Option key="all" value="all">
+                All
+              </Option>
               {sourceData.map((item) => (
                 <Option
                   key={item.source}

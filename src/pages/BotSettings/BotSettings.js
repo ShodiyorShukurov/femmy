@@ -16,6 +16,7 @@ function BotSettings() {
     selectItem,
     showModal,
     handleCancel,
+    isLoading,
   } = usePrice();
 
   const {
@@ -27,6 +28,10 @@ function BotSettings() {
     selectChannelItem,
     setSelectChannelItem,
   } = useChannelAdmin();
+
+if(isLoading){
+  return <Main>Loading...</Main>
+}
 
   return (
     <Main>

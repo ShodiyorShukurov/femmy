@@ -11,7 +11,7 @@ import UsersListTable from "./pages/UserList/UsersListTable";
 import TransactionListTable from "./pages/TransactionList/TransactionListTable";
 import BotSettings from "./pages/BotSettings/BotSettings";
 import NewsList from "./pages/News/NewsList";
-import TrailList from "./pages/Trail/TrailList";
+import TrialList from "./pages/Trial/TrialList";
 
 function App() {
   return (
@@ -29,8 +29,8 @@ function App() {
           <Route path="user-list" element={<UsersListTable />} />
           <Route path="transaction-list" element={<TransactionListTable />} />
           <Route path="bot-settings" element={<BotSettings />} />
-          <Route path="news-list" element={<NewsList/>} />
-          <Route path="trail-list" element={<TrailList/>} />
+          <Route path="news-list" element={<NewsList />} />
+          <Route path="trial-list" element={<TrialList />} />
         </Route>
       </Routes>
     </div>

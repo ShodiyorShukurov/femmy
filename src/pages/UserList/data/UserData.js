@@ -113,10 +113,11 @@ const userData = ({
       title: "Actions",
       key: "actions",
       render: (_, record) => (
-        <Space>
+        <div>
           <Button
             type="link"
             onClick={() => showUserInfoModal(record.userData)}
+            style={{ paddingLeft: "10px", paddingRight: "10px" }}
           >
             <svg
               width={20}
@@ -128,7 +129,11 @@ const userData = ({
             </svg>
           </Button>
 
-          <Button type="link" onClick={() => openMessageModal(record.userData)}>
+          <Button
+            type="link"
+            onClick={() => openMessageModal(record.userData)}
+            style={{ paddingLeft: "10px", paddingRight: "10px" }}
+          >
             <svg
               width={20}
               xmlns="http://www.w3.org/2000/svg"
@@ -141,6 +146,7 @@ const userData = ({
           <Button
             type="link"
             onClick={() => showTransactionModal(record.userData)}
+            style={{ paddingLeft: "10px", paddingRight: "10px" }}
           >
             <svg
               width={20}
@@ -155,7 +161,7 @@ const userData = ({
               />
             </svg>
           </Button>
-        </Space>
+        </div>
       ),
       align: "center",
     },

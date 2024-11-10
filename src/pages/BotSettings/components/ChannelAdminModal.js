@@ -1,5 +1,7 @@
 import React from "react";
-import { Button, Form, Input, message, Modal } from "antd";
+import { Button, Form,  message, Modal } from "antd";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Api from "../../../api";
 
 const ChannelAdminModal = ({
@@ -20,6 +22,8 @@ const ChannelAdminModal = ({
   }, [isModalChannelVisible, selectChannelItem, form]);
 
   const handleEditPrice = async (values) => {
+     setEditChannelData(true);
+
     const data = {
       id: Number(selectChannelItem.id),
       username: values.username,
@@ -27,7 +31,6 @@ const ChannelAdminModal = ({
 
     try {
       await Api.put("/channel-admin/edit", data);
-      setEditChannelData(true);
       message.success("Username edit successfully!");
       handleChannelCancel();
       setSelectChannelItem({});
@@ -35,33 +38,44 @@ const ChannelAdminModal = ({
     } catch (error) {
       console.error(error);
       message.error("Failed to edit username.");
+    } finally{
+      setEditChannelData(false);
     }
   };
 
 
   return (
     <Modal
-      title="Edit Username"
+      title="Edit Text"
       open={isModalChannelVisible}
       onCancel={handleChannelCancel}
       footer={null}
     >
-      <Form
-        form={form}
-        layout="vertical"
-        onFinish={handleEditPrice}
-      >
+      <Form form={form} layout="vertical" onFinish={handleEditPrice}>
         <Form.Item
           name="username"
-          label="Username"
-          rules={[{ required: true, message: "Please Username!" }]}
+          label="Text"
+          rules={[{ required: true, message: "Please Text!" }]}
         >
-          <Input />
+          <CKEditor
+            editor={ClassicEditor}
+            config={{
+              toolbar: ["bold", "italic", "link", "undo", "redo"],
+              image: {
+                upload: false,
+              },
+            }}
+            data={selectChannelItem.username || ""}
+            onChange={(event, editor) => {
+              const data = editor.getData();
+              form.setFieldsValue({ username: data });
+            }}
+          />
         </Form.Item>
 
         <Form.Item>
           <Button type="primary" htmlType="submit" block>
-            Edit Username
+            Edit Text
           </Button>
         </Form.Item>
       </Form>

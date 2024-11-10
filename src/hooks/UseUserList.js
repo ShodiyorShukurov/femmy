@@ -11,6 +11,7 @@ const useUserList = () => {
     React.useState(false);
   const [selectedUser, setSelectedUser] = React.useState(null);
   const [isModalUserInfo, setIsModalUserInfo] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const [form] = Form.useForm();
 
@@ -40,16 +41,22 @@ const useUserList = () => {
   };
 
   const fetchUserListData = async () => {
+    setIsLoading(true)
     try {
       const res = await Api.get(`/users/list?limit=50&page=${next}`);
       setUserListData(res.data.data);
     } catch (error) {
       console.error(error);
-      throw error;
+      if (error.message === "Request failed with status code 404") {
+        setUserListData([]);
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const fetchUserPhoneNumberData = async (phoneNumber) => {
+    setIsLoading(true);
     try {
       const res = await Api.get(
         `/users/list?limit=50&page=${next}&phone=${phoneNumber}`
@@ -60,7 +67,8 @@ const useUserList = () => {
       if (error.message === "Request failed with status code 404") {
         setUserListData([]);
       }
-      // throw error;
+    } finally{
+      setIsLoading(false);
     }
   };
 
@@ -73,7 +81,6 @@ const useUserList = () => {
       if (error.message === "Request failed with status code 404") {
         setSourceData([]);
       }
-      // throw error;
     }
   };
 
@@ -98,7 +105,8 @@ const useUserList = () => {
     showUserInfoModal,
     isModalUserInfo,
     setIsModalUserInfo,
-    sourceData
+    sourceData,
+    isLoading
   };
 };
 

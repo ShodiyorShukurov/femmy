@@ -4,7 +4,6 @@ const ChannelAdminData = ({ channelAdminData, showChannelModal }) => {
   const dataIndex =
     channelAdminData?.length > 0
       ? channelAdminData.map((admin) => ({
-          title: admin.title,
           username: admin.username,
           admin: admin,
         }))
@@ -12,13 +11,7 @@ const ChannelAdminData = ({ channelAdminData, showChannelModal }) => {
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "title",
-      key: "title",
-      align: "center",
-    },
-    {
-      title: "Username",
+      title: "Admin text",
       dataIndex: "username",
       key: "username",
       align: "center",

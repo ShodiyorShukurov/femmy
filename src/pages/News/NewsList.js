@@ -5,7 +5,11 @@ import NewsData from "./data/NewsData";
 import useNews from "../../hooks/UseNews";
 
 const NewsList = () => {
-  const { newsListData, setNext, next } = useNews();
+  const { newsListData, setNext, next, isLoading } = useNews();
+
+  if(isLoading) {
+    return <Main>Loading...</Main>;
+  }
 
   return (
     <Main>

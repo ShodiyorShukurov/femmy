@@ -29,7 +29,7 @@ const PriceData = ({ data, showModal }) => {
       dataIndex: "price",
       key: "price",
       align: "center",
-      render: (price) => `${Number(price / 100).toFixed(2)}`,
+      render: (price) => `${Number(price / 100).toFixed(2)} sum`,
     },
 
     {

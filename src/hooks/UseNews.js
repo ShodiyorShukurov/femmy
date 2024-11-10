@@ -4,8 +4,10 @@ import Api from "../api";
 const useNews = () => {
   const [newsListData, setNewsListData] = React.useState([]);
   const [next, setNext] = React.useState(1);
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const fetchNewsData = async () => {
+    setIsLoading(true)
     try {
       const res = await Api.get(`/news/list?limit=50&page=${next}`);
       setNewsListData(res.data.data);
@@ -14,6 +16,8 @@ const useNews = () => {
       if(error.message === "Request failed with status code 404"){
         setNewsListData([]);
       }
+    }finally{
+      setIsLoading(false);
     }
   };
 
@@ -25,6 +29,7 @@ const useNews = () => {
     newsListData,
     setNext,
     next,
+    isLoading,
   };
 };
 

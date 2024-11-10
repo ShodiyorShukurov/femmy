@@ -25,6 +25,7 @@ function UsersListTable() {
     isModalUserInfo,
     setIsModalUserInfo,
     sourceData,
+    isLoading,
   } = useUserList();
 
   const [phoneNumber, setPhoneNumber] = React.useState();
@@ -40,6 +41,11 @@ function UsersListTable() {
     fetchUserPhoneNumberData(number);
   };
 
+  if (isLoading) {
+    return <Main>Loading...</Main>;
+  }
+
+  
   return (
     <Main>
       <div className="tabled">

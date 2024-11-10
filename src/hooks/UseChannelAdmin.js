@@ -28,7 +28,9 @@ const useChannelAdmin = () => {
       setChannelAdminData([res.data.data]);
     } catch (error) {
       console.error(error);
-      throw error;
+      if (error.message === "Request failed with status code 404") {
+        setChannelAdminData([]);
+      }
     }
   };
 

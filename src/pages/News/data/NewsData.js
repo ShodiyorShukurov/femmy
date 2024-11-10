@@ -1,27 +1,16 @@
 import { Button, Image, Table } from "antd";
 import parse from "html-react-parser";
 
-const NewsData = ({ newsListData }) => {
+const NewsData = ({ newsListData, openMessageModal }) => {
   const dataIndex =
     newsListData?.length > 0
       ? newsListData.map((news, index) => ({
           id: index + 1,
-          data: parse(news.data),
-          image_url: news.image_url ? (
-            news.image_url.match(/\.(jpeg|jpg|gif|png)$/i) ? (
-              <Image src={news.image_url} width={100} />
-            ) : news.image_url.match(/\.(mp4|webm|ogg)$/i) ? (
-              <video src={news.image_url} width={100} height={80} controls />
-            ) : (
-              "Not found"
-            )
-          ) : (
-            "Not found"
-          ),
           source: news.source,
           subscribe: news.subscribe,
           user_count: news.user_count,
           create_at: news.create_at.slice(0, 10),
+          newsId: news.id
         }))
       : [];
 
@@ -32,19 +21,6 @@ const NewsData = ({ newsListData }) => {
       key: "id",
       align: "center",
     },
-    // {
-    //   title: "Data",
-    //   dataIndex: "data",
-    //   key: "data",
-    //   align: "center",
-    //   render: (data) => (data.length > 10 ? data.slice(0, 10) : data),
-    // },
-    // {
-    //   title: "Image or video",
-    //   dataIndex: "image_url",
-    //   key: "image_url",
-    //   align: "center",
-    // },
     {
       title: "Source",
       dataIndex: "source",
@@ -98,20 +74,9 @@ const NewsData = ({ newsListData }) => {
       dataIndex: "action",
       key: "action",
       align: "center",
-      render: () => (
+      render: (_, record) => (
         <div>
-          <Button type="link">
-            <svg
-              width={20}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-            >
-              <path d="M8 2a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM8 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM9.5 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
-            </svg>
-          </Button>
-
-          <Button type="link">
+          <Button type="link" onClick={() => openMessageModal(record.newsId)}>
             <svg
               width={20}
               xmlns="http://www.w3.org/2000/svg"

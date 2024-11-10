@@ -3,11 +3,22 @@ import Main from "../../components/layout/Main";
 import { Button, Card, Col, Row, Space } from "antd";
 import NewsData from "./data/NewsData";
 import useNews from "../../hooks/UseNews";
+import NewsModal from "./components/NewsModal";
 
 const NewsList = () => {
-  const { newsListData, setNext, next, isLoading } = useNews();
+  const {
+    newsListData,
+    setNext,
+    next,
+    isLoading,
+    openMessageModal,
+    isModalVisible,
+    handleCancel,
+    selectedItem,
+    setSelectedItem,
+  } = useNews();
 
-  if(isLoading) {
+  if (isLoading) {
     return <Main>Loading...</Main>;
   }
 
@@ -22,7 +33,10 @@ const NewsList = () => {
               title="News List"
             >
               <div className="table-responsive">
-                <NewsData newsListData={newsListData} />
+                <NewsData
+                  newsListData={newsListData}
+                  openMessageModal={openMessageModal}
+                />
               </div>
               <Space style={{ padding: "10px" }}>
                 {next > 1 && (
@@ -44,6 +58,15 @@ const NewsList = () => {
             </Card>
           </Col>
         </Row>
+
+        {/*News more info */}
+
+        <NewsModal
+          isModalVisible={isModalVisible}
+          handleCancel={handleCancel}
+          selectedItem={selectedItem}
+          setSelectedItem={setSelectedItem}
+        />
       </div>
     </Main>
   );

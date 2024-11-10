@@ -1,10 +1,11 @@
 import { Button, Table } from "antd";
+import parse from "html-react-parser";
 
 const ChannelAdminData = ({ channelAdminData, showChannelModal }) => {
   const dataIndex =
     channelAdminData?.length > 0
       ? channelAdminData.map((admin) => ({
-          username: admin.username,
+          username: parse(admin.username),
           admin: admin,
         }))
       : [];

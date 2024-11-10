@@ -5,6 +5,18 @@ const useNews = () => {
   const [newsListData, setNewsListData] = React.useState([]);
   const [next, setNext] = React.useState(1);
   const [isLoading, setIsLoading] = React.useState(false)
+  const [isModalVisible, setIsModalVisible] = React.useState(false)
+  const [selectedItem, setSelectedItem] = React.useState('')
+
+
+  const openMessageModal = (id) => {
+    setSelectedItem(id);
+    setIsModalVisible(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
 
   const fetchNewsData = async () => {
     setIsLoading(true)
@@ -30,6 +42,11 @@ const useNews = () => {
     setNext,
     next,
     isLoading,
+    openMessageModal,
+    isModalVisible,
+    handleCancel,
+    selectedItem,
+    setSelectedItem,
   };
 };
 

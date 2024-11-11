@@ -1,17 +1,19 @@
 import { Menu } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
+import { data } from "../../mock/data";
+import { useMain } from "../../hooks/UseMain";
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
   const page = pathname.replace("/", "");
-
+  const { changeValue } = useMain();
 
   return (
     <>
       <div className="brand">
         <img src={logo} alt="" />
-        <span>Admin Panel</span>
+        <span>{data[changeValue].title}</span>
       </div>
       <hr />
       <Menu theme="light" mode="inline">
@@ -36,7 +38,7 @@ function Sidenav({ color }) {
                 />
               </svg>
             </span>
-            <span className="label">Dashboard</span>
+            <span className="label">{data[changeValue].paths.path_1}</span>
           </NavLink>
         </Menu.Item>
 
@@ -57,7 +59,7 @@ function Sidenav({ color }) {
                 <path d="M8 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM3.156 11.763c.16-.629.44-1.21.813-1.72a2.5 2.5 0 0 0-2.725 1.377c-.136.287.102.58.418.58h1.449c.01-.077.025-.156.045-.237ZM12.847 11.763c.02.08.036.16.046.237h1.446c.316 0 .554-.293.417-.579a2.5 2.5 0 0 0-2.722-1.378c.374.51.653 1.09.813 1.72ZM14 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0ZM3.5 9a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3ZM5 13c-.552 0-1.013-.455-.876-.99a4.002 4.002 0 0 1 7.753 0c.136.535-.324.99-.877.99H5Z" />
               </svg>
             </span>
-            <span className="label">Users List</span>
+            <span className="label">{data[changeValue].paths.path_2}</span>
           </NavLink>
         </Menu.Item>
 
@@ -82,7 +84,7 @@ function Sidenav({ color }) {
                 />
               </svg>
             </span>
-            <span className="label">Transaction List</span>
+            <span className="label">{data[changeValue].paths.path_3}</span>
           </NavLink>
         </Menu.Item>
 
@@ -95,11 +97,10 @@ function Sidenav({ color }) {
               }}
             >
               <svg
-              width={20}
+                width={20}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
                 fill="currentColor"
-                class="size-4"
               >
                 <path
                   fillRule="evenodd"
@@ -108,7 +109,7 @@ function Sidenav({ color }) {
                 />
               </svg>
             </span>
-            <span className="label">Bot settings</span>
+            <span className="label">{data[changeValue].paths.path_4}</span>
           </NavLink>
         </Menu.Item>
 
@@ -125,7 +126,6 @@ function Sidenav({ color }) {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
                 fill="currentColor"
-                class="size-4"
               >
                 <path
                   fillRule="evenodd"
@@ -135,7 +135,7 @@ function Sidenav({ color }) {
                 <path d="M13 5h-1.5v6.25a1.25 1.25 0 1 0 2.5 0V6a1 1 0 0 0-1-1Z" />
               </svg>
             </span>
-            <span className="label">News List</span>
+            <span className="label">{data[changeValue].paths.path_5}</span>
           </NavLink>
         </Menu.Item>
 
@@ -144,7 +144,7 @@ function Sidenav({ color }) {
             <span
               className="icon"
               style={{
-                background: page === "trail-list" ? color : "",
+                background: page === "trial-list" ? color : "",
               }}
             >
               <svg
@@ -152,16 +152,12 @@ function Sidenav({ color }) {
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
                 fill="currentColor"
+                className="size-4"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M10 3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v9a2 2 0 0 0 2 2h8a2 2 0 0 1-2-2V3ZM4 4h4v2H4V4Zm4 3.5H4V9h4V7.5Zm-4 3h4V12H4v-1.5Z"
-                  clipRule="evenodd"
-                />
-                <path d="M13 5h-1.5v6.25a1.25 1.25 0 1 0 2.5 0V6a1 1 0 0 0-1-1Z" />
+                <path d="M13.407 2.59a.75.75 0 0 0-1.464.326c.365 1.636.557 3.337.557 5.084 0 1.747-.192 3.448-.557 5.084a.75.75 0 0 0 1.464.327c.264-1.185.444-2.402.531-3.644a2 2 0 0 0 0-3.534 24.736 24.736 0 0 0-.531-3.643ZM4.348 11H4a3 3 0 0 1 0-6h2c1.647 0 3.217-.332 4.646-.933C10.878 5.341 11 6.655 11 8c0 1.345-.122 2.659-.354 3.933a11.946 11.946 0 0 0-4.23-.925c.203.718.478 1.407.816 2.057.12.23.057.515-.155.663l-.828.58a.484.484 0 0 1-.707-.16A12.91 12.91 0 0 1 4.348 11Z" />
               </svg>
             </span>
-            <span className="label">Trial List</span>
+            <span className="label">{data[changeValue].paths.path_6}</span>
           </NavLink>
         </Menu.Item>
       </Menu>

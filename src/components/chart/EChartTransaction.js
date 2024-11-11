@@ -1,10 +1,13 @@
 import ReactApexChart from "react-apexcharts";
 import { Typography } from "antd";
 import useDashboard from "../../hooks/UseDashboard";
+import { data } from "../../mock/data";
+import { useMain } from "../../hooks/UseMain";
 
 function EChartTransaction() {
   const { Title } = Typography;
   const { monthStatistics } = useDashboard();
+  const { changeValue } = useMain();
 
   const eChart = {
     series: [
@@ -72,8 +75,16 @@ function EChartTransaction() {
           formatter: function (val, { dataPointIndex }) {
             const monthData = monthStatistics[dataPointIndex];
             return `
-              Total Amount: ${val} so'm<br/>
-              Percentage Increase: ${monthData.percentage_increase + " %" ?? "N/A"}
+              ${
+                data[changeValue].dashboard.total_transactions_month
+              }: ${val} so'm<br/>
+               ${
+                 data[changeValue].dashboard.total_transactions_month_percentage
+               }: ${
+              monthData.percentage_increase
+                ? monthData.percentage_increase + " %"
+                : "N/A"
+            }
             `;
           },
         },
@@ -83,7 +94,9 @@ function EChartTransaction() {
 
   return (
     <>
-      <Title level={5}>Transactions Statistics</Title>
+      <Title level={5}>
+        {data[changeValue].dashboard.transaction_statistics}
+      </Title>
       <div id="chart">
         <ReactApexChart
           className="bar-chart"

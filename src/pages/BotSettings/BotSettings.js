@@ -7,6 +7,8 @@ import PriceModal from "./components/PriceModal";
 import ChannelAdminData from "./data/ChannelAdminData";
 import ChannelAdminModal from "./components/ChannelAdminModal";
 import useChannelAdmin from "../../hooks/UseChannelAdmin";
+import { data as mockData } from "../../mock/data";
+import { useMain } from "../../hooks/UseMain";
 
 function BotSettings() {
   const {
@@ -29,6 +31,8 @@ function BotSettings() {
     setSelectChannelItem,
   } = useChannelAdmin();
 
+  const {changeValue} = useMain()
+
 if(isLoading){
   return <Main>Loading...</Main>
 }
@@ -41,7 +45,7 @@ if(isLoading){
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title="Price Table"
+              title={mockData[changeValue].bot_settings.price_table}
             >
               <div className="table-responsive">
                 <PriceData data={data} showModal={showModal} />
@@ -55,7 +59,7 @@ if(isLoading){
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title="Admin"
+              title={mockData[changeValue].bot_settings.admin}
             >
               <div className="table-responsive">
                 <ChannelAdminData

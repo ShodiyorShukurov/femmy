@@ -1,9 +1,15 @@
 import { Button, Table } from "antd";
+import { data } from "../../../mock/data";
+import { useMain } from "../../../hooks/UseMain";
 
-const PriceData = ({ data, showModal }) => {
+const PriceData = ({ data: priceData, showModal }) => {
+
+  
+  const { changeValue } = useMain();
+
   const dataIndex =
-    data?.length > 0
-      ? data.map((price, index) => ({
+    priceData?.length > 0
+      ? priceData.map((price, index) => ({
           id: index + 1,
           name: price.name,
           price: price.price,
@@ -13,19 +19,19 @@ const PriceData = ({ data, showModal }) => {
 
   const columns = [
     {
-      title: "№",
+      title: data[changeValue].bot_settings.id,
       dataIndex: "id",
       key: "id",
       align: "center",
     },
     {
-      title: "Name",
+      title: data[changeValue].bot_settings.name,
       dataIndex: "name",
       key: "name",
       align: "center",
     },
     {
-      title: "Price",
+      title: data[changeValue].bot_settings.price,
       dataIndex: "price",
       key: "price",
       align: "center",
@@ -33,7 +39,7 @@ const PriceData = ({ data, showModal }) => {
     },
 
     {
-      title: "Action",
+      title: data[changeValue].bot_settings.actions,
       dataIndex: "action",
       key: "action",
       render: (_, record) => (

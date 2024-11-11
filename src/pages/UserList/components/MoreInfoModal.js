@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Button, Row, Col, Card, Table } from "antd";
 import Api from "../../../api";
+import { data } from "../../../mock/data";
+import { useMain } from "../../../hooks/UseMain";
 
 const MoreInfoModal = ({
   isModalUserInfo,
@@ -8,8 +10,11 @@ const MoreInfoModal = ({
   selectedUser,
   setSelectedUser,
 }) => {
+
+  const {changeValue} = useMain(); 
+
   /*User data start*/
-const [userData, setUserData]= React.useState([])
+  const [userData, setUserData] = React.useState([]);
 
   const userIndex = userData?.length
     ? userData?.map((user) => ({
@@ -27,25 +32,25 @@ const [userData, setUserData]= React.useState([])
 
   const userColumns = [
     {
-      title: "ID",
+      title: data[changeValue].user_info.id,
       dataIndex: "id",
       key: "id",
       align: "center",
     },
     {
-      title: "Name",
+      title: data[changeValue].user_info.name,
       dataIndex: "name",
       key: "name",
       align: "center",
     },
     {
-      title: "User ID",
+      title: data[changeValue].user_info.user_id,
       dataIndex: "user_id",
       key: "user_id",
       align: "center",
     },
     {
-      title: "Phone Number",
+      title: data[changeValue].user_info.phone_number,
       dataIndex: "phone_number",
       key: "phone_number",
       align: "center",
@@ -53,11 +58,11 @@ const [userData, setUserData]= React.useState([])
         phone_number ? (
           <a href={"tel:" + phone_number}>{phone_number}</a>
         ) : (
-          "N/A"
+          data[changeValue].user_info.phone_number_error
         ),
     },
     {
-      title: "Subscribe",
+      title: data[changeValue].user_info.subscribe,
       dataIndex: "subscribe",
       key: "subscribe",
       align: "center",
@@ -73,7 +78,7 @@ const [userData, setUserData]= React.useState([])
     },
 
     {
-      title: "Duration",
+      title: data[changeValue].user_info.duration,
       dataIndex: "duration",
       key: "duration",
       align: "center",
@@ -89,7 +94,7 @@ const [userData, setUserData]= React.useState([])
     },
 
     {
-      title: "Expired",
+      title: data[changeValue].user_info.expired,
       dataIndex: "expired",
       key: "expired",
       align: "center",
@@ -106,7 +111,7 @@ const [userData, setUserData]= React.useState([])
 
     {
       title: "Source",
-      dataIndex: "source",
+      dataIndex: data[changeValue].user_info.source,
       key: "source",
       align: "center",
       render: (center) => (
@@ -124,9 +129,9 @@ const [userData, setUserData]= React.useState([])
   const fetchUserData = async () => {
     if (!selectedUser?.chat_id) return;
     try {
-      const res = await Api.get(`/user/${selectedUser?.chat_id}`);
+      const res = await Api.get("/user/" + selectedUser?.chat_id);
       if (res.data) {
-       setUserData([res.data.data]);
+        setUserData([res.data.data]);
       } else {
         setUserData([]);
       }
@@ -154,59 +159,79 @@ const [userData, setUserData]= React.useState([])
 
   const columns = [
     {
-      title: "ID",
+      title: data[changeValue].transaction_info.id,
       dataIndex: "id",
       key: "id",
       align: "center",
     },
     {
-      title: "Transaction ID",
+      title: data[changeValue].transaction_info.transaction_id,
       dataIndex: "transaction_id",
       key: "transaction_id",
       align: "center",
+      render: (transaction_id) =>
+        transaction_id ? (
+          transaction_id
+        ) : (
+          <span style={{ color: "red" }}>
+            {data[changeValue].transaction_info.transaction_id_error}
+          </span>
+        ),
     },
     {
-      title: "User ID",
+      title: data[changeValue].transaction_info.user_id,
       dataIndex: "user_id",
       key: "user_id",
       align: "center",
     },
     {
-      title: "Amount",
+      title: data[changeValue].transaction_info.amount,
       dataIndex: "amount",
       key: "amount",
       align: "center",
       render: (amount) => `${Number(amount / 100).toFixed(2)}`,
     },
     {
-      title: "Success Transaction ID",
+      title: data[changeValue].transaction_info.method,
+      dataIndex: "method",
+      key: "method",
+      align: "center",
+    },
+    {
+      title: data[changeValue].transaction_info.success_trans_id,
       dataIndex: "success_trans_id",
       key: "success_trans_id",
       align: "center",
+      render: (success_trans_id) =>
+        success_trans_id ? (
+          success_trans_id
+        ) : (
+          <span style={{ color: "red" }}>
+            {data[changeValue].transaction_info.success_trans_id_error}
+          </span>
+        ),
     },
 
     {
-      title: "Check ",
+      title: data[changeValue].transaction_info.ofd_url,
       dataIndex: "ofd_url",
       key: "ofd_url",
       align: "center",
       render: (_, record) =>
         record?.ofd_url ? (
           <a href={record?.ofd_url} target="_blanck">
-            <Button type="link">See check</Button>
+            <Button type="link">
+              {data[changeValue].transaction_info.ofd_url_success}
+            </Button>
           </a>
         ) : (
-          <span style={{ color: "red " }}>Not Found</span>
+          <span style={{ color: "red " }}>
+            {data[changeValue].transaction_info.ofd_url_error}
+          </span>
         ),
     },
     {
-      title: "Method",
-      dataIndex: "method",
-      key: "method",
-      align: "center",
-    },
-    {
-      title: "Create",
+      title: data[changeValue].transaction_info.create_at,
       dataIndex: "create_at",
       key: "create_at",
       align: "center",
@@ -237,7 +262,7 @@ const [userData, setUserData]= React.useState([])
 
   return (
     <Modal
-      title="User Info"
+      title={data[changeValue].user_info.title}
       open={isModalUserInfo}
       onCancel={() => {
         setIsModalUserInfo(false);
@@ -254,7 +279,7 @@ const [userData, setUserData]= React.useState([])
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title="User Info"
+              title={data[changeValue].user_info.title}
             >
               <div className="table-responsive">
                 <Table
@@ -274,7 +299,7 @@ const [userData, setUserData]= React.useState([])
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title="User Transaction Info"
+              title={data[changeValue].transaction_info.title}
             >
               <div className="table-responsive">
                 <Table

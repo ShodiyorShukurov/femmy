@@ -1,7 +1,11 @@
-import { Button, Image, Table } from "antd";
-import parse from "html-react-parser";
+import { Button,  Table } from "antd";
+import { data } from "../../../mock/data";
+import {useMain} from '../../../hooks/UseMain'
 
 const NewsData = ({ newsListData, openMessageModal }) => {
+
+  const {changeValue} = useMain()
+
   const dataIndex =
     newsListData?.length > 0
       ? newsListData.map((news, index) => ({
@@ -16,13 +20,13 @@ const NewsData = ({ newsListData, openMessageModal }) => {
 
   const columns = [
     {
-      title: "№",
+      title: data[changeValue].news_list.id,
       dataIndex: "id",
       key: "id",
       align: "center",
     },
     {
-      title: "Source",
+      title: data[changeValue].news_list.source,
       dataIndex: "source",
       key: "source",
       align: "center",
@@ -31,46 +35,54 @@ const NewsData = ({ newsListData, openMessageModal }) => {
           {source !== null ? (
             <span style={{ textTransform: "capitalize" }}>{source}</span>
           ) : (
-            <span style={{ color: "red " }}>Not Found</span>
+            <span style={{ color: "red " }}>
+              {data[changeValue].news_list.source_error}
+            </span>
           )}
         </span>
       ),
     },
 
     {
-      title: "Subscribe",
+      title: data[changeValue].news_list.subscribe,
       dataIndex: "subscribe",
       key: "subscribe",
       align: "center",
       render: (subscribe) => (
         <span>
           {subscribe === true ? (
-            <span style={{ color: "green" }}>Channel subscribers</span>
+            <span style={{ color: "green" }}>
+              {data[changeValue].news_list.subscribe_1}
+            </span>
           ) : subscribe === false ? (
-            <span style={{ color: "red" }}>Channel non-subscribers</span>
+            <span style={{ color: "red" }}>
+              {data[changeValue].news_list.subscribe_2}
+            </span>
           ) : (
-            <span style={{ color: "blue" }}>All</span>
+            <span style={{ color: "blue" }}>
+              {data[changeValue].news_list.subscribe_3}
+            </span>
           )}
         </span>
       ),
     },
 
     {
-      title: "User count",
+      title: data[changeValue].news_list.user_count,
       dataIndex: "user_count",
       key: "user_count",
       align: "center",
     },
 
     {
-      title: "Create",
+      title: data[changeValue].news_list.create_at,
       dataIndex: "create_at",
       key: "create_at",
       align: "center",
     },
 
     {
-      title: "Action",
+      title: data[changeValue].news_list.action,
       dataIndex: "action",
       key: "action",
       align: "center",
@@ -82,8 +94,14 @@ const NewsData = ({ newsListData, openMessageModal }) => {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
+              className="size-4"
             >
-              <path d="M8 2a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM8 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM9.5 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
+              <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
+              <path
+                fillRule="evenodd"
+                d="M1.38 8.28a.87.87 0 0 1 0-.566 7.003 7.003 0 0 1 13.238.006.87.87 0 0 1 0 .566A7.003 7.003 0 0 1 1.379 8.28ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                clipRule="evenodd"
+              />
             </svg>
           </Button>
         </div>

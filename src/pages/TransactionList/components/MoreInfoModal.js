@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Modal, Button, Row, Col, Card, Table } from "antd";
 import Api from "../../../api";
+import { data } from "../../../mock/data";
+import { useMain } from "../../../hooks/UseMain";
 
 const MoreInfoModal = ({
   isModalUserInfo,
@@ -8,6 +10,9 @@ const MoreInfoModal = ({
   selectedUser,
   setSelectedUser,
 }) => {
+
+  const {changeValue} = useMain();
+
   const [transIdData, setTransIdData] = useState();
 
   const dataIndex =
@@ -26,13 +31,13 @@ const MoreInfoModal = ({
 
   const columns = [
     {
-      title: "ID",
+      title: data[changeValue].transaction_info.id,
       dataIndex: "id",
       key: "id",
       align: "center",
     },
     {
-      title: "Transaction Id",
+      title: data[changeValue].transaction_info.transaction_id,
       dataIndex: "transaction_id",
       key: "transaction_id",
       align: "center",
@@ -40,30 +45,32 @@ const MoreInfoModal = ({
         transaction_id ? (
           transaction_id
         ) : (
-          <span style={{ color: "red" }}>Not found</span>
+          <span style={{ color: "red" }}>
+            {data[changeValue].transaction_info.transaction_id_error}
+          </span>
         ),
     },
     {
-      title: "User ID",
+      title: data[changeValue].transaction_info.user_id,
       dataIndex: "user_id",
       key: "user_id",
       align: "center",
     },
     {
-      title: "Amount",
+      title: data[changeValue].transaction_info.amount,
       dataIndex: "amount",
       key: "amount",
       align: "center",
       render: (amount) => `${Number(amount / 100).toFixed(2)}`,
     },
     {
-      title: "Method",
+      title: data[changeValue].transaction_info.method,
       dataIndex: "method",
       key: "method",
       align: "center",
     },
     {
-      title: "Success Transaction ID",
+      title: data[changeValue].transaction_info.success_trans_id,
       dataIndex: "success_trans_id",
       key: "success_trans_id",
       align: "center",
@@ -71,25 +78,31 @@ const MoreInfoModal = ({
         success_trans_id ? (
           success_trans_id
         ) : (
-          <span style={{ color: "red" }}>Not found</span>
+          <span style={{ color: "red" }}>
+            {data[changeValue].transaction_info.success_trans_id_error}
+          </span>
         ),
     },
     {
-      title: "Check ",
+      title: data[changeValue].transaction_info.ofd_url,
       dataIndex: "ofd_url",
       key: "ofd_url",
       align: "center",
       render: (_, record) =>
-        record.ofd_url ? (
-          <a href={record?.ofd_url} target="_blank" rel="noopener noreferrer">
-            <Button type="link">See check</Button>
+        record?.ofd_url ? (
+          <a href={record?.ofd_url} target="_blanck">
+            <Button type="link">
+              {data[changeValue].transaction_info.ofd_url_success}
+            </Button>
           </a>
         ) : (
-          <span style={{ color: "red" }}>Check not available</span>
+          <span style={{ color: "red " }}>
+            {data[changeValue].transaction_info.ofd_url_error}
+          </span>
         ),
     },
     {
-      title: "Create",
+      title: data[changeValue].transaction_info.create_at,
       dataIndex: "create_at",
       key: "create_at",
       align: "center",
@@ -113,7 +126,7 @@ const MoreInfoModal = ({
 
   return (
     <Modal
-      title="Transaction Info"
+      title={data[changeValue].transaction_info.title}
       open={isModalUserInfo}
       onCancel={() => {
         setIsModalUserInfo(false);
@@ -129,7 +142,7 @@ const MoreInfoModal = ({
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title="Transaction Info"
+              title={data[changeValue].transaction_info.title}
             >
               <div className="table-responsive">
                 <Table

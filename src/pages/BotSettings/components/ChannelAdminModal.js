@@ -3,6 +3,8 @@ import { Button, Form,  message, Modal } from "antd";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Api from "../../../api";
+import { data } from "../../../mock/data";
+import { useMain } from "../../../hooks/UseMain";
 
 const ChannelAdminModal = ({
   setEditChannelData,
@@ -11,6 +13,8 @@ const ChannelAdminModal = ({
   selectChannelItem,
   setSelectChannelItem,
 }) => {
+  
+  const { changeValue } = useMain();
   const [form] = Form.useForm();
 
   React.useEffect(() => {
@@ -31,13 +35,13 @@ const ChannelAdminModal = ({
 
     try {
       await Api.put("/channel-admin/edit", data);
-      message.success("Username edit successfully!");
+      message.success(data[changeValue].bot_settings.message_success);
       handleChannelCancel();
       setSelectChannelItem({});
       form.resetFields();
     } catch (error) {
       console.error(error);
-      message.error("Failed to edit username.");
+      message.error(data[changeValue].bot_settings.message_error);
     } finally{
       setEditChannelData(false);
     }
@@ -46,7 +50,7 @@ const ChannelAdminModal = ({
 
   return (
     <Modal
-      title="Edit Text"
+      title={data[changeValue].bot_settings.edit_text}
       open={isModalChannelVisible}
       onCancel={handleChannelCancel}
       footer={null}
@@ -54,8 +58,13 @@ const ChannelAdminModal = ({
       <Form form={form} layout="vertical" onFinish={handleEditPrice}>
         <Form.Item
           name="username"
-          label="Text"
-          rules={[{ required: true, message: "Please Text!" }]}
+          label={data[changeValue].bot_settings.label_admin}
+          rules={[
+            {
+              required: true,
+              message: data[changeValue].bot_settings.requred_admin,
+            },
+          ]}
         >
           <CKEditor
             editor={ClassicEditor}
@@ -75,7 +84,7 @@ const ChannelAdminModal = ({
 
         <Form.Item>
           <Button type="primary" htmlType="submit" block>
-            Edit Text
+            {data[changeValue].bot_settings.admin_button}
           </Button>
         </Form.Item>
       </Form>

@@ -5,6 +5,8 @@ import TrialData from "./data/TrialData";
 import useTrial from "../../hooks/UseTrial";
 import TrialModal from "./components/TrialModal";
 import DeleteModal from "./components/DeleteModal";
+import { data } from "../../mock/data";
+import { useMain } from "../../hooks/UseMain";
 
 const TrialList = () => {
   const {
@@ -18,7 +20,13 @@ const TrialList = () => {
     closeDeleteModal,
     handleDelete,
     isModalDelete,
+    isLoading,
+    fetchTrailData,
   } = useTrial();
+
+  const { changeValue } = useMain();
+
+  if (isLoading) return <Main>Loading...</Main>;
 
   return (
     <Main>
@@ -28,7 +36,7 @@ const TrialList = () => {
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title="Trail List"
+              title={data[changeValue].trial_list.title}
             >
               <Button
                 type="primary"
@@ -41,7 +49,7 @@ const TrialList = () => {
                 }}
                 onClick={() => showModal()}
               >
-                Add Trail
+                {data[changeValue].trial_list.add_button}
               </Button>
               <div className="table-responsive">
                 <TrialData
@@ -60,6 +68,7 @@ const TrialList = () => {
           selectItem={selectItem}
           handleCancel={handleCancel}
           setIsLoading={setIsLoading}
+          fetchTrailData={fetchTrailData}
         />
 
         {/*Trail Delete modal*/}

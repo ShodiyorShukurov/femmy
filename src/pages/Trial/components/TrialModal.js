@@ -1,13 +1,17 @@
 import { Button, Form, Input, InputNumber, message, Modal } from "antd";
 import Api from "../../../api";
 import React from "react";
+import { data } from "../../../mock/data";
+import { useMain } from "../../../hooks/UseMain";
 
 const TrailModal = ({
-  setIsLoading,
+  fetchTrailData,
   isModalVisible,
   selectItem,
   handleCancel,
 }) => {
+  const { changeValue } = useMain();
+
   const [form] = Form.useForm();
 
   React.useEffect(() => {
@@ -29,24 +33,28 @@ const TrailModal = ({
       if (selectItem && selectItem.id) {
         data.id = Number(selectItem.id);
         await Api.put("/trial/edit", data);
-        message.success("Edit successfully!");
+        message.success(data[changeValue].trial_list.message_edit_success);
       } else {
         await Api.post("/trial/add", data);
-        message.success("Add successfully!");
+        message.success(data[changeValue].trial_list.message_success);
       }
-      setIsLoading(true);
       handleCancel();
       form.resetFields();
     } catch (error) {
-      setIsLoading(true);
       console.error(error);
-      message.error("Failed");
+      message.error(data[changeValue].trial_list.message_error);
+    } finally {
+      fetchTrailData();
     }
   };
 
   return (
     <Modal
-      title={selectItem?.id ? "Edit" : "Add"}
+      title={
+        selectItem?.id
+          ? data[changeValue].trial_list.edit_text
+          : data[changeValue].trial_list.add_text
+      }
       open={isModalVisible}
       onCancel={handleCancel}
       footer={null}
@@ -54,23 +62,27 @@ const TrailModal = ({
       <Form form={form} layout="vertical" onFinish={handleSubmitTrial}>
         <Form.Item
           name="source"
-          label="Source"
-          rules={[{ required: true, message: "Please Source!" }]}
+          label={data[changeValue].trial_list.label_1}
+          rules={[
+            { required: true, message: data[changeValue].trial_list.requred_1 },
+          ]}
         >
           <Input style={{ width: "100%" }} />
         </Form.Item>
 
         <Form.Item
           name="day"
-          label="Day"
-          rules={[{ required: true, message: "Please day!" }]}
+          label={data[changeValue].trial_list.label_2}
+          rules={[
+            { required: true, message: data[changeValue].trial_list.requred_2 },
+          ]}
         >
           <InputNumber style={{ width: "100%" }} min={1} />
         </Form.Item>
 
         <Form.Item>
           <Button type="primary" htmlType="submit" block>
-            Submit
+            {data[changeValue].trial_list.button_text}
           </Button>
         </Form.Item>
       </Form>

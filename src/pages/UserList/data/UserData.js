@@ -1,12 +1,15 @@
-import { Button, Space, Table } from "antd";
+import { Button, Table } from "antd";
+import { data } from "../../../mock/data";
+import { useMain } from "../../../hooks/UseMain";
 
-
-const userData = ({
+const UserData = ({
   openMessageModal,
   showTransactionModal,
   showUserInfoModal,
   userListData,
 }) => {
+const { changeValue } = useMain();
+
   const dataIndex =
     userListData?.length > 0
       ? userListData.map((user, index) => ({
@@ -23,19 +26,19 @@ const userData = ({
 
   const columns = [
     {
-      title: "№",
+      title: data[changeValue].users_list.id,
       dataIndex: "id",
       key: "id",
       align: "center",
     },
     {
-      title: "Name",
+      title: data[changeValue].users_list.name,
       dataIndex: "name",
       key: "name",
       align: "center",
     },
     {
-      title: "Phone Number",
+      title: data[changeValue].users_list.phone_number,
       dataIndex: "phone_number",
       key: "phone_number",
       align: "center",
@@ -47,7 +50,7 @@ const userData = ({
         ),
     },
     {
-      title: "Subscribe",
+      title: data[changeValue].users_list.subscribe,
       dataIndex: "subscribe",
       key: "subscribe",
       align: "center",
@@ -63,7 +66,7 @@ const userData = ({
     },
 
     {
-      title: "Duration",
+      title: data[changeValue].users_list.duration,
       dataIndex: "duration",
       key: "duration",
       align: "center",
@@ -79,7 +82,7 @@ const userData = ({
     },
 
     {
-      title: "Expired",
+      title: data[changeValue].users_list.expired,
       dataIndex: "expired",
       key: "expired",
       align: "center",
@@ -95,14 +98,14 @@ const userData = ({
     },
 
     {
-      title: "Source",
+      title: data[changeValue].users_list.source,
       dataIndex: "source",
       key: "source",
       align: "center",
-      render: (center) => (
+      render: (source) => (
         <span>
-          {center !== null ? (
-            center
+          {source !== null ? (
+            <span style={{ textTransform: "capitalize" }}>{source}</span>
           ) : (
             <span style={{ color: "red " }}>Not Found</span>
           )}
@@ -110,7 +113,7 @@ const userData = ({
       ),
     },
     {
-      title: "Actions",
+      title: data[changeValue].users_list.actions,
       key: "actions",
       render: (_, record) => (
         <div>
@@ -120,12 +123,18 @@ const userData = ({
             style={{ paddingLeft: "10px", paddingRight: "10px" }}
           >
             <svg
-              width={20}
+            width={20}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
+              className="size-4"
             >
-              <path d="M8 2a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM8 6.5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM9.5 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0Z" />
+              <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
+              <path
+                fillRule="evenodd"
+                d="M1.38 8.28a.87.87 0 0 1 0-.566 7.003 7.003 0 0 1 13.238.006.87.87 0 0 1 0 .566A7.003 7.003 0 0 1 1.379 8.28ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                clipRule="evenodd"
+              />
             </svg>
           </Button>
 
@@ -177,4 +186,4 @@ const userData = ({
   );
 };
 
-export default userData;
+export default UserData;

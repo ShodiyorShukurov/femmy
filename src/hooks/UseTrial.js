@@ -23,6 +23,8 @@ const useTrial = () => {
   };
 
   const fetchTrailData = async () => {
+    setIsLoading(true);
+
     try {
       const res = await Api.get(`/trial/list`);
       setTrialListData(res.data.data);
@@ -31,6 +33,8 @@ const useTrial = () => {
       if (error.message === "Request failed with status code 404") {
         setTrialListData([]);
       }
+    }finally{
+      setIsLoading(false)
     }
   };
 
@@ -49,26 +53,24 @@ const useTrial = () => {
       id: id,
     };
 
-    setIsLoading(true);
-
     try {
       const res = await Api.delete(`/trial/delete`, { data });
       if (res) {
         message.success("Successfully deleted");
-        setIsLoading(false);
       }
       closeDeleteModal();
     } catch (error) {
-      setIsLoading(false);
       closeDeleteModal()
       message.error(error);
       console.log(error);
+    }finally{
+      fetchTrailData();
     }
   };
 
   React.useEffect(() => {
     fetchTrailData();
-  }, [isLoading]);
+  }, []);
 
   return {
     trialListData,
@@ -84,6 +86,7 @@ const useTrial = () => {
     closeDeleteModal,
     handleDelete,
     isModalDelete,
+    fetchTrailData,
   };
 };
 

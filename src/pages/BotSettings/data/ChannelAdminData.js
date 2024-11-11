@@ -1,7 +1,12 @@
 import { Button, Table } from "antd";
 import parse from "html-react-parser";
+import { data } from "../../../mock/data";
+import { useMain } from "../../../hooks/UseMain";
 
 const ChannelAdminData = ({ channelAdminData, showChannelModal }) => {
+
+  const {changeValue} = useMain()
+
   const dataIndex =
     channelAdminData?.length > 0
       ? channelAdminData.map((admin) => ({
@@ -12,14 +17,14 @@ const ChannelAdminData = ({ channelAdminData, showChannelModal }) => {
 
   const columns = [
     {
-      title: "Admin text",
+      title: data[changeValue].bot_settings.admin_text,
       dataIndex: "username",
       key: "username",
       align: "center",
     },
 
     {
-      title: "Action",
+      title: data[changeValue].bot_settings.admin_action,
       dataIndex: "action",
       key: "action",
       render: (_, record) => (

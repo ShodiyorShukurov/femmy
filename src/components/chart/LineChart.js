@@ -2,43 +2,47 @@ import ReactApexChart from "react-apexcharts";
 import { Typography } from "antd";
 import { MinusOutlined } from "@ant-design/icons";
 import useDashboard from "../../hooks/UseDashboard";
+import { data } from "../../mock/data";
+import { useMain } from "../../hooks/UseMain";
 
 function LineChart() {
   const { Title, Paragraph } = Typography;
   const { userStatisticsSource } = useDashboard();
+  const {changeValue} = useMain();
 
-  // Months as numbers for x-axis
-  const months = Array.from({ length: 12 }, (_, i) => i + 1); 
+  const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
-  // Initialize a map to collect data per source, excluding "N/A"
   const dataBySource = {};
 
   userStatisticsSource?.forEach((entry) => {
-    const monthIndex = new Date(entry.month.trim() + " 1, 2020").getMonth(); // Get index of month
+    const monthIndex = new Date(entry.month.trim() + " 1, 2020").getMonth();
     const source = entry.source.trim();
 
-    // Skip entries where the source is "N/A"
     if (source !== "N/A") {
       const count = Number(entry.count);
 
-      // Initialize the array for each source if it doesn't exist
       if (!dataBySource[source]) {
         dataBySource[source] = Array(12).fill(0);
       }
 
-      // Populate count data
       dataBySource[source][monthIndex] = count;
     }
   });
 
-  // Convert dataBySource into series format for ApexCharts
-  const series = Object.keys(dataBySource).map((source) => ({
+  const colors = [
+    "#FF5733",
+    "#33FF57",
+    "#3357FF",
+    "#FF33A8",
+    "#A833FF",
+    "#33FFF1",
+  ];
+  const series = Object.keys(dataBySource).map((source, index) => ({
     name: source,
     data: dataBySource[source],
-    offsetY: 0,
+    color: colors[index % colors.length], 
   }));
 
-  // Define ApexCharts options
   const lineChart = {
     series: series,
     options: {
@@ -50,6 +54,7 @@ function LineChart() {
           show: false,
         },
       },
+      colors: colors, 
       legend: {
         show: true,
       },
@@ -81,7 +86,7 @@ function LineChart() {
       tooltip: {
         y: {
           formatter: function (val) {
-            return `${val} users`;
+            return `${val} ${data[changeValue].dashboard.source_users}`;
           },
         },
       },
@@ -92,15 +97,17 @@ function LineChart() {
     <>
       <div className="linechart">
         <div>
-          <Title level={5}>Active Users by Source</Title>
-          <Paragraph className="lastweek">
+          <Title level={5}>
+            {data[changeValue].dashboard.source_statistics}
+          </Title>
+          {/*<Paragraph className="lastweek">
             than last week <span className="bnb2">+30%</span>
-          </Paragraph>
+          </Paragraph>*/}
         </div>
         <div className="sales">
           <ul>
-            {Object.keys(dataBySource).map((source) => (
-              <li key={source}>
+            {Object.keys(dataBySource).map((source, index) => (
+              <li key={source} style={{ color: colors[index % colors.length] }}>
                 <MinusOutlined /> {source}
               </li>
             ))}

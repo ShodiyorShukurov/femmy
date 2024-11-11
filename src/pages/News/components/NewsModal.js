@@ -3,6 +3,8 @@ import { Modal, Row, Col, Card, Table, Image } from "antd";
 import Api from "../../../api";
 import parse from "html-react-parser";
 import "../NewsCard.css";
+import { data } from "../../../mock/data";
+import { useMain } from "../../../hooks/UseMain";
 
 const NewsModal = ({
   isModalVisible,
@@ -10,6 +12,9 @@ const NewsModal = ({
   selectedItem,
   setSelectedItem,
 }) => {
+
+  const {changeValue} = useMain();
+
   const [newsData, setNewsData] = useState([]);
   const [usersData, setUsersData] = useState([]);
 
@@ -42,101 +47,101 @@ const NewsModal = ({
       }))
     : [];
 
-  const userColumns = [
-    {
-      title: "№",
-      dataIndex: "id",
-      key: "id",
-      align: "center",
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      align: "center",
-    },
-    {
-      title: "User ID",
-      dataIndex: "user_id",
-      key: "user_id",
-      align: "center",
-    },
-    {
-      title: "Phone Number",
-      dataIndex: "phone_number",
-      key: "phone_number",
-      align: "center",
-      render: (phone_number) =>
-        phone_number ? (
-          <a href={"tel:" + phone_number}>{phone_number}</a>
-        ) : (
-          "N/A"
-        ),
-    },
-    {
-      title: "Subscribe",
-      dataIndex: "subscribe",
-      key: "subscribe",
-      align: "center",
-      render: (subscribe) => (
-        <span>
-          {subscribe ? (
-            <span style={{ color: "green" }}>True</span>
-          ) : (
-            <span style={{ color: "red" }}>False</span>
-          )}
-        </span>
-      ),
-    },
+   const userColumns = [
+     {
+       title: data[changeValue].user_info.id,
+       dataIndex: "id",
+       key: "id",
+       align: "center",
+     },
+     {
+       title: data[changeValue].user_info.name,
+       dataIndex: "name",
+       key: "name",
+       align: "center",
+     },
+     {
+       title: data[changeValue].user_info.user_id,
+       dataIndex: "user_id",
+       key: "user_id",
+       align: "center",
+     },
+     {
+       title: data[changeValue].user_info.phone_number,
+       dataIndex: "phone_number",
+       key: "phone_number",
+       align: "center",
+       render: (phone_number) =>
+         phone_number ? (
+           <a href={"tel:" + phone_number}>{phone_number}</a>
+         ) : (
+           data[changeValue].user_info.phone_number_error
+         ),
+     },
+     {
+       title: data[changeValue].user_info.subscribe,
+       dataIndex: "subscribe",
+       key: "subscribe",
+       align: "center",
+       render: (subscribe) => (
+         <span>
+           {subscribe ? (
+             <span style={{ color: "green" }}>True</span>
+           ) : (
+             <span style={{ color: "red" }}>False</span>
+           )}
+         </span>
+       ),
+     },
 
-    {
-      title: "Duration",
-      dataIndex: "duration",
-      key: "duration",
-      align: "center",
-      render: (duration) => (
-        <span>
-          {duration ? (
-            <span style={{ color: "green" }}>True</span>
-          ) : (
-            <span style={{ color: "red" }}>False</span>
-          )}
-        </span>
-      ),
-    },
+     {
+       title: data[changeValue].user_info.duration,
+       dataIndex: "duration",
+       key: "duration",
+       align: "center",
+       render: (duration) => (
+         <span>
+           {duration ? (
+             <span style={{ color: "green" }}>True</span>
+           ) : (
+             <span style={{ color: "red" }}>False</span>
+           )}
+         </span>
+       ),
+     },
 
-    {
-      title: "Expired",
-      dataIndex: "expired",
-      key: "expired",
-      align: "center",
-      render: (expired) => (
-        <span>
-          {expired !== null ? (
-            expired
-          ) : (
-            <span style={{ color: "red " }}>Not Found</span>
-          )}
-        </span>
-      ),
-    },
+     {
+       title: data[changeValue].user_info.expired,
+       dataIndex: "expired",
+       key: "expired",
+       align: "center",
+       render: (expired) => (
+         <span>
+           {expired !== null ? (
+             expired
+           ) : (
+             <span style={{ color: "red " }}>Not Found</span>
+           )}
+         </span>
+       ),
+     },
 
-    {
-      title: "Source",
-      dataIndex: "source",
-      key: "source",
-      align: "center",
-      render: (center) => (
-        <span>
-          {center !== null ? (
-            center
-          ) : (
-            <span style={{ color: "red " }}>Not Found</span>
-          )}
-        </span>
-      ),
-    },
-  ];
+     {
+       title: "Source",
+       dataIndex: data[changeValue].user_info.source,
+       key: "source",
+       align: "center",
+       render: (center) => (
+         <span>
+           {center !== null ? (
+             center
+           ) : (
+             <span style={{ color: "red " }}>Not Found</span>
+           )}
+         </span>
+       ),
+     },
+   ];
 
   useEffect(() => {
     fetchNewsData();
@@ -144,7 +149,7 @@ const NewsModal = ({
 
   return (
     <Modal
-      title="News Info"
+      title={data[changeValue].news_list.news_modal}
       open={isModalVisible}
       onCancel={() => {
         handleCancel();
@@ -174,16 +179,20 @@ const NewsModal = ({
                 style={{ borderRadius: "8px", marginBottom: "16px" }}
               />
             ) : (
-              <div className="media-not-found">Media not found</div>
+              <div className="media-not-found">
+                {data[changeValue].news_list.media_not}
+              </div>
             )
           ) : (
-            <div className="media-not-found">Media not found</div>
+            <div className="media-not-found">
+              {data[changeValue].news_list.media_not}
+            </div>
           )}
         </div>
         <div className="news-content">
           {typeof newsData.data === "string"
             ? parse(newsData.data)
-            : "No content available"}
+            : data[changeValue].news_list.news_content}
         </div>
       </div>
 
@@ -192,7 +201,7 @@ const NewsModal = ({
           <Card
             bordered={false}
             className="criclebox tablespace mb-24"
-            title="Users Info"
+            title={data[changeValue].user_info.title}
           >
             <Table
               className="table-responsive"

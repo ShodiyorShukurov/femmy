@@ -4,6 +4,8 @@ import { UploadOutlined } from "@ant-design/icons";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import Api from "../../../api";
+import { data } from "../../../mock/data";
+import { useMain } from "../../../hooks/UseMain";
 
 const { Option } = Select;
 
@@ -14,6 +16,8 @@ const SendMessageUserModal = ({
   setSelectedUser,
   sourceData,
 }) => {
+  const { changeValue } = useMain();
+
   const [fileList, setFileList] = useState([]);
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +31,7 @@ const SendMessageUserModal = ({
 
     try {
       await Api.post("/news/single/user", formData);
-      message.success("Successfully!");
+      message.success(data[changeValue].message_users_modal.message_success);
       setIsLoading(false);
       setSelectedUser(null);
       handleCancel();
@@ -36,7 +40,7 @@ const SendMessageUserModal = ({
       setIsLoading(false);
       setSelectedUser(null);
       console.error(error);
-      message.error("Failed");
+      message.error(data[changeValue].message_users_modal.message_error);
     }
   };
 
@@ -50,7 +54,7 @@ const SendMessageUserModal = ({
 
     try {
       await Api.post("/news/all/users", formData);
-      message.success("Successfully!");
+      message.success(data[changeValue].message_users_modal.message_success);
       setIsLoading(false);
       handleCancel();
       form.resetFields();
@@ -58,22 +62,22 @@ const SendMessageUserModal = ({
     } catch (error) {
       setIsLoading(false);
       console.error(error);
-      message.error("Failed");
+      message.error(data[changeValue].message_users_modal.message_error);
     }
   };
 
   const handleUploadChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
-     if (newFileList.length === 0) {
-       form.setFieldsValue({ photo: null });
-     }
+    if (newFileList.length === 0) {
+      form.setFieldsValue({ photo: null });
+    }
   };
 
   const beforeUpload = (file) => {
     const isImageOrVideo =
       file.type.startsWith("image/") || file.type.startsWith("video/");
     if (!isImageOrVideo) {
-      message.error("Only images or videos are allowed!");
+      message.error(data[changeValue].message_users_modal.warning_2);
       return Upload.LIST_IGNORE;
     }
     return false;
@@ -81,7 +85,7 @@ const SendMessageUserModal = ({
 
   return (
     <Modal
-      title="Send Message"
+      title={data[changeValue].message_users_modal.title}
       open={isModalVisible}
       onCancel={handleCancel}
       footer={null}
@@ -95,8 +99,13 @@ const SendMessageUserModal = ({
       >
         <Form.Item
           name="text"
-          label="Text"
-          rules={[{ required: true, message: "Please enter text" }]}
+          label={data[changeValue].message_users_modal.label_1}
+          rules={[
+            {
+              required: true,
+              message: data[changeValue].message_users_modal.requred_1,
+            },
+          ]}
         >
           <CKEditor
             editor={ClassicEditor}
@@ -113,37 +122,45 @@ const SendMessageUserModal = ({
             }}
           />
         </Form.Item>
-        <Form.Item name="photo" label="Photo or video">
+        <Form.Item
+          name="photo"
+          label={data[changeValue].message_users_modal.label_2}
+        >
           <Upload
             fileList={fileList}
             beforeUpload={beforeUpload}
             onChange={handleUploadChange}
             maxCount={1}
           >
-            <Button icon={<UploadOutlined />}>Select Image or Video</Button>
+            <Button icon={<UploadOutlined />}>
+              {data[changeValue].message_users_modal.file_text}
+            </Button>
           </Upload>
         </Form.Item>
 
         {selectedUser?.chat_id ? null : (
           <Form.Item
             name="user_subcribe"
-            label="User Subscription"
+            label={data[changeValue].message_users_modal.label_3}
             rules={[
-              { required: true, message: "Please select a user account" },
+              {
+                required: true,
+                message: data[changeValue].message_users_modal.requred_3,
+              },
             ]}
           >
             <Select
-              placeholder="Please select a user account"
+              placeholder={data[changeValue].message_users_modal.placeholder_3}
               style={{ textTransform: "capitalize" }}
             >
               <Option key="all" value="all">
-                All
+                {data[changeValue].message_users_modal.option_1}
               </Option>
               <Option key="true" value="true">
-                Channel subscribers
+                {data[changeValue].message_users_modal.option_2}
               </Option>
               <Option key="false" value="false">
-                Channel non-subscribers
+                {data[changeValue].message_users_modal.option_3}
               </Option>
             </Select>
           </Form.Item>
@@ -152,17 +169,22 @@ const SendMessageUserModal = ({
         {selectedUser?.chat_id ? null : (
           <Form.Item
             name="source"
-            label="User Source"
-            rules={[{ required: true, message: "Please source" }]}
+            label={data[changeValue].message_users_modal.label_4}
+            rules={[
+              {
+                required: true,
+                message: data[changeValue].message_users_modal.requred_4,
+              },
+            ]}
           >
             <Select
-              placeholder="Please select source"
+              placeholder={data[changeValue].message_users_modal.placeholder_4}
               style={{ textTransform: "capitalize" }}
             >
               <Option key="all" value="all">
-                All
+                {data[changeValue].message_users_modal.option_1}
               </Option>
-              {sourceData.map((item) => (
+              {sourceData?.map((item) => (
                 <Option
                   key={item.source}
                   value={item.source}
@@ -176,7 +198,7 @@ const SendMessageUserModal = ({
         )}
         <Form.Item>
           <Button type="primary" htmlType="submit" block disabled={isLoading}>
-            Send Message
+            {data[changeValue].message_users_modal.button_submit}
           </Button>
         </Form.Item>
       </Form>

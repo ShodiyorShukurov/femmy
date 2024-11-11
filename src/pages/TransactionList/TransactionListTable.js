@@ -1,9 +1,13 @@
 import React from "react";
-import { Row, Col, Card, Button, Space,  Form, message } from "antd";
+import { Row, Col, Card, Button, Space, Form,  Select } from "antd";
 import useTransactionList from "../../hooks/UseTransactionList";
 import Main from "../../components/layout/Main";
 import TransactionData from "./data/TransactionData";
 import MoreInfoModal from "./components/MoreInfoModal";
+import { data } from "../../mock/data";
+import { useMain } from "../../hooks/UseMain";
+
+const { Option } = Select;
 
 function TransactionListTable() {
   const {
@@ -18,22 +22,18 @@ function TransactionListTable() {
     selectedUser,
     setSelectedUser,
     isLoading,
-    fetchTransactionSortData,
+    setMethod,
   } = useTransactionList();
+
+  const {changeValue} = useMain()
 
   const [form] = Form.useForm();
 
-  const handleFetch = (value) => {
-    if (value.month && value.year) {
-      fetchTransactionMonthData(value.year, value.month);
-    } else {
-      message.warning("Please provide both month and year");
+  const handleFetch = (values) => {
+    if (values.month && values.year) {
+      fetchTransactionMonthData(values.year, values.month);
     }
   };
-
-  if (isLoading) {
-    return <Main>Loading...</Main>;
-  }
 
   return (
     <Main>
@@ -43,7 +43,7 @@ function TransactionListTable() {
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title="Transaction List"
+              title={data[changeValue].transactions_info.title}
             >
               <div
                 style={{
@@ -52,125 +52,175 @@ function TransactionListTable() {
                   padding: "20px",
                 }}
               >
-                <Form form={form} layout="inline" onFinish={handleFetch}>
-                  <Form.Item label="Month" name="month">
-                    <select
-                      style={{
-                        width: "100%",
-                        height: "40px",
-                        border: "1px solid #d9d9d9",
-                        padding: "4px 11px",
-                        borderRadius: "6px",
-                        outline: "none",
-                      }}
+                <Form
+                  form={form}
+                  layout="inline"
+                  onValuesChange={(_, values) => handleFetch(values)}
+                >
+                  <Form.Item
+                    label={data[changeValue].transactions_info.label_1}
+                    name="month"
+                  >
+                    <Select
+                      placeholder={
+                        data[changeValue].transactions_info.placeholder_1
+                      }
                     >
-                      <option>Select Month</option>
-                      <option value="01">January</option>
-                      <option value="02">February</option>
-                      <option value="03">March</option>
-                      <option value="04">April</option>
-                      <option value="05">May</option>
-                      <option value="06">June</option>
-                      <option value="07">July</option>
-                      <option value="08">August</option>
-                      <option value="09">September</option>
-                      <option value="10">October</option>
-                      <option value="11">November</option>
-                      <option value="12">December</option>
-                    </select>
+                      <Option key="01" value="01">
+                        {data[changeValue].transactions_info.january}
+                      </Option>
+                      <Option key="02" value="02">
+                        {data[changeValue].transactions_info.february}
+                      </Option>
+                      <Option key="03" value="03">
+                        {data[changeValue].transactions_info.march}
+                      </Option>
+                      <Option key="04" value="04">
+                        {data[changeValue].transactions_info.april}
+                      </Option>
+                      <Option key="05" value="05">
+                        {data[changeValue].transactions_info.may}
+                      </Option>
+                      <Option key="06" value="06">
+                        {data[changeValue].transactions_info.june}
+                      </Option>
+                      <Option key="07" value="07">
+                        {data[changeValue].transactions_info.july}
+                      </Option>
+                      <Option key="08" value="08">
+                        {data[changeValue].transactions_info.august}
+                      </Option>
+                      <Option key="09" value="09">
+                        {data[changeValue].transactions_info.september}
+                      </Option>
+                      <Option key="10" value="10">
+                        {data[changeValue].transactions_info.october}
+                      </Option>
+                      <Option key="11" value="11">
+                        {data[changeValue].transactions_info.november}
+                      </Option>
+                      <Option key="12" value="12">
+                        {data[changeValue].transactions_info.december}
+                      </Option>
+                    </Select>
                   </Form.Item>
 
-                  <Form.Item label="Year" name="year">
-                    <select
-                      style={{
-                        width: "100%",
-                        height: "40px",
-                        border: "1px solid #d9d9d9",
-                        padding: "4px 11px",
-                        borderRadius: "6px",
-                        outline: "none",
-                      }}
+                  <Form.Item
+                    label={data[changeValue].transactions_info.label_2}
+                    name="year"
+                  >
+                    <Select
+                      placeholder={
+                        data[changeValue].transactions_info.placeholder_2
+                      }
                     >
-                      <option>Select Year</option>
-                      <option value="2020">2020</option>
-                      <option value="2021">2021</option>
-                      <option value="2022">2022</option>
-                      <option value="2023">2023</option>
-                      <option value="2024">2024</option>
-                      <option value="2025">2025</option>
-                      <option value="2026">2026</option>
-                      <option value="2027">2027</option>
-                      <option value="2028">2028</option>
-                      <option value="2029">2029</option>
-                      <option value="2030">2030</option>
-                    </select>
-                  </Form.Item>
-
-                  <Form.Item>
-                    <Button type="primary" htmlType="submit">
-                      Search
-                    </Button>
+                      <Option key="2020" value="2020">
+                        2020
+                      </Option>
+                      <Option key="2021" value="2021">
+                        2021
+                      </Option>
+                      <Option key="2022" value="2022">
+                        2022
+                      </Option>
+                      <Option key="2023" value="2023">
+                        2023
+                      </Option>
+                      <Option key="2024" value="2024">
+                        2024
+                      </Option>
+                      <Option key="2025" value="2025">
+                        2025
+                      </Option>
+                      <Option key="2026" value="2026">
+                        2026
+                      </Option>
+                      <Option key="2027" value="2027">
+                        2027
+                      </Option>
+                      <Option key="2028" value="2028">
+                        2028
+                      </Option>
+                      <Option key="2029" value="2029">
+                        2029
+                      </Option>
+                      <Option key="2030" value="2030">
+                        2030
+                      </Option>
+                    </Select>
                   </Form.Item>
                 </Form>
 
-                <div>
-                  <Form.Item label="Method" name="month">
-                    <select
-                      style={{
-                        width: "100%",
-                        height: "40px",
-                        border: "1px solid #d9d9d9",
-                        padding: "4px 11px",
-                        borderRadius: "6px",
-                        outline: "none",
-                      }}
-                      onChange={(evt) =>
-                        fetchTransactionSortData(evt.target.value)
-                      }
-                    >
-                      <option>Select Method</option>
-                      <option value="CARD">CARD</option>
-                      <option value="ADMIN">ADMIN</option>
-                      <option value="CASH">CASH</option>
-                    </select>
-                  </Form.Item>
-                </div>
-              </div>
-
-              {total?.sum ? (
-                <div
-                  style={{
-                    marginBottom: "16px",
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                    color: "#14A44D",
-                    padding: "0 20px",
-                  }}
+                <Form.Item
+                  label={data[changeValue].transactions_info.label_3}
+                  name="method"
                 >
-                  Total Amount: {Number(total?.sum / 100).toFixed(2)}
-                </div>
-              ) : (
-                " "
-              )}
-
-              <div className="table-responsive">
-                <TransactionData
-                  transactionListData={transactionListData}
-                  showUserInfoModal={showUserInfoModal}
-                />
+                  <Select
+                    onChange={(value) => setMethod(value)}
+                    placeholder={
+                      data[changeValue].transactions_info.placeholder_3
+                    }
+                  >
+                    <Option value="CARD" key="CARD">
+                      CARD
+                    </Option>
+                    <Option value="ADMIN" key="ADMIN">
+                      ADMIN
+                    </Option>
+                    <Option value="CASH" key="CASH">
+                      CASH
+                    </Option>
+                  </Select>
+                </Form.Item>
               </div>
-              <Space style={{ padding: "10px" }}>
-                {next > 1 ? (
-                  <Button onClick={() => setNext(next - 1)}>Previous</Button>
-                ) : (
-                  ""
-                )}
-                {transactionListData?.length >= 50 ? (
-                  <Button onClick={() => setNext(next + 1)}>Next</Button>
-                ) : (
-                  <Button disabled>Next</Button>
-                )}
-              </Space>
+
+              {isLoading ? (
+                "Loading..."
+              ) : (
+                <>
+                  {total?.sum ? (
+                    <div
+                      style={{
+                        marginBottom: "16px",
+                        fontSize: "18px",
+                        fontWeight: "bold",
+                        color: "#14A44D",
+                        padding: "0 20px",
+                      }}
+                    >
+                      {data[changeValue].transactions_info.total_amount}:{" "}
+                      {Number(total?.sum / 100).toFixed(2)}
+                    </div>
+                  ) : (
+                    " "
+                  )}
+
+                  <div className="table-responsive">
+                    <TransactionData
+                      transactionListData={transactionListData}
+                      showUserInfoModal={showUserInfoModal}
+                    />
+                  </div>
+                  <Space style={{ padding: "10px" }}>
+                    {next > 1 ? (
+                      <Button onClick={() => setNext(next - 1)}>
+                        {data[changeValue].previous_button}
+                      </Button>
+                    ) : (
+                      ""
+                    )}
+                    {transactionListData?.length >= 50 ? (
+                      <Button onClick={() => setNext(next + 1)}>
+                        {data[changeValue].next_button}
+                      </Button>
+                    ) : (
+                      <Button disabled>
+                        {data[changeValue].next_button}
+                      </Button>
+                    )}
+                  </Space>
+                </>
+              )}
             </Card>
           </Col>
         </Row>

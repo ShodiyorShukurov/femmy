@@ -5,11 +5,8 @@ import LineChart from "../../components/chart/LineChart";
 import Main from "../../components/layout/Main";
 import useDashboard from "../../hooks/UseDashboard";
 import EChartUser from "../../components/chart/EChartUser";
-
-function Home() {
-  const { Title } = Typography;
-
-  const { userStatistics, totalAmount, isLoading } = useDashboard();
+import { useMain } from "../../hooks/UseMain";
+import { data } from "../../mock/data";
 
   const dollor = [
     <svg
@@ -65,39 +62,46 @@ function Home() {
     </svg>,
   ];
 
+function Home() {
+  const { Title } = Typography;
+
+  const { userStatistics, totalAmount, isLoading } = useDashboard();
+  const { sidenavColor, changeValue } = useMain();
+
+
+
   const formatAmount = (amount) => {
-    const sum = amount / 100
+    const sum = amount / 100;
     if (sum >= 1000000) {
-      return (sum / 1000000).toFixed(1) + "m"; 
-    } else if (sum >= 100000) {
-      return (sum / 100000).toFixed(1) + "k"; 
+      return (sum / 1000000).toFixed(1) + "m";
+    } else if (sum >= 1000) {
+      return (sum / 1000).toFixed(1) + "k";
     } else {
-      return sum + " Sum"; 
+      return sum + " Sum";
     }
   };
 
-
   const count = [
     {
-      today: "Channel Members",
+      today: data[changeValue].dashboard.channel_members,
       title: userStatistics?.bot_members,
       icon: profile,
       bnb: "bnb2",
     },
     {
-      today: "Payed Users",
+      today: data[changeValue].dashboard.payed_users,
       title: userStatistics?.payed_user,
       icon: profile,
       bnb: "bnb2",
     },
     {
-      today: "Bot Users",
+      today: data[changeValue].dashboard.bot_users,
       title: userStatistics?.all_user,
       icon: profile,
       bnb: "bnb2",
     },
     {
-      today: "Sales",
+      today: data[changeValue].dashboard.sales,
       title: formatAmount(totalAmount?.sum),
       // persent: "+30%",
       icon: dollor,
@@ -119,8 +123,8 @@ function Home() {
     // },
   ];
 
-  if(isLoading){
-    return <Main>Loading...</Main>
+  if (isLoading) {
+    return <Main>Loading...</Main>;
   }
 
   return (
@@ -147,7 +151,14 @@ function Home() {
                       </Title>
                     </Col>
                     <Col xs={6}>
-                      <div className="icon-box">{c.icon}</div>
+                      <div
+                        className="icon-box"
+                        style={{
+                          background: sidenavColor,
+                        }}
+                      >
+                        {c.icon}
+                      </div>
                     </Col>
                   </Row>
                 </div>

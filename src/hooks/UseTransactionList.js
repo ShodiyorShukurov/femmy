@@ -9,6 +9,7 @@ const useTransactionList = () => {
   const [isModalUserInfo, setIsModalUserInfo] = React.useState(false);
   const [selectedUser, setSelectedUser] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [method, setMethod] = React.useState(""); // New state for method
 
   const showUserInfoModal = (record) => {
     setSelectedUser(record);
@@ -51,13 +52,12 @@ const useTransactionList = () => {
     }
   };
 
-  const fetchTransactionSortData = async (method) => {
+  const fetchTransactionSortData = async () => {
     if (!method) return;
-    console.log(method);
     setIsLoading(true);
     try {
       const res = await Api.get(
-        `transactions/list?limit=50&page=${next}&method=${method}`
+        `/transactions/list?limit=50&page=${next}&method=${method}`
       );
       setTransactionListData(res.data.data);
       setTotal(res.data.total);
@@ -76,7 +76,7 @@ const useTransactionList = () => {
     fetchTransactionData();
     fetchTransactionMonthData();
     fetchTransactionSortData();
-  }, [next, addData]);
+  }, [next, addData, method]); // Include method in dependencies
 
   return {
     transactionListData,
@@ -91,7 +91,8 @@ const useTransactionList = () => {
     selectedUser,
     setSelectedUser,
     isLoading,
-    fetchTransactionSortData,
+    setMethod, 
+    method
   };
 };
 

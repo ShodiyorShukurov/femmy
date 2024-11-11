@@ -1,6 +1,11 @@
-import { Button, Space, Table } from "antd";
+import { Button,  Table } from "antd";
+import { data } from "../../../mock/data";
+import { useMain } from "../../../hooks/UseMain";
 
 const TrailData = ({ trialListData, showModal, openDeleteModal }) => {
+
+  const {changeValue} = useMain()
+
   const dataIndex =
     trialListData?.length > 0
       ? trialListData.map((trail, index) => ({
@@ -15,13 +20,13 @@ const TrailData = ({ trialListData, showModal, openDeleteModal }) => {
 
   const columns = [
     {
-      title: "№",
+      title: data[changeValue].trial_list.id,
       dataIndex: "id",
       key: "id",
       align: "center",
     },
     {
-      title: "Source",
+      title: data[changeValue].trial_list.source,
       dataIndex: "source",
       key: "source",
       align: "center",
@@ -30,13 +35,15 @@ const TrailData = ({ trialListData, showModal, openDeleteModal }) => {
           {source !== null ? (
             source
           ) : (
-            <span style={{ color: "red " }}>Not Found</span>
+            <span style={{ color: "red " }}>
+              {data[changeValue].trial_list.source_error}
+            </span>
           )}
         </span>
       ),
     },
     {
-      title: "Day",
+      title: data[changeValue].trial_list.day,
       dataIndex: "day",
       key: "day",
       align: "center",
@@ -45,13 +52,15 @@ const TrailData = ({ trialListData, showModal, openDeleteModal }) => {
           {day !== null ? (
             day
           ) : (
-            <span style={{ color: "red " }}>Not Found</span>
+            <span style={{ color: "red " }}>
+              {data[changeValue].trial_list.day_error}
+            </span>
           )}
         </span>
       ),
     },
     {
-      title: "Action",
+      title: data[changeValue].trial_list.actions,
       dataIndex: "action",
       key: "action",
       align: "center",
@@ -78,7 +87,6 @@ const TrailData = ({ trialListData, showModal, openDeleteModal }) => {
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
-              class="size-4"
             >
               <path
                 fillRule="evenodd"

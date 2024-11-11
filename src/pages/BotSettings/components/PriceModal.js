@@ -1,6 +1,7 @@
 import { Button, Form, InputNumber, message, Modal } from "antd";
 import Api from "../../../api";
-import React from "react";
+import React from "react";import { data } from "../../../mock/data";
+import { useMain } from "../../../hooks/UseMain";
 
 const PriceModal = ({
   setEditData,
@@ -8,6 +9,8 @@ const PriceModal = ({
   selectItem,
   handleCancel,
 }) => {
+  
+  const { changeValue } = useMain();
   const [form] = Form.useForm();
 
   React.useEffect(() => {
@@ -27,12 +30,12 @@ const PriceModal = ({
 
     try {
       await Api.put("/price/edit", data);
-      message.success("Price edit successfully!");
+      message.success(data[changeValue].bot_settings.price_success);
       handleCancel();
       form.resetFields();
     } catch (error) {
       console.error(error);
-      message.error("Failed to edit price.");
+      message.error(data[changeValue].bot_settings.price_error);
     } finally {
       setEditData(false);
     }
@@ -40,7 +43,7 @@ const PriceModal = ({
 
   return (
     <Modal
-      title="Edit Price"
+      title={data[changeValue].bot_settings.price_title}
       open={isModalVisible}
       onCancel={handleCancel}
       footer={null}
@@ -48,15 +51,20 @@ const PriceModal = ({
       <Form form={form} layout="vertical" onFinish={handleEditPrice}>
         <Form.Item
           name="price"
-          label="Price"
-          rules={[{ required: true, message: "Please Price!" }]}
+          label={data[changeValue].bot_settings.price_label}
+          rules={[
+            {
+              required: true,
+              message: data[changeValue].bot_settings.price_required,
+            },
+          ]}
         >
           <InputNumber style={{ width: "100%" }} min={1} />
         </Form.Item>
 
         <Form.Item>
           <Button type="primary" htmlType="submit" block>
-            Edit Price
+            {data[changeValue].bot_settings.price_button}
           </Button>
         </Form.Item>
       </Form>

@@ -6,6 +6,8 @@ import SendMessageUserModal from "./components/SendMessageUserModal";
 import UserData from "./data/UserData";
 import AddTransactionModal from "./components/AddTransactionModal";
 import MoreInfoModal from "./components/MoreInfoModal";
+import { data } from "../../mock/data";
+import { useMain } from "../../hooks/UseMain";
 
 function UsersListTable() {
   const {
@@ -28,6 +30,8 @@ function UsersListTable() {
     isLoading,
   } = useUserList();
 
+  const { changeValue } = useMain();
+
   const [phoneNumber, setPhoneNumber] = React.useState();
 
   const onSearch = () => {
@@ -45,7 +49,6 @@ function UsersListTable() {
     return <Main>Loading...</Main>;
   }
 
-  
   return (
     <Main>
       <div className="tabled">
@@ -54,7 +57,7 @@ function UsersListTable() {
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title="User List"
+              title={data[changeValue].users_list.title}
             >
               <div
                 style={{
@@ -66,7 +69,7 @@ function UsersListTable() {
               >
                 <div>
                   <Input
-                    placeholder="Phone Number"
+                    placeholder={data[changeValue].users_list.input_placeholder}
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     onPressEnter={onSearch}
@@ -82,12 +85,12 @@ function UsersListTable() {
                     type="primary"
                     style={{ marginLeft: "10px" }}
                   >
-                    Search
+                    {data[changeValue].users_list.form_button_text}
                   </Button>
                 </div>
 
                 <Button type="primary" onClick={() => openMessageModal()}>
-                  Send message to users
+                  {data[changeValue].users_list.button_text}
                 </Button>
               </div>
 
@@ -102,17 +105,17 @@ function UsersListTable() {
               <Space style={{ padding: "10px" }}>
                 {next > 1 && (
                   <Button className="me-4" onClick={() => setNext(next - 1)}>
-                    Previous
+                    {data[changeValue].previous_button}
                   </Button>
                 )}
 
                 {userListData?.length >= 50 ? (
                   <Button color="dark" onClick={() => setNext(next + 1)}>
-                    Next
+                    {data[changeValue].next_button}
                   </Button>
                 ) : (
                   <Button variant="text" color="dark" disabled>
-                    Next
+                    {data[changeValue].next_button}
                   </Button>
                 )}
               </Space>

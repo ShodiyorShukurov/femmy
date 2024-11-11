@@ -1,23 +1,25 @@
 import ReactApexChart from "react-apexcharts";
 import { Typography } from "antd";
 import useDashboard from "../../hooks/UseDashboard";
-// import eChart from "./configs/eChart";
+import { data } from "../../mock/data";
+import { useMain } from "../../hooks/UseMain";
 
 function EChartUser() {
   const { Title } = Typography;
   const { userStatisticsMonth, monthStatistics } = useDashboard();
+  const {changeValue} = useMain()
 
   const eChart = {
     series: [
       {
-        name: "Users",
+        name: data[changeValue].dashboard.users_statistics_month,
         data: userStatisticsMonth
           ? userStatisticsMonth.map((total) => Number(total.user_count))
           : [],
         color: "#fff",
       },
       {
-        name: "Payed users",
+        name: data[changeValue].dashboard.payed_users_statistics_month,
         data: monthStatistics
           ? monthStatistics.map((total) => Number(total.user_count))
           : [],
@@ -120,7 +122,7 @@ function EChartUser() {
 
   return (
     <>
-      <Title level={5}>Users statistics</Title>
+      <Title level={5}>{ data[changeValue].dashboard.users_statistics}</Title>
 
       <div id="chart">
         <ReactApexChart

@@ -41,7 +41,7 @@ const useUserList = () => {
   };
 
   const fetchUserListData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const res = await Api.get(`/users/list?limit=50&page=${next}`);
       setUserListData(res.data.data);
@@ -56,10 +56,11 @@ const useUserList = () => {
   };
 
   const fetchUserPhoneNumberData = async (phoneNumber) => {
+    if (!phoneNumber) return;
     setIsLoading(true);
     try {
       const res = await Api.get(
-        `/users/list?limit=50&page=${next}&phone=${phoneNumber}`
+        `/users/list?limit=1&page=${next}&phone=${phoneNumber}`
       );
       setUserListData(res.data.data);
     } catch (error) {
@@ -67,7 +68,25 @@ const useUserList = () => {
       if (error.message === "Request failed with status code 404") {
         setUserListData([]);
       }
-    } finally{
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const fetchSortData = async (sortValue) => {
+    if (!sortValue) return;
+    setIsLoading(true);
+    try {
+      const res = await Api.get(
+        `/users/list?limit=50&page=${next}&sort=${sortValue}`
+      );
+      setUserListData(res.data.data);
+    } catch (error) {
+      console.error(error);
+      if (error.message === "Request failed with status code 404") {
+        setUserListData([]);
+      }
+    } finally {
       setIsLoading(false);
     }
   };
@@ -86,7 +105,9 @@ const useUserList = () => {
 
   React.useEffect(() => {
     fetchUserListData();
-    fetchSourceData()
+    fetchSourceData();
+    fetchSortData();
+    fetchUserPhoneNumberData();
   }, [next]);
 
   return {
@@ -106,7 +127,8 @@ const useUserList = () => {
     isModalUserInfo,
     setIsModalUserInfo,
     sourceData,
-    isLoading
+    isLoading,
+    fetchSortData,
   };
 };
 

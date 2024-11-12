@@ -73,7 +73,7 @@ function Home() {
   const formatAmount = (amount) => {
     const sum = amount / 100;
     if (sum >= 1000000) {
-      return (sum / 1000000).toFixed(1) + "m";
+      return (sum / 1000000).toFixed(3) + "m";
     } else if (sum >= 1000) {
       return (sum / 1000).toFixed(1) + "k";
     } else {
@@ -101,30 +101,18 @@ function Home() {
       bnb: "bnb2",
     },
     {
-      today: data[changeValue].dashboard.sales,
+      today:
+        data[changeValue].dashboard.sales +
+        ` (${data[changeValue].sum})`,
       title: formatAmount(totalAmount?.sum),
       // persent: "+30%",
       icon: dollor,
       bnb: "bnb2",
     },
-    // {
-    //   today: "New Clients",
-    //   title: "+1,200",
-    //   persent: "-20%",
-    //   icon: heart,
-    //   bnb: "redtext",
-    // },
-    // {
-    //   today: "New Orders",
-    //   title: "$13,200",
-    //   persent: "10%",
-    //   icon: cart,
-    //   bnb: "bnb2",
-    // },
   ];
 
   if (isLoading) {
-    return <Main>Loading...</Main>;
+    return <Main>{data[changeValue].loading}</Main>;
   }
 
   return (

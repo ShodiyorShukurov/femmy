@@ -47,101 +47,105 @@ const NewsModal = ({
       }))
     : [];
 
-   const userColumns = [
-     {
-       title: data[changeValue].user_info.id,
-       dataIndex: "id",
-       key: "id",
-       align: "center",
-     },
-     {
-       title: data[changeValue].user_info.name,
-       dataIndex: "name",
-       key: "name",
-       align: "center",
-     },
-     {
-       title: data[changeValue].user_info.user_id,
-       dataIndex: "user_id",
-       key: "user_id",
-       align: "center",
-     },
-     {
-       title: data[changeValue].user_info.phone_number,
-       dataIndex: "phone_number",
-       key: "phone_number",
-       align: "center",
-       render: (phone_number) =>
-         phone_number ? (
-           <a href={"tel:" + phone_number}>{phone_number}</a>
-         ) : (
-           data[changeValue].user_info.phone_number_error
-         ),
-     },
-     {
-       title: data[changeValue].user_info.subscribe,
-       dataIndex: "subscribe",
-       key: "subscribe",
-       align: "center",
-       render: (subscribe) => (
-         <span>
-           {subscribe ? (
-             <span style={{ color: "green" }}>True</span>
-           ) : (
-             <span style={{ color: "red" }}>False</span>
-           )}
-         </span>
-       ),
-     },
+const userColumns = [
+  {
+    title: data[changeValue].user_info.id,
+    dataIndex: "id",
+    key: "id",
+    align: "center",
+  },
+  {
+    title: data[changeValue].user_info.name,
+    dataIndex: "name",
+    key: "name",
+    align: "center",
+  },
+  {
+    title: data[changeValue].user_info.user_id,
+    dataIndex: "user_id",
+    key: "user_id",
+    align: "center",
+  },
+  {
+    title: data[changeValue].user_info.phone_number,
+    dataIndex: "phone_number",
+    key: "phone_number",
+    align: "center",
+    render: (phone_number) =>
+      phone_number ? (
+        <a href={"tel:" + phone_number}>{phone_number}</a>
+      ) : (
+        data[changeValue].user_info.phone_number_error
+      ),
+  },
+  {
+    title: data[changeValue].user_info.subscribe,
+    dataIndex: "subscribe",
+    key: "subscribe",
+    align: "center",
+    render: (subscribe) => (
+      <span>
+        {subscribe ? (
+          <span style={{ color: "green" }}>True</span>
+        ) : (
+          <span style={{ color: "red" }}>False</span>
+        )}
+      </span>
+    ),
+  },
 
-     {
-       title: data[changeValue].user_info.duration,
-       dataIndex: "duration",
-       key: "duration",
-       align: "center",
-       render: (duration) => (
-         <span>
-           {duration ? (
-             <span style={{ color: "green" }}>True</span>
-           ) : (
-             <span style={{ color: "red" }}>False</span>
-           )}
-         </span>
-       ),
-     },
+  {
+    title: data[changeValue].user_info.duration,
+    dataIndex: "duration",
+    key: "duration",
+    align: "center",
+    render: (duration) => (
+      <span>
+        {duration ? (
+          <span style={{ color: "green" }}>True</span>
+        ) : (
+          <span style={{ color: "red" }}>False</span>
+        )}
+      </span>
+    ),
+  },
 
-     {
-       title: data[changeValue].user_info.expired,
-       dataIndex: "expired",
-       key: "expired",
-       align: "center",
-       render: (expired) => (
-         <span>
-           {expired !== null ? (
-             expired
-           ) : (
-             <span style={{ color: "red " }}>Not Found</span>
-           )}
-         </span>
-       ),
-     },
+  {
+    title: data[changeValue].user_info.expired,
+    dataIndex: "expired",
+    key: "expired",
+    align: "center",
+    render: (expired) => (
+      <span>
+        {expired !== null ? (
+          expired
+        ) : (
+          <span style={{ color: "red " }}>
+            {data[changeValue].user_info.expired_error}
+          </span>
+        )}
+      </span>
+    ),
+  },
 
-     {
-       title: "Source",
-       dataIndex: data[changeValue].user_info.source,
-       key: "source",
-       align: "center",
-       render: (center) => (
-         <span>
-           {center !== null ? (
-             center
-           ) : (
-             <span style={{ color: "red " }}>Not Found</span>
-           )}
-         </span>
-       ),
-     },
-   ];
+  {
+    title: data[changeValue].user_info.source,
+    dataIndex: "source",
+    key: "source",
+    align: "center",
+    render: (source) => (
+      <span style={{ textTransform: "capitalize" }}>
+        {source !== null ? (
+          source
+        ) : (
+          <span style={{ color: "red " }}>
+            {data[changeValue].user_info.source_error}
+          </span>
+        )}
+      </span>
+    ),
+  },
+];
 
   useEffect(() => {
     fetchNewsData();

@@ -29,7 +29,8 @@ const TransactionData = ({ transactionListData, showUserInfoModal }) => {
       dataIndex: "amount",
       key: "amount",
       align: "center",
-      render: (amount) => `${Number(amount / 100).toFixed(2)} sum`,
+      render: (amount) =>
+        `${Number(amount / 100).toFixed(2)} ${data[changeValue].sum}`,
     },
     {
       title: data[changeValue].transactions_info.method,

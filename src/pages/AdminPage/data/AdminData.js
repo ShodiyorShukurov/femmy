@@ -2,18 +2,16 @@ import { Button, Table } from "antd";
 import { data } from "../../../mock/data";
 import { useMain } from "../../../hooks/UseMain";
 
-const TrailData = ({ trialListData, showModal, openDeleteModal }) => {
+const AdminData = ({ adminData, openMessageModal, openDeleteModal }) => {
   const { changeValue } = useMain();
 
   const dataIndex =
-    trialListData?.length > 0
-      ? trialListData.map((trail, index) => ({
+    adminData?.length > 0
+      ? adminData.map((admin, index) => ({
           id: index + 1,
-          source: trail.source,
-          day: trail.day,
-          create_at: trail.create_at?.slice(0, 10),
-          trail: trail,
-          trailId: trail.id,
+          admin_email: admin.admin_email,
+          admin: admin,
+          adminId: admin.admin_id,
         }))
       : [];
 
@@ -25,38 +23,10 @@ const TrailData = ({ trialListData, showModal, openDeleteModal }) => {
       align: "center",
     },
     {
-      title: data[changeValue].trial_list.source,
-      dataIndex: "source",
-      key: "source",
+      title: "Admin name",
+      dataIndex: "admin_email",
+      key: "admin_email",
       align: "center",
-      render: (source) => (
-        <span style={{ textTransform: "capitalize" }}>
-          {source !== null ? (
-            source
-          ) : (
-            <span style={{ color: "red " }}>
-              {data[changeValue].trial_list.source_error}
-            </span>
-          )}
-        </span>
-      ),
-    },
-    {
-      title: data[changeValue].trial_list.day,
-      dataIndex: "day",
-      key: "day",
-      align: "center",
-      render: (day) => (
-        <span>
-          {day !== null ? (
-            day
-          ) : (
-            <span style={{ color: "red " }}>
-              {data[changeValue].trial_list.day_error}
-            </span>
-          )}
-        </span>
-      ),
     },
     {
       title: data[changeValue].trial_list.actions,
@@ -65,7 +35,7 @@ const TrailData = ({ trialListData, showModal, openDeleteModal }) => {
       align: "center",
       render: (_, record) => (
         <div>
-          <Button type="link" onClick={() => showModal(record.trail)}>
+          <Button type="link" onClick={() => openMessageModal(record.admin)}>
             <svg
               width={16}
               xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +50,7 @@ const TrailData = ({ trialListData, showModal, openDeleteModal }) => {
             </svg>
           </Button>
 
-          <Button type="link" onClick={() => openDeleteModal(record.trailId)}>
+          <Button type="link" onClick={() => openDeleteModal(record.adminId)}>
             <svg
               width={16}
               xmlns="http://www.w3.org/2000/svg"
@@ -109,4 +79,4 @@ const TrailData = ({ trialListData, showModal, openDeleteModal }) => {
   );
 };
 
-export default TrailData;
+export default AdminData;

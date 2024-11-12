@@ -1,14 +1,10 @@
+import { Form, message } from "antd";
 import React from "react";
 import Api from "../api";
-import { Form, message } from "antd";
-import { data as changeData } from "../mock/data";
-import { useMain } from "./UseMain";
 
-const useTrial = () => {
-
-  const {changeValue} =useMain();
-
-  const [trialListData, setTrialListData] = React.useState([]);
+const useAdmin = () => {
+  const [adminData, setAdminData] = React.useState([]);
+  const [next, setNext] = React.useState(1);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [isModalDelete, setIsModalDelete] = React.useState(false);
   const [id, setId] = React.useState();
@@ -16,29 +12,27 @@ const useTrial = () => {
   const [selectItem, setSelectItem] = React.useState({});
   const [form] = Form.useForm();
 
-  const showModal = (item) => {
-    setSelectItem(item);
+  const openMessageModal = (id) => {
+    setSelectItem(id);
     setIsModalVisible(true);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
-    form.resetFields();
   };
 
-  const fetchTrailData = async () => {
+  const fetchAdminData = async () => {
     setIsLoading(true);
-
     try {
-      const res = await Api.get(`/trial/list`);
-      setTrialListData(res.data.data);
+      const res = await Api.get(`/admin/list?limit=50&page=${next}`);
+      setAdminData(res.data.data);
     } catch (error) {
       console.log(error);
       if (error.message === "Request failed with status code 404") {
-        setTrialListData([]);
+        setAdminData([]);
       }
-    }finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -58,29 +52,31 @@ const useTrial = () => {
     };
 
     try {
-      const res = await Api.delete(`/trial/delete`, { data });
+      const res = await Api.delete(`/admin/delete`, { data });
       if (res) {
-        message.success(changeData[changeValue].trial_list.success_delete);
+        message.success("Successfully deleted");
       }
       closeDeleteModal();
     } catch (error) {
-      closeDeleteModal()
+      closeDeleteModal();
       message.error(error);
       console.log(error);
-    }finally{
-      fetchTrailData();
+    } finally {
+      fetchAdminData();
     }
   };
 
   React.useEffect(() => {
-    fetchTrailData();
+    fetchAdminData();
   }, []);
 
   return {
-    trialListData,
+    adminData,
+    setNext,
+    next,
     isModalVisible,
     selectItem,
-    showModal,
+    openMessageModal,
     handleCancel,
     isLoading,
     setIsLoading,
@@ -88,8 +84,8 @@ const useTrial = () => {
     closeDeleteModal,
     handleDelete,
     isModalDelete,
-    fetchTrailData,
+    fetchAdminData,
   };
 };
 
-export default useTrial;
+export default useAdmin;

@@ -12,6 +12,8 @@ import TransactionListTable from "./pages/TransactionList/TransactionListTable";
 import BotSettings from "./pages/BotSettings/BotSettings";
 import NewsList from "./pages/News/NewsList";
 import TrialList from "./pages/Trial/TrialList";
+import Admin from "./pages/AdminPage/Admin";
+import { ADMIN_ROLE } from "./utils/constants";
 
 function App() {
   return (
@@ -31,6 +33,11 @@ function App() {
           <Route path="bot-settings" element={<BotSettings />} />
           <Route path="news-list" element={<NewsList />} />
           <Route path="trial-list" element={<TrialList />} />
+          {localStorage.getItem(ADMIN_ROLE) === "main_admin" ? (
+            <Route path="admin-list" element={<Admin />} />
+          ) : (
+            <Route path="admin-list" element={<Navigate to="/dashboard" />} />
+          )}
         </Route>
       </Routes>
     </div>

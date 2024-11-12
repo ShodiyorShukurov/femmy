@@ -103,23 +103,27 @@ const MoreInfoModal = ({
           {expired !== null ? (
             expired
           ) : (
-            <span style={{ color: "red " }}>Not Found</span>
+            <span style={{ color: "red " }}>
+              {data[changeValue].user_info.expired_error}
+            </span>
           )}
         </span>
       ),
     },
 
     {
-      title: "Source",
-      dataIndex: data[changeValue].user_info.source,
+      title: data[changeValue].user_info.source,
+      dataIndex: "source",
       key: "source",
       align: "center",
-      render: (center) => (
-        <span>
-          {center !== null ? (
-            center
+      render: (source) => (
+        <span style={{ textTransform: "capitalize" }}>
+          {source !== null ? (
+            source
           ) : (
-            <span style={{ color: "red " }}>Not Found</span>
+            <span style={{ color: "red " }}>
+              {data[changeValue].user_info.source_error}
+            </span>
           )}
         </span>
       ),
@@ -189,7 +193,8 @@ const MoreInfoModal = ({
       dataIndex: "amount",
       key: "amount",
       align: "center",
-      render: (amount) => `${Number(amount / 100).toFixed(2)}`,
+      render: (amount) =>
+        `${Number(amount / 100).toFixed(2)} ${data[changeValue].sum}`,
     },
     {
       title: data[changeValue].transaction_info.method,
@@ -271,7 +276,7 @@ const MoreInfoModal = ({
         setUserData([]);
       }}
       footer={null}
-      width={1000}
+      width={1200}
     >
       <div className="tabled">
         <Row gutter={[24, 0]}>

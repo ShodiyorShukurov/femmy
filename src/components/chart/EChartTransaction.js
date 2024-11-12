@@ -75,9 +75,9 @@ function EChartTransaction() {
           formatter: function (val, { dataPointIndex }) {
             const monthData = monthStatistics[dataPointIndex];
             return `
-              ${
-                data[changeValue].dashboard.total_transactions_month
-              }: ${val} so'm<br/>
+              ${data[changeValue].dashboard.total_transactions_month}: ${val} ${
+              data[changeValue].sum
+            } <br/>
                ${
                  data[changeValue].dashboard.total_transactions_month_percentage
                }: ${

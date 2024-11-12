@@ -23,7 +23,7 @@ const NewsList = () => {
   const {changeValue} = useMain()
 
   if (isLoading) {
-    return <Main>Loading...</Main>;
+    return <Main>{data[changeValue].loading}</Main>;
   }
 
   return (

@@ -8,7 +8,7 @@ import { useMain } from "../../hooks/UseMain";
 function LineChart() {
   const { Title, Paragraph } = Typography;
   const { userStatisticsSource } = useDashboard();
-  const {changeValue} = useMain();
+  const { changeValue } = useMain();
 
   const months = Array.from({ length: 12 }, (_, i) => i + 1);
 
@@ -40,7 +40,7 @@ function LineChart() {
   const series = Object.keys(dataBySource).map((source, index) => ({
     name: source,
     data: dataBySource[source],
-    color: colors[index % colors.length], 
+    color: colors[index % colors.length],
   }));
 
   const lineChart = {
@@ -54,7 +54,7 @@ function LineChart() {
           show: false,
         },
       },
-      colors: colors, 
+      colors: colors,
       legend: {
         show: true,
       },
@@ -107,8 +107,14 @@ function LineChart() {
         <div className="sales">
           <ul>
             {Object.keys(dataBySource).map((source, index) => (
-              <li key={source} style={{ color: colors[index % colors.length] }}>
-                <MinusOutlined /> {source}
+              <li
+                key={source}
+                style={{
+                  color: colors[index % colors.length],
+                  textTransform: "capitalize",
+                }}
+              >
+                {source}
               </li>
             ))}
           </ul>

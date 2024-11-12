@@ -2,13 +2,12 @@ import { Form, Input, Button, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Api from "../../api";
-import { API_TOKEN } from "../../utils/constants";
+import { ADMIN_ROLE, API_TOKEN } from "../../utils/constants";
 import { data } from "../../mock/data";
 import { useMain } from "../../hooks/UseMain";
 
 const LoginPage = () => {
-
-  const {changeValue} =useMain();
+  const { changeValue } = useMain();
 
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -29,6 +28,7 @@ const LoginPage = () => {
         });
       } else if (res.data.token) {
         localStorage.setItem(API_TOKEN, res.data.token);
+        localStorage.setItem(ADMIN_ROLE, res.data.data.admin_role);
         navigate("/dashboard");
       }
       setLoading(false);
@@ -81,7 +81,7 @@ const LoginPage = () => {
           </Form.Item>
 
           <Form.Item
-            label={data.login.label_2}
+            label={data[changeValue].login.label_2}
             name="admin_password"
             rules={[
               {

@@ -175,7 +175,7 @@ function TransactionListTable() {
               </div>
 
               {isLoading ? (
-                "Loading..."
+                data[changeValue].loading
               ) : (
                 <>
                   {total?.sum ? (

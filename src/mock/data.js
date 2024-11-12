@@ -12,7 +12,7 @@ const uzb = {
     button_text: "Login",
     button_loading_text: "Logging in...",
     error_text: "Login yoki parol noto'g'ri",
-    message_error: "Error"
+    message_error: "Error",
   },
 
   header: {
@@ -34,6 +34,7 @@ const uzb = {
     path_4: "Bot Settings",
     path_5: "News List",
     path_6: "Trial List",
+    path_7: "Admin List",
   },
 
   dashboard: {
@@ -54,6 +55,7 @@ const uzb = {
   users_list: {
     title: "Users List",
     input_placeholder: "Phone Number",
+    must_number: "Must enter a phone number!",
     form_button_text: "Search",
     button_text: "Send message to users",
     id: "№",
@@ -64,6 +66,11 @@ const uzb = {
     expired: "Expired",
     source: "Source",
     actions: "Actions",
+    option_placeholder: "Select sort user",
+    option_1: " Channel users",
+    option_2: "Unpaid users or unsubscribe",
+    option_3: "Har oy pul yechiladigan",
+    option_4: "To'xtatilgan",
   },
 
   message_users_modal: {
@@ -97,7 +104,9 @@ const uzb = {
     subscribe: "Subscribe",
     duration: "Duration",
     expired: "Expired",
+    expired_error: "Expired",
     source: "Source",
+    source_error: "Not available",
   },
 
   transaction_info: {
@@ -111,7 +120,7 @@ const uzb = {
     success_trans_id_error: "Not available",
     ofd_url: "Check ",
     ofd_url_success: "See check",
-    ofd_url_error: "Not Found",
+    ofd_url_error: "Not available",
     method: "Method",
     create_at: "Create",
   },
@@ -192,7 +201,7 @@ const uzb = {
     source_error: "Not Available",
     day: "Day",
     day_error: "Not Available",
-    actions: "Action",
+    actions: "Actions",
     message_success: "Add successfully!",
     message_edit_success: "Edit successfully!",
     message_error: "Failed",
@@ -207,10 +216,30 @@ const uzb = {
     delete_button_text1: "Delete",
     delete_button_text2: "Cancel",
     delete_text: "Delete",
+    success_delete: "Delete successfully!",
+    uniq_data: "Bunaqa ijtimoiy tarmoq oldin qo'shilgan",
   },
 
+  admin: {
+    title: "Admin List",
+    add_button: "Add Admin",
+    message_edit_success: "Edit successfully",
+    message_success: "Add successfully",
+    admin_delete_text: "Delete successfully",
+    error_message: "Failed",
+    admin_edit_text: "Edit",
+    admin_add_text: "Add",
+    label_1: "Admin Name",
+    requred_1: "Please Admin Name",
+    label_2: "Admin Password",
+    requred_2: "Please Admin Password",
+    button_text: "Submit",
+  },
+
+  loading: "Loading...",
   next_button: "Next",
   previous_button: "Previous",
+  sum: "Sum",
 };
 
 export const data = { uzb };

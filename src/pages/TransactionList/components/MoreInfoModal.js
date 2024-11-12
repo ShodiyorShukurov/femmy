@@ -61,7 +61,8 @@ const MoreInfoModal = ({
       dataIndex: "amount",
       key: "amount",
       align: "center",
-      render: (amount) => `${Number(amount / 100).toFixed(2)}`,
+      render: (amount) =>
+        `${Number(amount / 100).toFixed(2)} ${data[changeValue].sum}`,
     },
     {
       title: data[changeValue].transaction_info.method,

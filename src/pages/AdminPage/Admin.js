@@ -1,28 +1,30 @@
 import React from "react";
 import Main from "../../components/layout/Main";
-import { Button, Card, Col, Row } from "antd";
-import TrialData from "./data/TrialData";
-import useTrial from "../../hooks/UseTrial";
-import TrialModal from "./components/TrialModal";
+import { Button, Card, Col, Row, Space } from "antd";
 import DeleteModal from "./components/DeleteModal";
 import { data } from "../../mock/data";
 import { useMain } from "../../hooks/UseMain";
+import AdminData from "./data/AdminData";
+import AdminModal from "./components/AdminModal";
+import useAdmin from "../../hooks/UseAdmin";
 
-const TrialList = () => {
+const Admin = () => {
   const {
-    trialListData,
+    adminData,
+    setNext,
+    next,
     isModalVisible,
     selectItem,
-    showModal,
+    openMessageModal,
     handleCancel,
+    isLoading,
     setIsLoading,
     openDeleteModal,
     closeDeleteModal,
     handleDelete,
     isModalDelete,
-    isLoading,
-    fetchTrailData,
-  } = useTrial();
+    fetchAdminData,
+  } = useAdmin();
 
   const { changeValue } = useMain();
 
@@ -36,7 +38,7 @@ const TrialList = () => {
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title={data[changeValue].trial_list.title}
+              title={data[changeValue].admin.title}
             >
               <Button
                 type="primary"
@@ -47,28 +49,46 @@ const TrialList = () => {
                   marginRight: "20px",
                   marginBottom: "20px",
                 }}
-                onClick={() => showModal()}
+                onClick={() => openMessageModal()}
               >
-                {data[changeValue].trial_list.add_button}
+                {data[changeValue].admin.add_button}
               </Button>
               <div className="table-responsive">
-                <TrialData
-                  trialListData={trialListData}
-                  showModal={showModal}
+                <AdminData
+                  adminData={adminData}
+                  openMessageModal={openMessageModal}
                   openDeleteModal={openDeleteModal}
                 />
               </div>
+
+              <Space style={{ padding: "10px" }}>
+                {next > 1 && (
+                  <Button className="me-4" onClick={() => setNext(next - 1)}>
+                    {data[changeValue].previous_button}
+                  </Button>
+                )}
+
+                {adminData?.length >= 50 ? (
+                  <Button color="dark" onClick={() => setNext(next + 1)}>
+                    {data[changeValue].next_button}
+                  </Button>
+                ) : (
+                  <Button variant="text" color="dark" disabled>
+                    {data[changeValue].next_button}
+                  </Button>
+                )}
+              </Space>
             </Card>
           </Col>
         </Row>
 
         {/*Trail Add and edit modal*/}
-        <TrialModal
+        <AdminModal
           isModalVisible={isModalVisible}
           selectItem={selectItem}
           handleCancel={handleCancel}
           setIsLoading={setIsLoading}
-          fetchTrailData={fetchTrailData}
+          fetchAdminData={fetchAdminData}
         />
 
         {/*Trail Delete modal*/}
@@ -83,4 +103,4 @@ const TrialList = () => {
   );
 };
 
-export default TrialList;
+export default Admin;

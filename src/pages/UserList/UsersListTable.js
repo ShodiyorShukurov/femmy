@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Card, Button, Space, Input, message } from "antd";
+import { Row, Col, Card, Button, Space, Input, message, Select } from "antd";
 import useUserList from "../../hooks/UseUserList";
 import Main from "../../components/layout/Main";
 import SendMessageUserModal from "./components/SendMessageUserModal";
@@ -8,6 +8,8 @@ import AddTransactionModal from "./components/AddTransactionModal";
 import MoreInfoModal from "./components/MoreInfoModal";
 import { data } from "../../mock/data";
 import { useMain } from "../../hooks/UseMain";
+
+const { Option } = Select;
 
 function UsersListTable() {
   const {
@@ -28,6 +30,7 @@ function UsersListTable() {
     setIsModalUserInfo,
     sourceData,
     isLoading,
+    fetchSortData,
   } = useUserList();
 
   const { changeValue } = useMain();
@@ -36,7 +39,7 @@ function UsersListTable() {
 
   const onSearch = () => {
     if (!phoneNumber) {
-      message.warning("Must enter a phone number!");
+      message.warning(data[changeValue].users_list.must_number);
       return;
     }
     const number = phoneNumber.startsWith("+")
@@ -44,10 +47,6 @@ function UsersListTable() {
       : phoneNumber;
     fetchUserPhoneNumberData(number);
   };
-
-  if (isLoading) {
-    return <Main>Loading...</Main>;
-  }
 
   return (
     <Main>
@@ -89,18 +88,41 @@ function UsersListTable() {
                   </Button>
                 </div>
 
+                <Select
+                  placeholder={data[changeValue].users_list.option_placeholder}
+                  style={{ width: "300px" }}
+                  onChange={(value) => fetchSortData(value)}
+                >
+                  <Option key="subscribe" value="subscribe">
+                    {data[changeValue].users_list.option_1}
+                  </Option>
+                  <Option key="unsubscribe" value="unsubscribe">
+                    {data[changeValue].users_list.option_2}
+                  </Option>
+                  <Option key="duration" value="duration">
+                    {data[changeValue].users_list.option_3}
+                  </Option>
+                  <Option key="unduration" value="unduration">
+                    {data[changeValue].users_list.option_4}
+                  </Option>
+                </Select>
+
                 <Button type="primary" onClick={() => openMessageModal()}>
                   {data[changeValue].users_list.button_text}
                 </Button>
               </div>
 
               <div className="table-responsive">
-                <UserData
-                  userListData={userListData}
-                  openMessageModal={openMessageModal}
-                  showTransactionModal={showTransactionModal}
-                  showUserInfoModal={showUserInfoModal}
-                />
+                {isLoading ? (
+                  data[changeValue].loading
+                ) : (
+                  <UserData
+                    userListData={userListData}
+                    openMessageModal={openMessageModal}
+                    showTransactionModal={showTransactionModal}
+                    showUserInfoModal={showUserInfoModal}
+                  />
+                )}
               </div>
               <Space style={{ padding: "10px" }}>
                 {next > 1 && (
@@ -109,7 +131,7 @@ function UsersListTable() {
                   </Button>
                 )}
 
-                {userListData?.length >= 50 ? (
+                {userListData?.length >= 1 ? (
                   <Button color="dark" onClick={() => setNext(next + 1)}>
                     {data[changeValue].next_button}
                   </Button>

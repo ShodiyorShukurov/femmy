@@ -93,6 +93,9 @@ function UsersListTable() {
                   style={{ width: "300px" }}
                   onChange={(value) => fetchSortData(value)}
                 >
+                  <Option key="all" value="all">
+                    All
+                  </Option>
                   <Option key="subscribe" value="subscribe">
                     {data[changeValue].users_list.option_1}
                   </Option>

@@ -34,7 +34,7 @@ function BotSettings() {
   const {changeValue} = useMain()
 
 if(isLoading){
-  return <Main>{data[changeValue].loading}</Main>;
+  return <Main>{mockData[changeValue].loading}</Main>;
 }
 
   return (

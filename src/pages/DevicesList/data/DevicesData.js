@@ -1,51 +1,53 @@
 import { Button, Table } from "antd";
-import { data } from "../../../mock/data";
-import {useMain} from '../../../hooks/UseMain'
 
 const TransactionData = ({ transactionListData, showUserInfoModal }) => {
 
-  const {changeValue} = useMain()
 
   const dataIndex =
     transactionListData?.length > 0
-      ? transactionListData?.map((transaction, index) => ({
+      ? transactionListData?.map((device, index) => ({
           id: index + 1,
-          amount: transaction.amount,
-          method: transaction.method,
-          create_at: transaction.create_at.slice(0, 10  ),
-          transactionId: transaction.id,
+          phone_brand: device.phone_brand,
+          platform: device.platform,
+          phone_lang: device.phone_lang,
+          app_lang: device.app_lang,
+          transactionId: device.user_id,
         }))
       : [];
 
   const columns = [
     {
-      title: data[changeValue].transactions_info.id,
+      title: "№",
       dataIndex: "id",
       key: "id",
       align: "center",
     },
     {
-      title: data[changeValue].transactions_info.amount,
-      dataIndex: "amount",
-      key: "amount",
-      align: "center",
-      render: (amount) =>
-        `${Number(amount / 100).toFixed(2)} ${data[changeValue].sum}`,
-    },
-    {
-      title: data[changeValue].transactions_info.method,
-      dataIndex: "method",
-      key: "method",
+      title: "Phone Brand",
+      dataIndex: "phone_brand",
+      key: "phone_brand",
       align: "center",
     },
     {
-      title: data[changeValue].transactions_info.create_at,
-      dataIndex: "create_at",
-      key: "create_at",
+      title: "Platform",
+      dataIndex: "platform",
+      key: "platform",
       align: "center",
     },
     {
-      title: data[changeValue].transactions_info.actions,
+      title: "Phone Lang",
+      dataIndex: "phone_lang",
+      key: "phone_lang",
+      align: "center",
+    },
+    {
+      title: "App Lang",
+      dataIndex: "app_lang",
+      key: "app_lang",
+      align: "center",
+    },
+    {
+      title: "Action",
       key: "actions",
       render: (_, record) => (
         <Button

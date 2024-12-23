@@ -8,7 +8,7 @@
   const { Header: AntHeader, Content, Sider } = Layout;
 
   function Main({ children }) {
-    const { sidenavColor, setSidenavColor, } = useMain();
+    const { sidenavColor, setSidenavColor} = useMain();
 
     const [isVisible, setIsVisible] = useState(false);
 

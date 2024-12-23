@@ -6,18 +6,15 @@ export const MainContextProvider = ({ children }) => {
   const [sidenavColor, setSidenavColor] = useState(
     localStorage.getItem("sidenavColor") || "#1890ff"
   );
-  const [changeValue, setChangeValue] = useState(
-    localStorage.getItem("changeValue") || "uzb"
-  );
+
 
   useEffect(() => {
     localStorage.setItem("sidenavColor", sidenavColor);
-    localStorage.setItem("changeValue", changeValue);
-  }, [sidenavColor, changeValue]);
+  }, [sidenavColor,]);
 
   return (
     <MainContext.Provider
-      value={{ sidenavColor, setSidenavColor, changeValue, setChangeValue }}
+      value={{ sidenavColor, setSidenavColor, }}
     >
       {children}
     </MainContext.Provider>

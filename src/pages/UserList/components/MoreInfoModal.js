@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { Modal, Button, Row, Col, Card, Table } from "antd";
+import React from "react";
+import { Modal, Row, Col, Card, Table } from "antd";
 import Api from "../../../api";
-import { data } from "../../../mock/data";
-import { useMain } from "../../../hooks/UseMain";
 
 const MoreInfoModal = ({
   isModalUserInfo,
@@ -10,9 +8,6 @@ const MoreInfoModal = ({
   selectedUser,
   setSelectedUser,
 }) => {
-
-  const {changeValue} = useMain(); 
-
   /*User data start*/
   const [userData, setUserData] = React.useState([]);
 
@@ -21,36 +16,51 @@ const MoreInfoModal = ({
         id: user.id,
         name: user.name,
         user_id: user.chat_id,
+        model_id: user.model_id,
         phone_number: user.phone_number,
-        subscribe: user.subscribe,
-        duration: user.duration,
-        expired: user.expired,
-        source: user.source,
-        userData: user,
+        age: user.age,
+        height: user.height,
+        weight: user.weight,
+        avarage_period: user.avarage_period,
+        bot_step: user.bot_step,
+        cycle_duration: user.cycle_duration,
+        premium: user.premium,
+        telegram: user.telegram,
+        expired_date: user.expired_date
       }))
     : [];
 
   const userColumns = [
     {
-      title: data[changeValue].user_info.id,
+      title: "Id",
       dataIndex: "id",
       key: "id",
       align: "center",
     },
     {
-      title: data[changeValue].user_info.name,
+      title: "Name",
       dataIndex: "name",
       key: "name",
       align: "center",
     },
     {
-      title: data[changeValue].user_info.user_id,
+      title: "User Id",
       dataIndex: "user_id",
       key: "user_id",
       align: "center",
+      render: (user_id) =>
+        user_id ? user_id : <p style={{ color: "red" }}>N/A</p>,
     },
     {
-      title: data[changeValue].user_info.phone_number,
+      title: "Model Id",
+      dataIndex: "model_id",
+      key: "model_id",
+      align: "center",
+      render: (model_id) =>
+        model_id ? model_id : <p style={{ color: "red" }}>N/A</p>,
+    },
+    {
+      title: "Phone Number",
       dataIndex: "phone_number",
       key: "phone_number",
       align: "center",
@@ -58,17 +68,95 @@ const MoreInfoModal = ({
         phone_number ? (
           <a href={"tel:" + phone_number}>{phone_number}</a>
         ) : (
-          data[changeValue].user_info.phone_number_error
+          <p style={{ color: "red" }}>N/A</p>
         ),
     },
     {
-      title: data[changeValue].user_info.subscribe,
-      dataIndex: "subscribe",
-      key: "subscribe",
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
       align: "center",
-      render: (subscribe) => (
+      render: (age) => (
+        <span>{age ? age : <span style={{ color: "red" }}>N/A</span>}</span>
+      ),
+    },
+
+    {
+      title: "Height",
+      dataIndex: "height",
+      key: "height",
+      align: "center",
+      render: (height) => (
         <span>
-          {subscribe ? (
+          {height ? height : <span style={{ color: "red" }}>N/A</span>}
+        </span>
+      ),
+    },
+
+    {
+      title: "Weight",
+      dataIndex: "weight",
+      key: "weight",
+      align: "center",
+      render: (weight) => (
+        <span>
+          {weight ? weight : <span style={{ color: "red" }}>N/A</span>}
+        </span>
+      ),
+    },
+
+    {
+      title: "Avarage period",
+      dataIndex: "avarage_period",
+      key: "avarage_period",
+      align: "center",
+      render: (avarage_period) => (
+        <span>
+          {avarage_period ? (
+            avarage_period
+          ) : (
+            <span style={{ color: "red" }}>N/A</span>
+          )}
+        </span>
+      ),
+    },
+
+    {
+      title: "Bot step",
+      dataIndex: "bot_step",
+      key: "bot_step",
+      align: "center",
+      render: (bot_step) => (
+        <span>
+          {bot_step ? bot_step : <span style={{ color: "red" }}>N/A</span>}
+        </span>
+      ),
+    },
+
+    {
+      title: "Cycle Duration",
+      dataIndex: "cycle_duration",
+      key: "cycle_duration",
+      align: "center",
+      render: (cycle_duration) => (
+        <span>
+          {cycle_duration ? (
+            cycle_duration
+          ) : (
+            <span style={{ color: "red" }}>N/A</span>
+          )}
+        </span>
+      ),
+    },
+
+    {
+      title: "Premium",
+      dataIndex: "premium",
+      key: "premium",
+      align: "center",
+      render: (premium) => (
+        <span>
+          {premium ? (
             <span style={{ color: "green" }}>True</span>
           ) : (
             <span style={{ color: "red" }}>False</span>
@@ -78,13 +166,13 @@ const MoreInfoModal = ({
     },
 
     {
-      title: data[changeValue].user_info.duration,
-      dataIndex: "duration",
-      key: "duration",
+      title: "Telegram",
+      dataIndex: "telegram",
+      key: "telegram",
       align: "center",
-      render: (duration) => (
+      render: (telegram) => (
         <span>
-          {duration ? (
+          {telegram ? (
             <span style={{ color: "green" }}>True</span>
           ) : (
             <span style={{ color: "red" }}>False</span>
@@ -94,36 +182,16 @@ const MoreInfoModal = ({
     },
 
     {
-      title: data[changeValue].user_info.expired,
-      dataIndex: "expired",
-      key: "expired",
+      title: "Expired Date",
+      dataIndex: "expired_date",
+      key: "expired_date",
       align: "center",
-      render: (expired) => (
+      render: (expired_date) => (
         <span>
-          {expired !== null ? (
-            expired
+          {expired_date ? (
+            expired_date
           ) : (
-            <span style={{ color: "red " }}>
-              {data[changeValue].user_info.expired_error}
-            </span>
-          )}
-        </span>
-      ),
-    },
-
-    {
-      title: data[changeValue].user_info.source,
-      dataIndex: "source",
-      key: "source",
-      align: "center",
-      render: (source) => (
-        <span style={{ textTransform: "capitalize" }}>
-          {source !== null ? (
-            source
-          ) : (
-            <span style={{ color: "red " }}>
-              {data[changeValue].user_info.source_error}
-            </span>
+            <span style={{ color: "red" }}>N/A</span>
           )}
         </span>
       ),
@@ -131,9 +199,9 @@ const MoreInfoModal = ({
   ];
 
   const fetchUserData = async () => {
-    if (!selectedUser?.chat_id) return;
+    if (!selectedUser?.id) return;
     try {
-      const res = await Api.get("/user/" + selectedUser?.chat_id);
+      const res = await Api.get("/user/" + selectedUser?.id);
       if (res.data) {
         setUserData([res.data.data]);
       } else {
@@ -146,137 +214,21 @@ const MoreInfoModal = ({
 
   /*User data end*/
 
-  /*User all transaction data start*/
-  const [userTransactionData, setUserTransactionData] = useState([]);
-  const dataIndex = userTransactionData?.length
-    ? userTransactionData?.map((user) => ({
-        id: user.id,
-        transaction_id: user.transaction_id,
-        user_id: user.user_id,
-        amount: user.amount,
-        success_trans_id: user.success_trans_id,
-        ofd_url: user.ofd_url,
-        method: user.method,
-        create_at: user.create_at.slice(0, 10),
-      }))
-    : [];
-
-  const columns = [
-    {
-      title: data[changeValue].transaction_info.id,
-      dataIndex: "id",
-      key: "id",
-      align: "center",
-    },
-    {
-      title: data[changeValue].transaction_info.transaction_id,
-      dataIndex: "transaction_id",
-      key: "transaction_id",
-      align: "center",
-      render: (transaction_id) =>
-        transaction_id ? (
-          transaction_id
-        ) : (
-          <span style={{ color: "red" }}>
-            {data[changeValue].transaction_info.transaction_id_error}
-          </span>
-        ),
-    },
-    {
-      title: data[changeValue].transaction_info.user_id,
-      dataIndex: "user_id",
-      key: "user_id",
-      align: "center",
-    },
-    {
-      title: data[changeValue].transaction_info.amount,
-      dataIndex: "amount",
-      key: "amount",
-      align: "center",
-      render: (amount) =>
-        `${Number(amount / 100).toFixed(2)} ${data[changeValue].sum}`,
-    },
-    {
-      title: data[changeValue].transaction_info.method,
-      dataIndex: "method",
-      key: "method",
-      align: "center",
-    },
-    {
-      title: data[changeValue].transaction_info.success_trans_id,
-      dataIndex: "success_trans_id",
-      key: "success_trans_id",
-      align: "center",
-      render: (success_trans_id) =>
-        success_trans_id ? (
-          success_trans_id
-        ) : (
-          <span style={{ color: "red" }}>
-            {data[changeValue].transaction_info.success_trans_id_error}
-          </span>
-        ),
-    },
-
-    {
-      title: data[changeValue].transaction_info.ofd_url,
-      dataIndex: "ofd_url",
-      key: "ofd_url",
-      align: "center",
-      render: (_, record) =>
-        record?.ofd_url ? (
-          <a href={record?.ofd_url} target="_blanck">
-            <Button type="link">
-              {data[changeValue].transaction_info.ofd_url_success}
-            </Button>
-          </a>
-        ) : (
-          <span style={{ color: "red " }}>
-            {data[changeValue].transaction_info.ofd_url_error}
-          </span>
-        ),
-    },
-    {
-      title: data[changeValue].transaction_info.create_at,
-      dataIndex: "create_at",
-      key: "create_at",
-      align: "center",
-    },
-  ];
-
-  const fetchUserTransactionData = async () => {
-    if (!selectedUser?.chat_id) return;
-    try {
-      const res = await Api.get(
-        `/transactions/user?user_id=${selectedUser?.chat_id}`
-      );
-      if (res.data.data.length > 0) {
-        setUserTransactionData(res.data.data);
-      } else {
-        setUserTransactionData([]);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  /*User all transaction data end*/
-
   React.useEffect(() => {
     fetchUserData();
-    fetchUserTransactionData();
-  }, [selectedUser?.chat_id]);
+  }, [selectedUser?.id]);
 
   return (
     <Modal
-      title={data[changeValue].user_info.title}
+      title={""}
       open={isModalUserInfo}
       onCancel={() => {
         setIsModalUserInfo(false);
         setSelectedUser(null);
-        setUserTransactionData([]);
         setUserData([]);
       }}
       footer={null}
-      width={1200}
+      width={1500}
     >
       <div className="tabled">
         <Row gutter={[24, 0]}>
@@ -284,32 +236,12 @@ const MoreInfoModal = ({
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title={data[changeValue].user_info.title}
+              title={"User Information"}
             >
               <div className="table-responsive">
                 <Table
                   columns={userColumns}
                   dataSource={userIndex}
-                  pagination={false}
-                  className="ant-border-space"
-                />
-              </div>
-            </Card>
-          </Col>
-        </Row>
-      </div>
-      <div className="tabled">
-        <Row gutter={[24, 0]}>
-          <Col xs="24" xl={24}>
-            <Card
-              bordered={false}
-              className="criclebox tablespace mb-24"
-              title={data[changeValue].transaction_info.title}
-            >
-              <div className="table-responsive">
-                <Table
-                  columns={columns}
-                  dataSource={dataIndex}
                   pagination={false}
                   className="ant-border-space"
                 />

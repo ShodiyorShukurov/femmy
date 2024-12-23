@@ -6,14 +6,9 @@ import PrivateRoute from "./utils/PrivateRoute";
 
 import LoginPage from "./components/layout/Login";
 
-import Dashboard from "./pages/Dashboard/Dashboard";
 import UsersListTable from "./pages/UserList/UsersListTable";
-import TransactionListTable from "./pages/TransactionList/TransactionListTable";
-import BotSettings from "./pages/BotSettings/BotSettings";
-import NewsList from "./pages/News/NewsList";
-import TrialList from "./pages/Trial/TrialList";
-import Admin from "./pages/AdminPage/Admin";
-import { ADMIN_ROLE } from "./utils/constants";
+import DevicesListTable from "./pages/DevicesList/DevicesListTable";
+
 
 function App() {
   return (
@@ -27,17 +22,8 @@ function App() {
 
         {/* Private route logic for protecting routes */}
         <Route path="/" element={<PrivateRoute />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="user-list" element={<UsersListTable />} />
-          <Route path="transaction-list" element={<TransactionListTable />} />
-          <Route path="bot-settings" element={<BotSettings />} />
-          <Route path="news-list" element={<NewsList />} />
-          <Route path="trial-list" element={<TrialList />} />
-          {localStorage.getItem(ADMIN_ROLE) === "main_admin" ? (
-            <Route path="admin-list" element={<Admin />} />
-          ) : (
-            <Route path="admin-list" element={<Navigate to="/dashboard" />} />
-          )}
+          <Route path="users-list" element={<UsersListTable />} />
+          <Route path="devices-list" element={<DevicesListTable />} />
         </Route>
       </Routes>
     </div>

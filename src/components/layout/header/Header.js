@@ -10,11 +10,7 @@ import {
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import './header.css'
-import uzb from '../../../assets/images/uzb-flag.png'
-import rus from '../../../assets/images/rus-flag.png'
-import eng from "../../../assets/images/eng-flag.png"
-import { useMain } from "../../../hooks/UseMain";
-import { data } from "../../../mock/data";
+
 
 
 const ButtonContainer = styled.div`
@@ -77,7 +73,7 @@ function Header({
   handleSidenavColor,
   handleSidenavType,
 }) {
-const {changeValue, setChangeValue} = useMain()
+
 
   const { Title, Text } = Typography;
 
@@ -98,7 +94,7 @@ const {changeValue, setChangeValue} = useMain()
         <Col span={24} md={6}>
           <Breadcrumb>
             <Breadcrumb.Item>
-              <NavLink to="/dashboard">{ data[changeValue].header.pages}</NavLink>
+              <NavLink to="/dashboard">Pages</NavLink>
             </Breadcrumb.Item>
             <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
               {name.replace("-", " ")}
@@ -201,7 +197,7 @@ const {changeValue, setChangeValue} = useMain()
                     </Button>
                   </ButtonContainer>
                 </div>
-                <div className="fixed-nav mb-2">
+               {/* <div className="fixed-nav mb-2">
                   <Title level={5}>Navbar Fixed </Title>
                   <div className="language-btns">
                     <button
@@ -227,7 +223,7 @@ const {changeValue, setChangeValue} = useMain()
                       English
                     </button>
                   </div>
-                </div>
+                </div>*/}
               </div>
             </div>
           </Drawer>

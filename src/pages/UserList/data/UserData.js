@@ -1,10 +1,7 @@
 import { Button, Table } from "antd";
-import { data } from "../../../mock/data";
 import { useMain } from "../../../hooks/UseMain";
 
 const UserData = ({
-  openMessageModal,
-  showTransactionModal,
   showUserInfoModal,
   userListData,
 }) => {
@@ -16,9 +13,9 @@ const { changeValue } = useMain();
           id: index + 1,
           name: user.name,
           phone_number: user.phone_number,
-          subscribe: user.subscribe,
-          duration: user.duration,
-          expired: user.expired,
+          age: user.age,
+          premium: user.premium,
+          telegram: user.telegram,
           source: user.source,
           userData: user,
         }))
@@ -26,19 +23,19 @@ const { changeValue } = useMain();
 
   const columns = [
     {
-      title: data[changeValue].users_list.id,
+      title: "№",
       dataIndex: "id",
       key: "id",
       align: "center",
     },
     {
-      title: data[changeValue].users_list.name,
+      title: "Name",
       dataIndex: "name",
       key: "name",
       align: "center",
     },
     {
-      title: data[changeValue].users_list.phone_number,
+      title: "Phone Number",
       dataIndex: "phone_number",
       key: "phone_number",
       align: "center",
@@ -50,13 +47,31 @@ const { changeValue } = useMain();
         ),
     },
     {
-      title: data[changeValue].users_list.subscribe,
-      dataIndex: "subscribe",
-      key: "subscribe",
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
       align: "center",
-      render: (subscribe) => (
+      render: (age) => (
         <span>
-          {subscribe ? (
+          {age ? (
+            age
+          ) : (
+            <span style={{ color: "red" }}>
+              N/A
+            </span>
+          )}
+        </span>
+      ),
+    },
+
+    {
+      title: "Premium",
+      dataIndex: "premium",
+      key: "premium",
+      align: "center",
+      render: (premium) => (
+        <span>
+          {premium ? (
             <span style={{ color: "green" }}>True</span>
           ) : (
             <span style={{ color: "red" }}>False</span>
@@ -66,13 +81,13 @@ const { changeValue } = useMain();
     },
 
     {
-      title: data[changeValue].users_list.duration,
-      dataIndex: "duration",
-      key: "duration",
+      title: "Telegram",
+      dataIndex: "telegram",
+      key: "telegram",
       align: "center",
-      render: (duration) => (
+      render: (telegram) => (
         <span>
-          {duration ? (
+          {telegram ? (
             <span style={{ color: "green" }}>True</span>
           ) : (
             <span style={{ color: "red" }}>False</span>
@@ -80,40 +95,8 @@ const { changeValue } = useMain();
         </span>
       ),
     },
-
     {
-      title: data[changeValue].users_list.expired,
-      dataIndex: "expired",
-      key: "expired",
-      align: "center",
-      render: (expired) => (
-        <span>
-          {expired !== null ? (
-            expired
-          ) : (
-            <span style={{ color: "red " }}>Not Found</span>
-          )}
-        </span>
-      ),
-    },
-
-    {
-      title: data[changeValue].users_list.source,
-      dataIndex: "source",
-      key: "source",
-      align: "center",
-      render: (source) => (
-        <span>
-          {source !== null ? (
-            <span style={{ textTransform: "capitalize" }}>{source}</span>
-          ) : (
-            <span style={{ color: "red " }}>Not Found</span>
-          )}
-        </span>
-      ),
-    },
-    {
-      title: data[changeValue].users_list.actions,
+      title: "Action",
       key: "actions",
       render: (_, record) => (
         <div>
@@ -123,7 +106,7 @@ const { changeValue } = useMain();
             style={{ paddingLeft: "10px", paddingRight: "10px" }}
           >
             <svg
-            width={20}
+              width={20}
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
@@ -133,39 +116,6 @@ const { changeValue } = useMain();
               <path
                 fillRule="evenodd"
                 d="M1.38 8.28a.87.87 0 0 1 0-.566 7.003 7.003 0 0 1 13.238.006.87.87 0 0 1 0 .566A7.003 7.003 0 0 1 1.379 8.28ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </Button>
-
-          <Button
-            type="link"
-            onClick={() => openMessageModal(record.userData)}
-            style={{ paddingLeft: "10px", paddingRight: "10px" }}
-          >
-            <svg
-              width={20}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-            >
-              <path d="M2.87 2.298a.75.75 0 0 0-.812 1.021L3.39 6.624a1 1 0 0 0 .928.626H8.25a.75.75 0 0 1 0 1.5H4.318a1 1 0 0 0-.927.626l-1.333 3.305a.75.75 0 0 0 .811 1.022 24.89 24.89 0 0 0 11.668-5.115.75.75 0 0 0 0-1.175A24.89 24.89 0 0 0 2.869 2.298Z" />
-            </svg>
-          </Button>
-          <Button
-            type="link"
-            onClick={() => showTransactionModal(record.userData)}
-            style={{ paddingLeft: "10px", paddingRight: "10px" }}
-          >
-            <svg
-              width={20}
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 16 16"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-10.25v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5a.75.75 0 0 1 1.5 0Z"
                 clipRule="evenodd"
               />
             </svg>

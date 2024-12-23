@@ -2,12 +2,10 @@ import { Form, Input, Button, notification } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Api from "../../api";
-import { ADMIN_ROLE, API_TOKEN } from "../../utils/constants";
-import { data } from "../../mock/data";
-import { useMain } from "../../hooks/UseMain";
+import { API_TOKEN } from "../../utils/constants";
+
 
 const LoginPage = () => {
-  const { changeValue } = useMain();
 
   const navigate = useNavigate();
   const [form] = Form.useForm();
@@ -23,20 +21,19 @@ const LoginPage = () => {
 
       if (res.data.status === 401 || res.data.status === 404) {
         notification.error({
-          message: data[changeValue].login.error_text,
-          description: data[changeValue].login.error_text,
+          message: "Xato",
+          description: "Kodni xato kiritdingiz!",
         });
       } else if (res.data.token) {
         localStorage.setItem(API_TOKEN, res.data.token);
-        localStorage.setItem(ADMIN_ROLE, res.data.data.admin_role);
-        navigate("/dashboard");
+        navigate("/users-list");
       }
       setLoading(false);
     } catch (error) {
       console.log(error);
       notification.error({
-        message: data[changeValue].login.error_text,
-        description: data[changeValue].login.error_text,
+        message: "Xato",
+        description: error.message,
       });
       setLoading(false);
     }
@@ -59,7 +56,7 @@ const LoginPage = () => {
         className="card shadow p-4"
         style={{ width: "100%", maxWidth: "400px" }}
       >
-        <h2 className="text-center mb-4">{data[changeValue].login.title}</h2>
+        <h2 className="text-center mb-4">Login</h2>
 
         <Form
           form={form}
@@ -68,37 +65,33 @@ const LoginPage = () => {
           autoComplete="off"
         >
           <Form.Item
-            label={data[changeValue].login.label_1}
+            label="Email"
             name="admin_email"
             rules={[
               {
                 required: true,
-                message: data[changeValue].login.input_message_1,
+                message: "Required Email ",
               },
             ]}
           >
-            <Input placeholder={data[changeValue].login.input_placeholder_1} />
+            <Input placeholder="Email" />
           </Form.Item>
 
           <Form.Item
-            label={data[changeValue].login.label_2}
+            label="Password"
             name="admin_password"
             rules={[
               {
                 required: true,
-                message: data[changeValue].login.input_message_2,
+                message: "Required Password",
               },
             ]}
           >
-            <Input.Password
-              placeholder={data[changeValue].login.input_placeholder_2}
-            />
+            <Input.Password placeholder="Password" />
           </Form.Item>
 
           <Button type="primary" htmlType="submit" loading={loading} block>
-            {loading
-              ? data[changeValue].login.button_loading_text
-              : data[changeValue].login.button_text}
+            {loading ? "Login" : "Login in..."}
           </Button>
         </Form>
       </div>

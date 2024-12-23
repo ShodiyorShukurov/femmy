@@ -55,66 +55,15 @@ const useUserList = () => {
     }
   };
 
-  const fetchUserPhoneNumberData = async (phoneNumber) => {
-    if (!phoneNumber) return;
-    setIsLoading(true);
-    try {
-      const res = await Api.get(
-        `/users/list?limit=1&page=${next}&phone=${phoneNumber}`
-      );
-      setUserListData(res.data.data);
-    } catch (error) {
-      console.error(error);
-      if (error.message === "Request failed with status code 404") {
-        setUserListData([]);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const fetchSortData = async (sortValue) => {
-    if (!sortValue) return;
-    setIsLoading(true);
-    try {
-      const res = await Api.get(
-        `/users/list?limit=50&page=${next}&sort=${sortValue}`
-      );
-      setUserListData(res.data.data);
-    } catch (error) {
-      console.error(error);
-      if (error.message === "Request failed with status code 404") {
-        setUserListData([]);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const fetchSourceData = async () => {
-    try {
-      const res = await Api.get(`/users/source/list`);
-      setSourceData(res.data.data);
-    } catch (error) {
-      console.error(error);
-      if (error.message === "Request failed with status code 404") {
-        setSourceData([]);
-      }
-    }
-  };
 
   React.useEffect(() => {
     fetchUserListData();
-    fetchSourceData();
-    fetchSortData();
-    fetchUserPhoneNumberData();
   }, [next]);
 
   return {
     userListData,
     next,
     setNext,
-    fetchUserPhoneNumberData,
     isModalVisible,
     handleCancel,
     selectedUser,
@@ -128,7 +77,6 @@ const useUserList = () => {
     setIsModalUserInfo,
     sourceData,
     isLoading,
-    fetchSortData,
   };
 };
 

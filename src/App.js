@@ -8,7 +8,7 @@ import LoginPage from "./components/layout/Login";
 
 import UsersListTable from "./pages/UserList/UsersListTable";
 import DevicesListTable from "./pages/DevicesList/DevicesListTable";
-
+import CategoryListTable from "./pages/CategoryList/CategoryListTable";
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
         <Route path="/" element={<PrivateRoute />}>
           <Route path="users-list" element={<UsersListTable />} />
           <Route path="devices-list" element={<DevicesListTable />} />
+          <Route path="categories-list" element={<CategoryListTable />} />
         </Route>
       </Routes>
     </div>

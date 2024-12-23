@@ -1,23 +1,25 @@
 import { Button, Modal } from "antd";
-import React from "react";
+import React from "react";import { data } from "../../../mock/data";
+import { useMain } from "../../../hooks/UseMain";
 
 const DeleteModal = ({ closeDeleteModal, handleDelete, isModalDelete }) => {
+   const { changeValue } = useMain();
 
   return (
     <Modal
-      title="Delete Modal"
+      title={data[changeValue].trial_list.delete_title}
       open={isModalDelete}
       onCancel={closeDeleteModal}
       footer={[
         <Button key="submit" type="primary" danger onClick={handleDelete}>
-          Delete
+          {data[changeValue].trial_list.delete_button_text1}
         </Button>,
         <Button key="back" onClick={closeDeleteModal}>
-          Cancel
+          {data[changeValue].trial_list.delete_button_text2}
         </Button>,
       ]}
     >
-      <p>Are you really going to delete it?</p>
+      <p>{data[changeValue].trial_list.delete_text}</p>
     </Modal>
   );
 };

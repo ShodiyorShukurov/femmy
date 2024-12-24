@@ -13,7 +13,7 @@ const CategoryModal = ({
 }) => {
   const [fileList, setFileList] = React.useState([]);
   const [form] = Form.useForm();
-console.log(selectItem)
+  console.log(selectItem);
   React.useEffect(() => {
     if (isModalVisible && selectItem) {
       form.setFieldsValue({
@@ -100,7 +100,20 @@ console.log(selectItem)
             },
           ]}
         >
-          <Input placeholder="Type" />
+          <Select placeholder="Change Type">
+            <Option value="1" key="1">
+              1
+            </Option>
+            <Option value="2" key="2">
+              2
+            </Option>
+            <Option value="3" key="3">
+              3
+            </Option>
+            <Option value="4" key="4">
+              4
+            </Option>
+          </Select>
         </Form.Item>
 
         <Form.Item
@@ -151,7 +164,7 @@ console.log(selectItem)
           label="Photo"
           rules={[
             {
-              required: true,
+              required: selectItem?.image_url ? false : true,
               message: "Photo required",
             },
           ]}

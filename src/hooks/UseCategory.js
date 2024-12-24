@@ -4,11 +4,9 @@ import Api from "../api";
 
 const useCategory = () => {
   const [categoryData, setCategoryData] = React.useState([]);
-  const [lang, setLang] = React.useState("uz");
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [isModalDelete, setIsModalDelete] = React.useState(false);
   const [id, setId] = React.useState();
-  const [isLoading, setIsLoading] = React.useState(false);
   const [selectItem, setSelectItem] = React.useState({});
   const [form] = Form.useForm();
 
@@ -24,7 +22,6 @@ const useCategory = () => {
   };
 
   const fetchCategoryData = async () => {
-    setIsLoading(true);
     try {
       const res = await Api.get(`/categories`);
       setCategoryData(res.data.data);
@@ -33,8 +30,6 @@ const useCategory = () => {
       if (error.message === "Request failed with status code 404") {
         setCategoryData([]);
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -74,15 +69,11 @@ const useCategory = () => {
 
   return {
     categoryData,
-    setLang,
-    lang,
     isModalVisible,
     setIsModalVisible,
     selectItem,
     openCategoryModal,
     handleCancel,
-    // isLoading,
-    // setIsLoading,
     openDeleteModal,
     closeDeleteModal,
     handleDelete,

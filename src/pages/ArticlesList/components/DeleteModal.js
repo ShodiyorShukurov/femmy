@@ -10,7 +10,7 @@ const DeleteModal = ({ closeDeleteModal, handleDelete, isModalDelete }) => {
       onCancel={closeDeleteModal}
       footer={[
         <Button key="submit" type="primary" danger onClick={handleDelete}>
-          Delete
+         Delete
         </Button>,
         <Button key="back" onClick={closeDeleteModal}>
           Cancel

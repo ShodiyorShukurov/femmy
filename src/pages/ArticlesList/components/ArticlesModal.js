@@ -2,23 +2,30 @@ import React from "react";
 import { Button, Form, Input, message, Modal, Select, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import Api from "../../../api";
+import TextArea from "antd/lib/input/TextArea";
+import useCategory from "../../../hooks/UseCategory";
 
 const { Option } = Select;
 
-const CategoryModal = ({
+const ArticlesModal = ({
   isModalVisible,
-  fetchCategoryData,
+  fetchArticlesData,
   selectItem,
   handleCancel,
 }) => {
+  const { categoryData } = useCategory();
   const [fileList, setFileList] = React.useState([]);
   const [form] = Form.useForm();
-console.log(selectItem)
+
   React.useEffect(() => {
     if (isModalVisible && selectItem) {
       form.setFieldsValue({
-        name: selectItem.name || "",
-        type: selectItem.type || "",
+        title: selectItem.title || "",
+        description: selectItem.description || "",
+        category_id: selectItem.category_id || "",
+        source: selectItem.source || "",
+        video_url: selectItem.video_url || "",
+        featured: selectItem.featured ? "true" : "false",
         free: selectItem.free ? "true" : "false",
         lang: selectItem.lang || "",
       });
@@ -28,19 +35,22 @@ console.log(selectItem)
   const handleSubmitTrial = async (values) => {
     const formData = new FormData();
 
-    formData.append("name", values.name);
-    formData.append("lang", values.lang);
-    formData.append("type", values.type);
+    formData.append("title", values.title);
+    formData.append("description", values.description);
+    formData.append("category_id", values.category_id);
+    formData.append("source", values.source);
+    formData.append("video_url", values.video_url);
+    formData.append("featured", values.featured);
     formData.append("free", values.free);
     formData.append("image", values?.image?.file);
 
     try {
       if (selectItem && selectItem.id) {
         formData.append("id", selectItem.id);
-        await Api.put("/category/edit", formData);
+        await Api.put("/article/edit", formData);
         message.success("Muvaffaqiyatli tahrirlandi");
       } else {
-        await Api.post("/category/add", formData);
+        await Api.post("/article/add", formData);
         message.success("Muvaffaqiyali qo'shildi");
       }
       handleCancel();
@@ -49,7 +59,7 @@ console.log(selectItem)
       console.error(error);
       message.error("Xatolik");
     } finally {
-      fetchCategoryData();
+      fetchArticlesData();
     }
   };
 
@@ -78,50 +88,94 @@ console.log(selectItem)
     >
       <Form form={form} layout="vertical" onFinish={handleSubmitTrial}>
         <Form.Item
-          name="name"
-          label="Name"
+          name="title"
+          label="Title"
           rules={[
             {
               required: true,
-              message: "Name required",
+              message: "Title required",
             },
           ]}
         >
-          <Input placeholder="Name" />
+          <Input placeholder="Title" />
         </Form.Item>
 
         <Form.Item
-          name="type"
-          label="Type"
+          name="description"
+          label="Description"
           rules={[
             {
               required: true,
-              message: "Type required",
+              message: "Description required",
             },
           ]}
         >
-          <Input placeholder="Type" />
+          <TextArea placeholder="Description" rows={5} />
         </Form.Item>
 
         <Form.Item
-          name="lang"
-          label={"Language"}
+          name="category_id"
+          label={"Category"}
           rules={[
             {
               required: true,
-              message: "Language required",
+              message: "Category required",
             },
           ]}
         >
-          <Select placeholder="Change Lang">
-            <Option value="uz" key="uz">
-              Uzbek
+          <Select placeholder="Change Category">
+            {categoryData.length > 0
+              ? categoryData.map((category) => (
+                  <Option value={category.id} key={category.id}>
+                    {category.name}
+                  </Option>
+                ))
+              : ""}
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          name="source"
+          label="Source"
+          rules={[
+            {
+              required: true,
+              message: "Source required",
+            },
+          ]}
+        >
+          <Input placeholder="Source" />
+        </Form.Item>
+
+        <Form.Item
+          name="video_url"
+          label="Video Url"
+          rules={[
+            {
+              required: true,
+              message: "Video Url required",
+            },
+          ]}
+        >
+          <Input placeholder="Video Url" type="url" />
+        </Form.Item>
+
+        <Form.Item
+          name="featured"
+          label={"Featured"}
+          rules={[
+            {
+              required: true,
+              message: "Featured required",
+            },
+          ]}
+        >
+          <Select placeholder="Change Featured">
+            <Option value="true" key="1">
+              True
             </Option>
-            <Option value="en" key="en">
-              English
-            </Option>
-            <Option value="ru" key="ru">
-              Russian
+            <Option value="false" key="2">
+              False
             </Option>
           </Select>
         </Form.Item>
@@ -151,7 +205,7 @@ console.log(selectItem)
           label="Photo"
           rules={[
             {
-              required: true,
+              required: selectItem?.image_url ? false : true,
               message: "Photo required",
             },
           ]}
@@ -176,4 +230,4 @@ console.log(selectItem)
   );
 };
 
-export default CategoryModal;
+export default ArticlesModal;

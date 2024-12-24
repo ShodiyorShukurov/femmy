@@ -9,6 +9,7 @@ import LoginPage from "./components/layout/Login";
 import UsersListTable from "./pages/UserList/UsersListTable";
 import DevicesListTable from "./pages/DevicesList/DevicesListTable";
 import CategoryListTable from "./pages/CategoryList/CategoryListTable";
+import ArticlesListTable from "./pages/ArticlesList/ArticlesListTable";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="users-list" element={<UsersListTable />} />
           <Route path="devices-list" element={<DevicesListTable />} />
           <Route path="categories-list" element={<CategoryListTable />} />
+          <Route path='articles-list' element={<ArticlesListTable />} />
         </Route>
       </Routes>
     </div>

@@ -1,9 +1,9 @@
-import React from "react";
-import { Button, Form, Input, message, Modal, Select, Upload } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import Api from "../../../api";
-import TextArea from "antd/lib/input/TextArea";
-import useCategory from "../../../hooks/UseCategory";
+import React from 'react';
+import { Button, Form, Input, message, Modal, Select, Upload } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import Api from '../../../api';
+import TextArea from 'antd/lib/input/TextArea';
+import useCategory from '../../../hooks/UseCategory';
 
 const { Option } = Select;
 
@@ -20,14 +20,14 @@ const ArticlesModal = ({
   React.useEffect(() => {
     if (isModalVisible && selectItem) {
       form.setFieldsValue({
-        title: selectItem.title || "",
-        description: selectItem.description || "",
-        category_id: selectItem.category_id || "",
-        source: selectItem.source || "",
-        video_url: selectItem.video_url || "",
-        featured: selectItem.featured ? "true" : "false",
-        free: selectItem.free ? "true" : "false",
-        lang: selectItem.lang || "",
+        title: selectItem.title || '',
+        description: selectItem.description || '',
+        category_id: selectItem.category_id || '',
+        source: selectItem.source || '',
+        video_url: selectItem.video_url || '',
+        featured: selectItem.featured ? 'true' : 'false',
+        free: selectItem.free ? 'true' : 'false',
+        lang: selectItem.lang || '',
       });
     }
   }, [isModalVisible, selectItem, form]);
@@ -35,29 +35,29 @@ const ArticlesModal = ({
   const handleSubmitTrial = async (values) => {
     const formData = new FormData();
 
-    formData.append("title", values.title);
-    formData.append("description", values.description);
-    formData.append("category_id", values.category_id);
-    formData.append("source", values.source);
-    formData.append("video_url", values.video_url);
-    formData.append("featured", values.featured);
-    formData.append("free", values.free);
-    formData.append("image", values?.image?.file);
+    formData.append('title', values.title);
+    formData.append('description', values.description);
+    formData.append('category_id', values.category_id);
+    formData.append('source', values.source);
+    formData.append('video_url', values.video_url);
+    formData.append('featured', values.featured);
+    formData.append('free', values.free);
+    formData.append('image', values?.image?.file);
 
     try {
       if (selectItem && selectItem.id) {
-        formData.append("id", selectItem.id);
-        await Api.put("/article/edit", formData);
-        message.success("Muvaffaqiyatli tahrirlandi");
+        formData.append('id', selectItem.id);
+        await Api.put('/article/edit', formData);
+        message.success('Muvaffaqiyatli tahrirlandi');
       } else {
-        await Api.post("/article/add", formData);
+        await Api.post('/article/add', formData);
         message.success("Muvaffaqiyali qo'shildi");
       }
       handleCancel();
       form.resetFields();
     } catch (error) {
       console.error(error);
-      message.error("Xatolik");
+      message.error('Xatolik');
     } finally {
       fetchArticlesData();
     }
@@ -71,9 +71,9 @@ const ArticlesModal = ({
   };
 
   const beforeUpload = (file) => {
-    const isImageOrVideo = file.type.startsWith("image/");
+    const isImageOrVideo = file.type.startsWith('image/');
     if (!isImageOrVideo) {
-      message.error("");
+      message.error('');
       return Upload.LIST_IGNORE;
     }
     return false;
@@ -81,7 +81,7 @@ const ArticlesModal = ({
 
   return (
     <Modal
-      title={selectItem?.id ? "Tahrirlash" : "Qo'shish"}
+      title={selectItem?.id ? 'Tahrirlash' : "Qo'shish"}
       open={isModalVisible}
       onCancel={handleCancel}
       footer={null}
@@ -93,7 +93,7 @@ const ArticlesModal = ({
           rules={[
             {
               required: true,
-              message: "Title required",
+              message: 'Title required',
             },
           ]}
         >
@@ -106,7 +106,7 @@ const ArticlesModal = ({
           rules={[
             {
               required: true,
-              message: "Description required",
+              message: 'Description required',
             },
           ]}
         >
@@ -115,11 +115,11 @@ const ArticlesModal = ({
 
         <Form.Item
           name="category_id"
-          label={"Category"}
+          label={'Category'}
           rules={[
             {
               required: true,
-              message: "Category required",
+              message: 'Category required',
             },
           ]}
         >
@@ -130,7 +130,7 @@ const ArticlesModal = ({
                     {category.name}
                   </Option>
                 ))
-              : ""}
+              : ''}
           </Select>
         </Form.Item>
 
@@ -140,33 +140,24 @@ const ArticlesModal = ({
           rules={[
             {
               required: true,
-              message: "Source required",
+              message: 'Source required',
             },
           ]}
         >
           <Input placeholder="Source" />
         </Form.Item>
 
-        <Form.Item
-          name="video_url"
-          label="Video Url"
-          rules={[
-            {
-              required: true,
-              message: "Video Url required",
-            },
-          ]}
-        >
+        <Form.Item name="video_url" label="Video Url">
           <Input placeholder="Video Url" type="url" />
         </Form.Item>
 
         <Form.Item
           name="featured"
-          label={"Featured"}
+          label={'Featured'}
           rules={[
             {
               required: true,
-              message: "Featured required",
+              message: 'Featured required',
             },
           ]}
         >
@@ -182,11 +173,11 @@ const ArticlesModal = ({
 
         <Form.Item
           name="free"
-          label={"Premium"}
+          label={'Premium'}
           rules={[
             {
               required: true,
-              message: "Premium required",
+              message: 'Premium required',
             },
           ]}
         >
@@ -206,7 +197,7 @@ const ArticlesModal = ({
           rules={[
             {
               required: selectItem?.image_url ? false : true,
-              message: "Photo required",
+              message: 'Photo required',
             },
           ]}
         >

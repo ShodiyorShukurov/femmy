@@ -27,7 +27,7 @@ function App() {
 
         <Route path="/" element={<Navigate to="/login" />} />
 
-        <Route path="/maqola/:id" element={<DeepLinkPage />} />
+        <Route path="/article_details_page/:id" element={<DeepLinkPage />} />
 
         <Route path="/" element={<PrivateRoute />}>
           <Route path="users-list" element={<UsersListTable />} />

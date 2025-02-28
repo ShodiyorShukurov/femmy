@@ -1,11 +1,15 @@
 [
-    {
-      "relation": ["delegate_permission/common.handle_all_urls"],
-      "target": {
-        "namespace": "android_app",
-        "package_name": "app.femmy.behad",
-        "sha256_cert_fingerprints": ["38:43:F0:7F:61:8D:E7:44:E0:ED:8D:B0:83:53:29:2F:1A:7C:D2:35:76:32:42:70:91:4C:88:F1:2C:C6:5E:D3"]
-      }
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "app.femmy.behad",
+      "sha256_cert_fingerprints": [
+        "38:43:F0:7F:61:8D:E7:44:E0:ED:8D:B0:83:53:29:2F:1A:7C:D2:35:76:32:42:70:91:4C:88:F1:2C:C6:5E:D3",
+        "15:A5:EB:B7:A8:AF:8F:09:B2:21:24:4C:0A:9E:FA:D3:EB:A8:2E:23:F4:E6:58:43:AB:D3:FF:35:8C:D0:24:25"
+      ]
     }
-  ]
-  
+  }
+]

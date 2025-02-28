@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useParams } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import './assets/styles/main.css';
 import './assets/styles/responsive.css';

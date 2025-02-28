@@ -1,0 +1,11 @@
+[
+    {
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.femmy.behad",
+        "sha256_cert_fingerprints": ["38:43:F0:7F:61:8D:E7:44:E0:ED:8D:B0:83:53:29:2F:1A:7C:D2:35:76:32:42:70:91:4C:88:F1:2C:C6:5E:D3"]
+      }
+    }
+  ]
+  

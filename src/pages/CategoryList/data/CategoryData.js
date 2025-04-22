@@ -1,4 +1,4 @@
-import { Table, Button,Image } from "antd";
+import { Table, Button, Image } from 'antd';
 
 const CategoryData = ({ categoryData, openCategoryModal, openDeleteModal }) => {
   const dataIndex =
@@ -9,65 +9,78 @@ const CategoryData = ({ categoryData, openCategoryModal, openDeleteModal }) => {
           lang: category.lang,
           type: category.type,
           free: category.free,
+          html_code: category.html_code,
           image: (
             <Image
               src={category.image_url}
               width={100}
-              style={{ borderRadius: "10px" }}
+              style={{ borderRadius: '10px' }}
               alt={category.name}
             />
           ),
           categoryData: category,
-          categoryId: category.id
+          categoryId: category.id,
         }))
       : [];
 
   const columns = [
     {
-      title: "№",
-      dataIndex: "id",
-      key: "id",
-      align: "center",
+      title: '№',
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center',
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      align: "center",
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      align: 'center',
     },
     {
-      title: "Language",
-      dataIndex: "lang",
-      key: "lang",
-      align: "center",
+      title: 'Language',
+      dataIndex: 'lang',
+      key: 'lang',
+      align: 'center',
     },
     {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
-      align: "center",
+      title: 'Type',
+      dataIndex: 'type',
+      key: 'type',
+      align: 'center',
     },
     {
-      title: "Free",
-      dataIndex: "free",
-      key: "free",
-      align: "center",
+      title: 'Free',
+      dataIndex: 'free',
+      key: 'free',
+      align: 'center',
       render: (free) =>
         free ? (
-          <span style={{ color: "green" }}>True</span>
+          <span style={{ color: 'green' }}>True</span>
         ) : (
-          <span style={{ color: "red" }}>False</span>
+          <span style={{ color: 'red' }}>False</span>
         ),
     },
     {
-      title: "Image",
-      dataIndex: "image",
-      key: "image",
-      align: "center",
+      title: 'Html code',
+      dataIndex: 'html_code',
+      key: 'html_code',
+      align: 'center',
+      render: (html_code) =>
+        html_code?.length > 0 ? (
+          <span>{html_code.slice(0, 10) + '...'}</span>
+        ) : (
+          <span>{html_code}</span>
+        ),
     },
     {
-      title: "Action",
-      key: "actions",
+      title: 'Image',
+      dataIndex: 'image',
+      key: 'image',
+      align: 'center',
+    },
+    {
+      title: 'Action',
+      key: 'actions',
       render: (_, record) => (
         <>
           <Button
@@ -90,7 +103,7 @@ const CategoryData = ({ categoryData, openCategoryModal, openDeleteModal }) => {
 
           <Button
             type="link"
-              onClick={() => openDeleteModal(record.categoryId)}
+            onClick={() => openDeleteModal(record.categoryId)}
           >
             <svg
               width={16}
@@ -107,7 +120,7 @@ const CategoryData = ({ categoryData, openCategoryModal, openDeleteModal }) => {
           </Button>
         </>
       ),
-      align: "center",
+      align: 'center',
     },
   ];
 

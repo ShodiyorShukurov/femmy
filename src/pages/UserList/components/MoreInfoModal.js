@@ -1,6 +1,8 @@
-import React from "react";
-import { Modal, Row, Col, Card, Table } from "antd";
-import Api from "../../../api";
+import React from 'react';
+import { Modal, Row, Col, Card, List, Collapse } from 'antd';
+import Api from '../../../api';
+
+const { Panel } = Collapse;
 
 const MoreInfoModal = ({
   isModalUserInfo,
@@ -11,197 +13,10 @@ const MoreInfoModal = ({
   /*User data start*/
   const [userData, setUserData] = React.useState([]);
 
-  const userIndex = userData?.length
-    ? userData?.map((user) => ({
-        id: user.id,
-        name: user.name,
-        user_id: user.chat_id,
-        model_id: user.model_id,
-        phone_number: user.phone_number,
-        age: user.age,
-        height: user.height,
-        weight: user.weight,
-        avarage_period: user.avarage_period,
-        bot_step: user.bot_step,
-        cycle_duration: user.cycle_duration,
-        premium: user.premium,
-        telegram: user.telegram,
-        expired_date: user.expired_date
-      }))
-    : [];
-
-  const userColumns = [
-    {
-      title: "Id",
-      dataIndex: "id",
-      key: "id",
-      align: "center",
-    },
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      align: "center",
-    },
-    {
-      title: "User Id",
-      dataIndex: "user_id",
-      key: "user_id",
-      align: "center",
-      render: (user_id) =>
-        user_id ? user_id : <p style={{ color: "red" }}>N/A</p>,
-    },
-    {
-      title: "Model Id",
-      dataIndex: "model_id",
-      key: "model_id",
-      align: "center",
-      render: (model_id) =>
-        model_id ? model_id : <p style={{ color: "red" }}>N/A</p>,
-    },
-    {
-      title: "Phone Number",
-      dataIndex: "phone_number",
-      key: "phone_number",
-      align: "center",
-      render: (phone_number) =>
-        phone_number ? (
-          <a href={"tel:" + phone_number}>{phone_number}</a>
-        ) : (
-          <p style={{ color: "red" }}>N/A</p>
-        ),
-    },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-      align: "center",
-      render: (age) => (
-        <span>{age ? age : <span style={{ color: "red" }}>N/A</span>}</span>
-      ),
-    },
-
-    {
-      title: "Height",
-      dataIndex: "height",
-      key: "height",
-      align: "center",
-      render: (height) => (
-        <span>
-          {height ? height : <span style={{ color: "red" }}>N/A</span>}
-        </span>
-      ),
-    },
-
-    {
-      title: "Weight",
-      dataIndex: "weight",
-      key: "weight",
-      align: "center",
-      render: (weight) => (
-        <span>
-          {weight ? weight : <span style={{ color: "red" }}>N/A</span>}
-        </span>
-      ),
-    },
-
-    {
-      title: "Avarage period",
-      dataIndex: "avarage_period",
-      key: "avarage_period",
-      align: "center",
-      render: (avarage_period) => (
-        <span>
-          {avarage_period ? (
-            avarage_period
-          ) : (
-            <span style={{ color: "red" }}>N/A</span>
-          )}
-        </span>
-      ),
-    },
-
-    {
-      title: "Bot step",
-      dataIndex: "bot_step",
-      key: "bot_step",
-      align: "center",
-      render: (bot_step) => (
-        <span>
-          {bot_step ? bot_step : <span style={{ color: "red" }}>N/A</span>}
-        </span>
-      ),
-    },
-
-    {
-      title: "Cycle Duration",
-      dataIndex: "cycle_duration",
-      key: "cycle_duration",
-      align: "center",
-      render: (cycle_duration) => (
-        <span>
-          {cycle_duration ? (
-            cycle_duration
-          ) : (
-            <span style={{ color: "red" }}>N/A</span>
-          )}
-        </span>
-      ),
-    },
-
-    {
-      title: "Premium",
-      dataIndex: "premium",
-      key: "premium",
-      align: "center",
-      render: (premium) => (
-        <span>
-          {premium ? (
-            <span style={{ color: "green" }}>True</span>
-          ) : (
-            <span style={{ color: "red" }}>False</span>
-          )}
-        </span>
-      ),
-    },
-
-    {
-      title: "Telegram",
-      dataIndex: "telegram",
-      key: "telegram",
-      align: "center",
-      render: (telegram) => (
-        <span>
-          {telegram ? (
-            <span style={{ color: "green" }}>True</span>
-          ) : (
-            <span style={{ color: "red" }}>False</span>
-          )}
-        </span>
-      ),
-    },
-
-    {
-      title: "Expired Date",
-      dataIndex: "expired_date",
-      key: "expired_date",
-      align: "center",
-      render: (expired_date) => (
-        <span>
-          {expired_date ? (
-            expired_date
-          ) : (
-            <span style={{ color: "red" }}>N/A</span>
-          )}
-        </span>
-      ),
-    },
-  ];
-
   const fetchUserData = async () => {
     if (!selectedUser?.id) return;
     try {
-      const res = await Api.get("/user/" + selectedUser?.id);
+      const res = await Api.get('/user/admin/' + selectedUser?.id);
       if (res.data) {
         setUserData([res.data.data]);
       } else {
@@ -220,7 +35,7 @@ const MoreInfoModal = ({
 
   return (
     <Modal
-      title={""}
+      title={''}
       open={isModalUserInfo}
       onCancel={() => {
         setIsModalUserInfo(false);
@@ -228,7 +43,7 @@ const MoreInfoModal = ({
         setUserData([]);
       }}
       footer={null}
-      width={1500}
+      width={700}
     >
       <div className="tabled">
         <Row gutter={[24, 0]}>
@@ -236,14 +51,214 @@ const MoreInfoModal = ({
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title={"User Information"}
+              title={'User Information'}
             >
               <div className="table-responsive">
-                <Table
+                {/* <Table
                   columns={userColumns}
                   dataSource={userIndex}
                   pagination={false}
                   className="ant-border-space"
+                /> */}
+                <List
+                  style={{
+                    border: 'none',
+                  }}
+                  size="small"
+                  // header={<div>Header</div>}
+                  // footer={<div>Footer</div>}
+                  bordered
+                  dataSource={userData}
+                  renderItem={(item) => (
+                    <>
+                      <List.Item>Id: {item.id}</List.Item>
+                      <List.Item>Name: {item.name}</List.Item>
+                      <List.Item>
+                        Email:{' '}
+                        {item.email ? (
+                          <a href={'mailto:' + item.email}>{item.email}</a>
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
+                      </List.Item>
+                      <List.Item
+                        style={{
+                          display: 'flex',
+                          justifyContent: 'left',
+                          alignItems: 'center',
+                        }}
+                      >
+                        Chat Id:{' '}
+                        {item.chat_id ? (
+                          item.chat_id
+                        ) : (
+                          <span style={{ color: 'red', marginLeft: '3px' }}>
+                            N/A
+                          </span>
+                        )}
+                      </List.Item>
+                      <List.Item>
+                        Mode Id:{' '}
+                        {item.mode_id ? (
+                          item.mode_id
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
+                      </List.Item>
+                      <List.Item>
+                        Phone Number:{' '}
+                        {item.phone_number ? (
+                          <a href={'tel:' + item.phone_number}>
+                            {item.phone_number}
+                          </a>
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
+                      </List.Item>
+                      <List.Item>
+                        Age:{' '}
+                        {
+                          <span>
+                            {item.age ? (
+                              item.age
+                            ) : (
+                              <span style={{ color: 'red' }}>N/A</span>
+                            )}
+                          </span>
+                        }
+                      </List.Item>
+                      <List.Item>
+                        Height:{' '}
+                        {
+                          <span>
+                            {item.height ? (
+                              item.height
+                            ) : (
+                              <span style={{ color: 'red' }}>N/A</span>
+                            )}
+                          </span>
+                        }
+                      </List.Item>
+                      <List.Item>
+                        Weight:{' '}
+                        {
+                          <span>
+                            {item.weight ? (
+                              item.weight
+                            ) : (
+                              <span style={{ color: 'red' }}>N/A</span>
+                            )}
+                          </span>
+                        }
+                      </List.Item>
+                      <List.Item>
+                        Avarage period:{' '}
+                        {
+                          <span>
+                            {item.avarage_period ? (
+                              item.avarage_period
+                            ) : (
+                              <span style={{ color: 'red' }}>N/A</span>
+                            )}
+                          </span>
+                        }
+                      </List.Item>
+                      <List.Item>
+                        Bot step:{' '}
+                        {
+                          <span>
+                            {item.bot_step ? (
+                              item.bot_step
+                            ) : (
+                              <span style={{ color: 'red' }}>N/A</span>
+                            )}
+                          </span>
+                        }
+                      </List.Item>
+                      <List.Item>
+                        Cycle Duration:{' '}
+                        {
+                          <span>
+                            {item.cycle_duration ? (
+                              item.cycle_duration
+                            ) : (
+                              <span style={{ color: 'red' }}>N/A</span>
+                            )}
+                          </span>
+                        }
+                      </List.Item>
+                      <List.Item>
+                        Premium:{' '}
+                        {item.premium ? (
+                          <span style={{ color: 'green' }}>True</span>
+                        ) : (
+                          <span style={{ color: 'red' }}>False</span>
+                        )}
+                      </List.Item>
+                      <List.Item>
+                        Telegram:{' '}
+                        {item.telegram ? (
+                          <span style={{ color: 'green' }}>True</span>
+                        ) : (
+                          <span style={{ color: 'red' }}>False</span>
+                        )}
+                      </List.Item>
+                      <List.Item>
+                        Expired Date:{' '}
+                        {item.expired_date ? (
+                          item.expired_date
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
+                      </List.Item>
+                      <List.Item>
+                        Expired Date:{' '}
+                        {item.expired_date ? (
+                          item.expired_date
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
+                      </List.Item>
+                      <List.Item>
+                        Fetal age:{' '}
+                        {item.fetal_age ? (
+                          item.fetal_age
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
+                      </List.Item>
+                      <List.Item>
+                        Baby born date:{' '}
+                        {item.baby_born_date ? (
+                          item.baby_born_date
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
+                      </List.Item>
+                      <List.Item>
+                        Pincode:{' '}
+                        {item.pincode ? (
+                          item.pincode
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
+                      </List.Item>
+                      <List.Item>
+                        Tracking:{' '}
+                        {item?.tracking ? (
+                          <Collapse>
+                           <Panel header={`Trakicng`} key={'0'}>
+                              {item?.tracking?.map((item, index) => (
+                                <div key={index}>{item}</div>
+                              ))}
+                            </Panel>
+                          </Collapse>
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
+                      </List.Item>
+                    </>
+                  )}
                 />
               </div>
             </Card>

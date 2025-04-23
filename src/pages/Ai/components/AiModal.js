@@ -16,7 +16,7 @@ const AiModal = ({ isModalVisible, fetchAiData, selectItem, handleCancel }) => {
         mode_id: selectItem.mode_id || '',
         prompt: selectItem.prompt || '',
         model: selectItem.model || '',
-        questions: selectItem.questions.join(', ') || '',
+        questions: selectItem.questions.join('\n') || '',
       });
     }
   }, [isModalVisible, selectItem, form]);
@@ -29,7 +29,7 @@ const AiModal = ({ isModalVisible, fetchAiData, selectItem, handleCancel }) => {
       mode_id: Number(values.mode_id),
       prompt: values.prompt,
       model: values.model,
-      questions: values.questions.split(', '),
+      questions: values.questions.split('\n'),
     };
 
     try {

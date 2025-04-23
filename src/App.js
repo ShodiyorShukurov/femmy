@@ -8,6 +8,7 @@ import UsersListTable from './pages/UserList/UsersListTable';
 import DevicesListTable from './pages/DevicesList/DevicesListTable';
 import CategoryListTable from './pages/CategoryList/CategoryListTable';
 import ArticlesListTable from './pages/ArticlesList/ArticlesListTable';
+import AiPages from './pages/Ai/AiPages';
 
 function DeepLinkPage() {
   const { id } = useParams();
@@ -34,6 +35,7 @@ function App() {
           <Route path="devices-list" element={<DevicesListTable />} />
           <Route path="categories-list" element={<CategoryListTable />} />
           <Route path="articles-list" element={<ArticlesListTable />} />
+          <Route path="ai-list" element={<AiPages />} />
         </Route>
       </Routes>
     </div>

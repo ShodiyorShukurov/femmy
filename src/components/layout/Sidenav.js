@@ -1,10 +1,10 @@
-import { Menu } from "antd";
-import { NavLink, useLocation } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+import { Menu } from 'antd';
+import { NavLink, useLocation } from 'react-router-dom';
+import logo from '../../assets/images/logo.png';
 
 function Sidenav({ color }) {
   const { pathname } = useLocation();
-  const page = pathname.replace("/", "");
+  const page = pathname.replace('/', '');
 
   return (
     <>
@@ -19,7 +19,7 @@ function Sidenav({ color }) {
             <span
               className="icon"
               style={{
-                background: page === "users-list" ? color : "",
+                background: page === 'users-list' ? color : '',
               }}
             >
               <svg
@@ -40,7 +40,7 @@ function Sidenav({ color }) {
             <span
               className="icon"
               style={{
-                background: page === "devices-list" ? color : "",
+                background: page === 'devices-list' ? color : '',
               }}
             >
               <svg
@@ -65,7 +65,7 @@ function Sidenav({ color }) {
             <span
               className="icon"
               style={{
-                background: page === "categories-list" ? color : "",
+                background: page === 'categories-list' ? color : '',
               }}
             >
               <svg
@@ -87,11 +87,11 @@ function Sidenav({ color }) {
             <span
               className="icon"
               style={{
-                background: page === "articles-list" ? color : "",
+                background: page === 'articles-list' ? color : '',
               }}
             >
               <svg
-              width={20}
+                width={20}
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
                 fill="currentColor"
@@ -110,6 +110,28 @@ function Sidenav({ color }) {
               </svg>
             </span>
             <span className="label">Articles List</span>
+          </NavLink>
+        </Menu.Item>
+
+        <Menu.Item key="5">
+          <NavLink to="/ai-list">
+            <span
+              className="icon"
+              style={{
+                background: page === 'ai-list' ? color : '',
+              }}
+            >
+              <svg
+                width={20}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="size-4"
+              >
+                <path d="M10.618 10.26c-.361.223-.618.598-.618 1.022 0 .226-.142.43-.36.49A6.006 6.006 0 0 1 8 12c-.569 0-1.12-.08-1.64-.227a.504.504 0 0 1-.36-.491c0-.424-.257-.799-.618-1.021a5 5 0 1 1 5.235 0ZM6.867 13.415a.75.75 0 1 0-.225 1.483 9.065 9.065 0 0 0 2.716 0 .75.75 0 1 0-.225-1.483 7.563 7.563 0 0 1-2.266 0Z" />
+              </svg>
+            </span>
+            <span className="label">Ai List</span>
           </NavLink>
         </Menu.Item>
       </Menu>

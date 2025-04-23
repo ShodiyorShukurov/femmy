@@ -1,11 +1,8 @@
-import { Button, Table } from "antd";
-import { useMain } from "../../../hooks/UseMain";
+import { Button, Table } from 'antd';
+import { useMain } from '../../../hooks/UseMain';
 
-const UserData = ({
-  showUserInfoModal,
-  userListData,
-}) => {
-const { changeValue } = useMain();
+const UserData = ({ showUserInfoModal, userListData }) => {
+  const { changeValue } = useMain();
 
   const dataIndex =
     userListData?.length > 0
@@ -21,89 +18,87 @@ const { changeValue } = useMain();
         }))
       : [];
 
+  const handleOpenNewTab = (data) => {
+    const params = new URLSearchParams(data).toString();
+    const newWindow = window.open(`/user-edit?${params}`, '_blank');
+    if (newWindow) newWindow.focus();
+  };
+
   const columns = [
     {
-      title: "№",
-      dataIndex: "id",
-      key: "id",
-      align: "center",
+      title: '№',
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center',
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      align: "center",
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      align: 'center',
     },
     {
-      title: "Phone Number",
-      dataIndex: "phone_number",
-      key: "phone_number",
-      align: "center",
+      title: 'Phone Number',
+      dataIndex: 'phone_number',
+      key: 'phone_number',
+      align: 'center',
       render: (phone_number) =>
         phone_number ? (
-          <a href={"tel:" + phone_number}>{phone_number}</a>
+          <a href={'tel:' + phone_number}>{phone_number}</a>
         ) : (
-          "N/A"
+          'N/A'
         ),
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-      align: "center",
+      title: 'Age',
+      dataIndex: 'age',
+      key: 'age',
+      align: 'center',
       render: (age) => (
-        <span>
-          {age ? (
-            age
-          ) : (
-            <span style={{ color: "red" }}>
-              N/A
-            </span>
-          )}
-        </span>
+        <span>{age ? age : <span style={{ color: 'red' }}>N/A</span>}</span>
       ),
     },
 
     {
-      title: "Premium",
-      dataIndex: "premium",
-      key: "premium",
-      align: "center",
+      title: 'Premium',
+      dataIndex: 'premium',
+      key: 'premium',
+      align: 'center',
       render: (premium) => (
         <span>
           {premium ? (
-            <span style={{ color: "green" }}>True</span>
+            <span style={{ color: 'green' }}>True</span>
           ) : (
-            <span style={{ color: "red" }}>False</span>
+            <span style={{ color: 'red' }}>False</span>
           )}
         </span>
       ),
     },
 
     {
-      title: "Telegram",
-      dataIndex: "telegram",
-      key: "telegram",
-      align: "center",
+      title: 'Telegram',
+      dataIndex: 'telegram',
+      key: 'telegram',
+      align: 'center',
       render: (telegram) => (
         <span>
           {telegram ? (
-            <span style={{ color: "green" }}>True</span>
+            <span style={{ color: 'green' }}>True</span>
           ) : (
-            <span style={{ color: "red" }}>False</span>
+            <span style={{ color: 'red' }}>False</span>
           )}
         </span>
       ),
     },
     {
-      title: "Action",
-      key: "actions",
+      title: 'Action',
+      key: 'actions',
       render: (_, record) => (
         <div>
           <Button
             type="link"
             onClick={() => showUserInfoModal(record.userData)}
-            style={{ paddingLeft: "10px", paddingRight: "10px" }}
+            style={{ paddingLeft: '10px', paddingRight: '10px' }}
           >
             <svg
               width={20}
@@ -120,9 +115,23 @@ const { changeValue } = useMain();
               />
             </svg>
           </Button>
+          <Button type="link" onClick={() => handleOpenNewTab(record.userData)}>
+            <svg
+              width={16}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+            >
+              <path
+                fillRule="evenodd"
+                d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </Button>
         </div>
       ),
-      align: "center",
+      align: 'center',
     },
   ];
 

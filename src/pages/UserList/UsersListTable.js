@@ -1,9 +1,9 @@
-import React from "react";
-import { Row, Col, Card, Button, Space} from "antd";
-import useUserList from "../../hooks/UseUserList";
-import Main from "../../components/layout/Main";
-import UserData from "./data/UserData";
-import MoreInfoModal from "./components/MoreInfoModal";
+import React from 'react';
+import { Row, Col, Card, Button, Space } from 'antd';
+import useUserList from '../../hooks/UseUserList';
+import Main from '../../components/layout/Main';
+import UserData from './data/UserData';
+import MoreInfoModal from './components/MoreInfoModal';
 
 
 function UsersListTable() {
@@ -19,7 +19,6 @@ function UsersListTable() {
     isLoading,
   } = useUserList();
 
-
   return (
     <Main>
       <div className="tabled">
@@ -28,7 +27,7 @@ function UsersListTable() {
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
-              title={"Users Information"}
+              title={'Users Information'}
             >
               <div className="table-responsive">
                 {isLoading ? (
@@ -40,7 +39,7 @@ function UsersListTable() {
                   />
                 )}
               </div>
-              <Space style={{ padding: "10px" }}>
+              <Space style={{ padding: '10px' }}>
                 {next > 1 && (
                   <Button className="me-4" onClick={() => setNext(next - 1)}>
                     Previous

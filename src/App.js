@@ -10,6 +10,7 @@ import CategoryListTable from './pages/CategoryList/CategoryListTable';
 import ArticlesListTable from './pages/ArticlesList/ArticlesListTable';
 import AiPages from './pages/Ai/AiPages';
 import UserEdit from './pages/UserList/components/UserEdit';
+import PricePage from './pages/Price/PricePage';
 
 function DeepLinkPage() {
   const { id } = useParams();
@@ -38,6 +39,7 @@ function App() {
           <Route path="articles-list" element={<ArticlesListTable />} />
           <Route path="ai-list" element={<AiPages />} />
           <Route path="user-edit" element={<UserEdit />} />
+          <Route path="price-list" element={<PricePage />} />
         </Route>
       </Routes>
     </div>

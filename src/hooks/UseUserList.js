@@ -4,7 +4,6 @@ import { Form } from "antd";
 
 const useUserList = () => {
   const [userListData, setUserListData] = React.useState([]);
-  const [sourceData, setSourceData] = React.useState([]);
   const [isModalVisible, setIsModalVisible] = React.useState(false);
   const [next, setNext] = React.useState(1);
   const [isTransactionModalVisible, setIsTransactionModalVisible] =
@@ -75,8 +74,8 @@ const useUserList = () => {
     showUserInfoModal,
     isModalUserInfo,
     setIsModalUserInfo,
-    sourceData,
     isLoading,
+    fetchUserListData
   };
 };
 

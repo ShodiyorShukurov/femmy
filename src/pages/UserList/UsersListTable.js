@@ -4,7 +4,7 @@ import useUserList from '../../hooks/UseUserList';
 import Main from '../../components/layout/Main';
 import UserData from './data/UserData';
 import MoreInfoModal from './components/MoreInfoModal';
-
+import PasswordModal from './components/PasswordModal';
 
 function UsersListTable() {
   const {
@@ -17,6 +17,10 @@ function UsersListTable() {
     isModalUserInfo,
     setIsModalUserInfo,
     isLoading,
+    openMessageModal,
+    isModalVisible,
+    handleCancel,
+    fetchUserListData
   } = useUserList();
 
   return (
@@ -36,6 +40,7 @@ function UsersListTable() {
                   <UserData
                     userListData={userListData}
                     showUserInfoModal={showUserInfoModal}
+                    openMessageModal={openMessageModal}
                   />
                 )}
               </div>
@@ -66,6 +71,13 @@ function UsersListTable() {
           setIsModalUserInfo={setIsModalUserInfo}
           selectedUser={selectedUser}
           setSelectedUser={setSelectedUser}
+        />
+
+        <PasswordModal
+          isModalVisible={isModalVisible}
+          selectedUser={selectedUser}
+          handleCancel={handleCancel}
+          fetchUserListData={fetchUserListData}
         />
       </div>
     </Main>

@@ -8,6 +8,7 @@ const UserData = ({ showUserInfoModal, userListData }) => {
     userListData?.length > 0
       ? userListData.map((user, index) => ({
           id: index + 1,
+          id1: user.id,
           name: user.name,
           phone_number: user.phone_number,
           age: user.age,
@@ -29,6 +30,12 @@ const UserData = ({ showUserInfoModal, userListData }) => {
       title: '№',
       dataIndex: 'id',
       key: 'id',
+      align: 'center',
+    },
+    {
+      title: 'Id',
+      dataIndex: 'id1',
+      key: 'id1',
       align: 'center',
     },
     {

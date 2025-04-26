@@ -105,7 +105,10 @@ const ArticleMoreInfo = ({
   ];
 
   const fetchUserData = async () => {
-    if (!selectItem) return;
+    if (
+      selectItem === undefined || 
+      (typeof selectItem === 'object' && selectItem !== null && Object.keys(selectItem).length === 0)
+    ) return
     try {
       const res = await Api.get("/article/" + selectItem);
       if (res.data) {
@@ -117,7 +120,6 @@ const ArticleMoreInfo = ({
       console.error(error);
     }
   };
-  console.log(articleData);
 
   /*User data end*/
 

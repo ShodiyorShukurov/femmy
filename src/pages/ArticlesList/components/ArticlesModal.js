@@ -22,6 +22,7 @@ const ArticlesModal = ({
       form.setFieldsValue({
         title: selectItem.title || '',
         description: selectItem.description || '',
+        html_code: selectItem.html_code || '',
         category_id: selectItem.category_id || '',
         source: selectItem.source || '',
         video_url: selectItem.video_url || '',
@@ -37,6 +38,7 @@ const ArticlesModal = ({
 
     formData.append('title', values.title);
     formData.append('description', values.description);
+    formData.append('html_code', values.html_code);
     formData.append('category_id', values.category_id);
     formData.append('source', values.source);
     formData.append('video_url', values.video_url);
@@ -114,6 +116,19 @@ const ArticlesModal = ({
         </Form.Item>
 
         <Form.Item
+          name="html_code"
+          label="Html code"
+          rules={[
+            {
+              required: true,
+              message: 'Html code required',
+            },
+          ]}
+        >
+          <TextArea placeholder="Html code" rows={5} />
+        </Form.Item>
+
+        <Form.Item
           name="category_id"
           label={'Category'}
           rules={[
@@ -173,15 +188,15 @@ const ArticlesModal = ({
 
         <Form.Item
           name="free"
-          label={'Premium'}
+          label={'Free'}
           rules={[
             {
               required: true,
-              message: 'Premium required',
+              message: 'Free required',
             },
           ]}
         >
-          <Select placeholder="Change Premium">
+          <Select placeholder="Change Free">
             <Option value="true" key="1">
               True
             </Option>

@@ -1,4 +1,4 @@
-import { Table, Button, Image } from "antd";
+import { Table, Button, Image } from 'antd';
 
 const ArticlesData = ({
   articlesData,
@@ -14,15 +14,19 @@ const ArticlesData = ({
           title: article.title,
           description:
             article?.description.length > 0
-              ? article.description.slice(0, 10) + "..."
+              ? article.description.slice(0, 10) + '...'
               : article.description,
           featured: article.featured,
           free: article.free,
+          html_code:
+            article?.html_code?.length > 0
+              ? article?.html_code?.slice(0, 10) + '...'
+              : article?.html_code,
           image: (
             <Image
               src={article.image_url}
               width={100}
-              style={{ borderRadius: "10px" }}
+              style={{ borderRadius: '10px' }}
               alt={article.title}
             />
           ),
@@ -31,7 +35,7 @@ const ArticlesData = ({
               Watch the video
             </Button>
           ) : (
-            ""
+            ''
           ),
           articleData: article,
           articleId: article.id,
@@ -40,63 +44,69 @@ const ArticlesData = ({
 
   const columns = [
     {
-      title: "№",
-      dataIndex: "id",
-      key: "id",
-      align: "center",
+      title: '№',
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center',
     },
     {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-      align: "center",
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+      align: 'center',
     },
     {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-      align: "center",
+      title: 'Description',
+      dataIndex: 'description',
+      key: 'description',
+      align: 'center',
     },
     {
-      title: "Featured",
-      dataIndex: "featured",
-      key: "featured",
-      align: "center",
+      title: 'Html Code',
+      dataIndex: 'html_code',
+      key: 'html_code',
+      align: 'center',
+    },
+    {
+      title: 'Featured',
+      dataIndex: 'featured',
+      key: 'featured',
+      align: 'center',
       render: (featured) =>
         featured ? (
-          <span style={{ color: "green" }}>True</span>
+          <span style={{ color: 'green' }}>True</span>
         ) : (
-          <span style={{ color: "red" }}>False</span>
+          <span style={{ color: 'red' }}>False</span>
         ),
     },
     {
-      title: "Free",
-      dataIndex: "free",
-      key: "free",
-      align: "center",
+      title: 'Free',
+      dataIndex: 'free',
+      key: 'free',
+      align: 'center',
       render: (free) =>
         free ? (
-          <span style={{ color: "green" }}>True</span>
+          <span style={{ color: 'green' }}>True</span>
         ) : (
-          <span style={{ color: "red" }}>False</span>
+          <span style={{ color: 'red' }}>False</span>
         ),
     },
     {
-      title: "Image",
-      dataIndex: "image",
-      key: "image",
-      align: "center",
+      title: 'Image',
+      dataIndex: 'image',
+      key: 'image',
+      align: 'center',
     },
 
     {
-      title: "Video",
-      dataIndex: "video_url",
-      key: "video_url",
-      align: "center",
+      title: 'Video',
+      dataIndex: 'video_url',
+      key: 'video_url',
+      align: 'center',
     },
     {
-      title: "Action",
-      key: "actions",
+      title: 'Action',
+      key: 'actions',
       render: (_, record) => (
         <>
           <Button
@@ -153,7 +163,7 @@ const ArticlesData = ({
           </Button>
         </>
       ),
-      align: "center",
+      align: 'center',
     },
   ];
 

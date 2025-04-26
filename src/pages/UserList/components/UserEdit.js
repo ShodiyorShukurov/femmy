@@ -43,6 +43,7 @@ const UserEdit = () => {
       pincode: values.pincode,
       premium: values.premium,
       weight: values.weight,
+      password: values.password
     };
 
     try {
@@ -215,6 +216,12 @@ const UserEdit = () => {
                             False
                           </Option>
                         </Select>
+                      </Form.Item>
+                    </Col>
+
+                    <Col span={8} key={'password'}>
+                    <Form.Item name={`password`} label={`Password`}>
+                        <Input.Password placeholder={`Password`}  />
                       </Form.Item>
                     </Col>
 

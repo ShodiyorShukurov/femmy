@@ -162,8 +162,8 @@ const ArticlesModal = ({
           <Input placeholder="Source" />
         </Form.Item>
 
-        <Form.Item name="video_url" label="Video Url">
-          <Input placeholder="Video Url" type="url" />
+        <Form.Item name="video_url" label="Afzalliklar">
+          <Input placeholder="Afzalliklar"  />
         </Form.Item>
 
         <Form.Item

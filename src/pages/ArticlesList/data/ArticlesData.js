@@ -99,7 +99,7 @@ const ArticlesData = ({
     },
 
     {
-      title: 'Video',
+      title: 'Afzalliklar',
       dataIndex: 'video_url',
       key: 'video_url',
       align: 'center',

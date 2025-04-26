@@ -212,14 +212,6 @@ const MoreInfoModal = ({
                         )}
                       </List.Item>
                       <List.Item>
-                        Expired Date:{' '}
-                        {item.expired_date ? (
-                          item.expired_date
-                        ) : (
-                          <span style={{ color: 'red' }}>N/A</span>
-                        )}
-                      </List.Item>
-                      <List.Item>
                         Fetal age:{' '}
                         {item.fetal_age ? (
                           item.fetal_age

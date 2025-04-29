@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Card, Button, Space } from 'antd';
+import { Row, Col, Card, Button, Space, Input } from 'antd';
 import useUserList from '../../hooks/UseUserList';
 import Main from '../../components/layout/Main';
 import UserData from './data/UserData';
@@ -20,8 +20,11 @@ function UsersListTable() {
     openMessageModal,
     isModalVisible,
     handleCancel,
-    fetchUserListData
+    fetchUserListData,
   } = useUserList();
+
+  const [value, setValue] = React.useState('');
+  const [phoneValue, setPhoneValue] = React.useState('');
 
   return (
     <Main>
@@ -33,6 +36,42 @@ function UsersListTable() {
               className="criclebox tablespace mb-24"
               title={'Users Information'}
             >
+              <form
+                style={{margin: '20px'}}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  fetchUserListData(value, phoneValue)
+                }}
+              >
+                <Input
+                  placeholder="Search by id"
+                  name="search"
+                  onChange={(e) => setValue(e.target.value)}
+                  value={value}
+                  style={{ width: '300px' }}
+                />
+                <Input
+                  placeholder="Search by phone number"
+                  name="search"
+                  onChange={(e) => setPhoneValue(e.target.value)}
+                  value={phoneValue}
+                  style={{ width: '300px', marginLeft: "20px" }}
+                />
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  style={{ marginLeft: '10px' }}
+                >
+                  Search
+                </Button>
+                <Button
+                  type="default"
+                  onClick={() =>  {fetchUserListData(); setValue('')}}
+                  style={{ marginLeft: '10px' }}
+                >
+                  Reset
+                </Button>
+              </form>
               <div className="table-responsive">
                 {isLoading ? (
                   <p>Loading...</p>

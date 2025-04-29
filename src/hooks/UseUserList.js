@@ -1,6 +1,6 @@
-import React from "react";
-import Api from "../api";
-import { Form } from "antd";
+import React from 'react';
+import Api from '../api';
+import { Form } from 'antd';
 
 const useUserList = () => {
   const [userListData, setUserListData] = React.useState([]);
@@ -39,21 +39,32 @@ const useUserList = () => {
     setIsModalUserInfo(true);
   };
 
-  const fetchUserListData = async () => {
+  const fetchUserListData = async (id, phone) => {
     setIsLoading(true);
     try {
-      const res = await Api.get(`/users/list?limit=50&page=${next}`);
-      setUserListData(res.data.data);
+      if (id) {
+        const res = await Api.get(`/users/list?limit=50&page=${next}&id=${id}`);
+        setUserListData(res.data.data);
+      } else if (phone) {
+        const res = await Api.get(
+          `/users/list?limit=50&page=${next}&phone=${
+            phone?.slice(0, 1) === '+' ? phone.slice(1) : phone
+          }`
+        );
+        setUserListData(res.data.data);
+      } else {
+        const res = await Api.get(`/users/list?limit=50&page=${next}`);
+        setUserListData(res.data.data);
+      }
     } catch (error) {
       console.error(error);
-      if (error.message === "Request failed with status code 404") {
+      if (error.message === 'Request failed with status code 404') {
         setUserListData([]);
       }
     } finally {
       setIsLoading(false);
     }
   };
-
 
   React.useEffect(() => {
     fetchUserListData();
@@ -75,7 +86,7 @@ const useUserList = () => {
     isModalUserInfo,
     setIsModalUserInfo,
     isLoading,
-    fetchUserListData
+    fetchUserListData,
   };
 };
 

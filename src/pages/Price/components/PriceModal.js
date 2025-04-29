@@ -28,12 +28,12 @@ const PriceModal = ({
 
   const handleSubmitTrial = async (values) => {
     const data = {
-      title_uz: values.title_uz.trim(),
-      title_ru: values.title_ru.trim(),
-      title_eng: values.title_eng.trim(),
-      period: values.period.trim(),
-      price: values.price.trim(),
-      sort_order: values.sort_order.trim(),
+      title_uz: values.title_uz?.trim(),
+      title_ru: values.title_ru?.trim(),
+      title_eng: values.title_eng?.trim(),
+      period: String(values?.period)?.trim(),
+      price: String(values?.price)?.trim(),
+      sort_order: String(values.sort_order)?.trim(),
     };
 
     try {

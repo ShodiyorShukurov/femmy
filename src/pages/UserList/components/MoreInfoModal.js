@@ -228,6 +228,14 @@ const MoreInfoModal = ({
                         )}
                       </List.Item>
                       <List.Item>
+                      Last period date:{' '}
+                        {item.last_period_date ? (
+                          item.last_period_date.slice(0,10)
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
+                      </List.Item>
+                      <List.Item>
                         Pincode:{' '}
                         {item.pincode ? (
                           item.pincode

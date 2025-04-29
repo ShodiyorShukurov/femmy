@@ -133,12 +133,12 @@ const PriceModal = ({
         <Form.Item
           name="monthly_price"
           label="Monthly price"
-          rules={[
-            {
-              required: true,
-              message: 'Monthly price required',
-            },
-          ]}
+          // rules={[
+          //   {
+          //     required: true,
+          //     message: 'Monthly price required',
+          //   },
+          // ]}
         >
           <InputNumber placeholder="Monthly price" style={{ width: '100%' }} />
         </Form.Item>

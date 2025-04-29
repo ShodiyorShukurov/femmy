@@ -11,6 +11,7 @@ const PriceData = ({ priceData, openAiModal, openDeleteModal }) => {
           title_eng: priceData.title_eng,
           title_ru: priceData.title_ru,
           price: priceData.price,
+          monthly_price: priceData.monthly_price,
           period: priceData.period,
           sort_order: priceData.sort_order,
           priceData: priceData,
@@ -47,6 +48,12 @@ const PriceData = ({ priceData, openAiModal, openDeleteModal }) => {
       title: 'Price',
       dataIndex: 'price',
       key: 'price',
+      align: 'center',
+    },
+    {
+      title: 'Monthly price',
+      dataIndex: 'monthly_price',
+      key: 'monthly_price',
       align: 'center',
     },
     {

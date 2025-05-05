@@ -1,0 +1,25 @@
+{
+    "applinks": {
+      "apps": [],
+      "details": [
+        {
+          "appIDs": [
+            "C4N9PQ9AH6.app.femmy.behad"
+          ],
+          "paths": [
+            "/article_details_page/*", "*"
+          ],
+          "components": [
+            {
+              "/": "/*"
+            }
+          ]
+        }
+      ]
+    },
+    "webcredentials": {
+      "apps": [
+        "C4N9PQ9AH6.app.femmy.behad"
+      ]
+    }
+  }

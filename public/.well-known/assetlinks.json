@@ -5,10 +5,9 @@
     ],
     "target": {
       "namespace": "android_app",
-      "package_name": "app.femmy.behad",
+      "package_name": "app.femmy.ai.behad",
       "sha256_cert_fingerprints": [
-        "38:43:F0:7F:61:8D:E7:44:E0:ED:8D:B0:83:53:29:2F:1A:7C:D2:35:76:32:42:70:91:4C:88:F1:2C:C6:5E:D3",
-        "15:A5:EB:B7:A8:AF:8F:09:B2:21:24:4C:0A:9E:FA:D3:EB:A8:2E:23:F4:E6:58:43:AB:D3:FF:35:8C:D0:24:25"
+        "0B:09:B7:A5:BE:54:B1:1C:8D:4F:00:0F:A0:31:2C:BD:DE:7C:AD:E5:0B:7E:CA:62:40:9C:B7:BF:83:9D:C1:E5"
       ]
     }
   }

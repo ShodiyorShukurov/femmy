@@ -3,10 +3,10 @@ import { Row, Col, Card, Button } from "antd";
 import Main from "../../components/layout/Main";
 import ArticlesData from "./data/ArticlesData";
 import ArticlesModal from "./components/ArticlesModal";
-import DeleteModal from "../AdminPage/components/DeleteModal";
 import useArticles from "../../hooks/UseArticles";
 import VideoModal from "./components/VideoModal";
 import ArticleMoreInfo from "./components/ArticleMoreInfo";
+import DeleteModal from "./components/DeleteModal";
 
 function ArticlesListTable() {
   const {

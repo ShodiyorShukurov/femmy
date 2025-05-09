@@ -1,6 +1,8 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState, useRef } from 'react';
 import { Modal, Row, Col, Card, List, Collapse } from 'antd';
-import Api from '../../../api';
+import Api from '../../../api/index';
 
 const { Panel } = Collapse;
 
@@ -10,8 +12,8 @@ const MoreInfoModal = ({
   selectedUser,
   setSelectedUser,
 }) => {
-  /*User data start*/
-  const [userData, setUserData] = React.useState([]);
+  const [userData, setUserData] = useState([]);
+  const scrollPositionRef = useRef(0); 
 
   const fetchUserData = async () => {
     if (!selectedUser?.id) return;
@@ -23,50 +25,80 @@ const MoreInfoModal = ({
         setUserData([]);
       }
     } catch (error) {
-      console.error(error);
+      console.error('Error fetching user data:', error);
     }
   };
 
-  /*User data end*/
+  useEffect(() => {
+    if (isModalUserInfo) {
+      // Joriy scroll pozitsiyasini saqlash
+      scrollPositionRef.current = window.scrollY;
+      console.log('Modal opened, saved scroll:', scrollPositionRef.current);
+      // Sahifani fixed holatga o‘tkazish
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollPositionRef.current}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Modal yopilganda scrollni qayta tiklash
+      const scrollY = scrollPositionRef.current;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      window.scrollTo(0, scrollY);
+      console.log('Modal closed, restored scroll:', scrollY);
+    }
 
-  React.useEffect(() => {
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+    };
+  }, [isModalUserInfo]);
+
+  useEffect(() => {
     fetchUserData();
   }, [selectedUser?.id]);
 
+  const handleCancel = () => {
+    setIsModalUserInfo(false);
+    setSelectedUser(null);
+    setUserData([]);
+  };
+
   return (
     <Modal
-      title={''}
+      title=""
       open={isModalUserInfo}
-      onCancel={() => {
-        setIsModalUserInfo(false);
-        setSelectedUser(null);
-        setUserData([]);
-      }}
+      onCancel={handleCancel}
       footer={null}
       width={700}
+      centered
+      maskClosable={true}
+      autoFocusButton={null} // Avtomatik fokusni o‘chirish
+      focusTriggerAfterClose={false} // Yopilganda fokusni qaytarmaslik
+      bodyStyle={{
+        maxHeight: '70vh',
+        overflowY: 'auto',
+      }}
+      style={{
+        zIndex: 10000,
+      }}
     >
       <div className="tabled">
         <Row gutter={[24, 0]}>
-          <Col xs="24" xl={24}>
+          <Col xs={24} xl={24}>
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
               title={'User Information'}
             >
               <div className="table-responsive">
-                {/* <Table
-                  columns={userColumns}
-                  dataSource={userIndex}
-                  pagination={false}
-                  className="ant-border-space"
-                /> */}
                 <List
-                  style={{
-                    border: 'none',
-                  }}
+                  style={{ border: 'none' }}
                   size="small"
-                  // header={<div>Header</div>}
-                  // footer={<div>Footer</div>}
                   bordered
                   dataSource={userData}
                   renderItem={(item) => (
@@ -117,75 +149,51 @@ const MoreInfoModal = ({
                       </List.Item>
                       <List.Item>
                         Age:{' '}
-                        {
-                          <span>
-                            {item.age ? (
-                              item.age
-                            ) : (
-                              <span style={{ color: 'red' }}>N/A</span>
-                            )}
-                          </span>
-                        }
+                        {item.age ? (
+                          item.age
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
                       </List.Item>
                       <List.Item>
                         Height:{' '}
-                        {
-                          <span>
-                            {item.height ? (
-                              item.height
-                            ) : (
-                              <span style={{ color: 'red' }}>N/A</span>
-                            )}
-                          </span>
-                        }
+                        {item.height ? (
+                          item.height
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
                       </List.Item>
                       <List.Item>
                         Weight:{' '}
-                        {
-                          <span>
-                            {item.weight ? (
-                              item.weight
-                            ) : (
-                              <span style={{ color: 'red' }}>N/A</span>
-                            )}
-                          </span>
-                        }
+                        {item.weight ? (
+                          item.weight
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
                       </List.Item>
                       <List.Item>
-                        Avarage period:{' '}
-                        {
-                          <span>
-                            {item.avarage_period ? (
-                              item.avarage_period
-                            ) : (
-                              <span style={{ color: 'red' }}>N/A</span>
-                            )}
-                          </span>
-                        }
+                        Average period:{' '}
+                        {item.avarage_period ? (
+                          item.avarage_period
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
                       </List.Item>
                       <List.Item>
                         Bot step:{' '}
-                        {
-                          <span>
-                            {item.bot_step ? (
-                              item.bot_step
-                            ) : (
-                              <span style={{ color: 'red' }}>N/A</span>
-                            )}
-                          </span>
-                        }
+                        {item.bot_step ? (
+                          item.bot_step
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
                       </List.Item>
                       <List.Item>
                         Cycle Duration:{' '}
-                        {
-                          <span>
-                            {item.cycle_duration ? (
-                              item.cycle_duration
-                            ) : (
-                              <span style={{ color: 'red' }}>N/A</span>
-                            )}
-                          </span>
-                        }
+                        {item.cycle_duration ? (
+                          item.cycle_duration
+                        ) : (
+                          <span style={{ color: 'red' }}>N/A</span>
+                        )}
                       </List.Item>
                       <List.Item>
                         Premium:{' '}
@@ -228,9 +236,9 @@ const MoreInfoModal = ({
                         )}
                       </List.Item>
                       <List.Item>
-                      Last period date:{' '}
+                        Last period date:{' '}
                         {item.last_period_date ? (
-                          item.last_period_date.slice(0,10)
+                          item.last_period_date.slice(0, 10)
                         ) : (
                           <span style={{ color: 'red' }}>N/A</span>
                         )}
@@ -247,7 +255,7 @@ const MoreInfoModal = ({
                         Tracking:{' '}
                         {item?.tracking ? (
                           <Collapse>
-                           <Panel header={`Trakicng`} key={'0'}>
+                            <Panel header={`Tracking`} key={'0'}>
                               {item?.tracking?.map((item, index) => (
                                 <div key={index}>{item}</div>
                               ))}

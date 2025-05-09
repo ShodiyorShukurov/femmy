@@ -4,7 +4,7 @@ import Main from "../../components/layout/Main";
 import CategoryData from "./data/CategoryData";
 import useCategory from "../../hooks/UseCategory";
 import CategoryModal from "./components/CategoryModal";
-import DeleteModal from "../AdminPage/components/DeleteModal";
+import DeleteModal from "./components/DeleteModal";
 
 function CategoryListTable() {
   const {

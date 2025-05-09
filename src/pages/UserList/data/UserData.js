@@ -1,7 +1,9 @@
+import React, { useRef, useEffect } from 'react';
 import { Button, Table } from 'antd';
 
 const UserData = ({ showUserInfoModal, userListData, openMessageModal }) => {
-
+  const scrollRef = useRef(null); // Table scroll pozitsiyasini saqlash uchun
+  const scrollPositionRef = useRef(0); // Table ichki scroll pozitsiyasi
 
   const dataIndex =
     userListData?.length > 0
@@ -23,6 +25,19 @@ const UserData = ({ showUserInfoModal, userListData, openMessageModal }) => {
     const newWindow = window.open(`/user-edit?${params}`, '_blank');
     if (newWindow) newWindow.focus();
   };
+
+
+  useEffect(() => {
+    const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+    if (tableBody) {
+      const handleScroll = () => {
+        scrollPositionRef.current = tableBody.scrollTop;
+        console.log('Table scroll position:', scrollPositionRef.current);
+      };
+      tableBody.addEventListener('scroll', handleScroll);
+      return () => tableBody.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
 
   const columns = [
     {
@@ -64,7 +79,6 @@ const UserData = ({ showUserInfoModal, userListData, openMessageModal }) => {
         <span>{age ? age : <span style={{ color: 'red' }}>N/A</span>}</span>
       ),
     },
-
     {
       title: 'Premium',
       dataIndex: 'premium',
@@ -80,7 +94,6 @@ const UserData = ({ showUserInfoModal, userListData, openMessageModal }) => {
         </span>
       ),
     },
-
     {
       title: 'Telegram',
       dataIndex: 'telegram',
@@ -103,7 +116,13 @@ const UserData = ({ showUserInfoModal, userListData, openMessageModal }) => {
         <div>
           <Button
             type="link"
-            onClick={() => showUserInfoModal(record.userData)}
+            onClick={() => {
+              const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+              if (tableBody) {
+                scrollPositionRef.current = tableBody.scrollTop;
+              }
+              showUserInfoModal(record.userData);
+            }}
             style={{ paddingLeft: '10px', paddingRight: '10px' }}
           >
             <svg
@@ -135,7 +154,6 @@ const UserData = ({ showUserInfoModal, userListData, openMessageModal }) => {
               />
             </svg>
           </Button>
-
           <Button type="link" onClick={() => openMessageModal(record.userData.id)}>
             <svg
               width={16}
@@ -155,12 +173,15 @@ const UserData = ({ showUserInfoModal, userListData, openMessageModal }) => {
   ];
 
   return (
-    <Table
-      columns={columns}
-      dataSource={dataIndex}
-      pagination={false}
-      className="ant-border-space"
-    />
+    <div ref={scrollRef}>
+      <Table
+        columns={columns}
+        dataSource={dataIndex}
+        pagination={false}
+        className="ant-border-space"
+        scroll={{ y: 600 }} // Jadvalga ichki scroll qo‘shish
+      />
+    </div>
   );
 };
 

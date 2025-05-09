@@ -1,7 +1,9 @@
-import { Button, Table } from "antd";
+import React, { useRef, useEffect } from 'react';
+import { Button, Table } from 'antd';
 
-const TransactionData = ({ transactionListData, showUserInfoModal }) => {
-
+const DevicesData = ({ transactionListData, showUserInfoModal }) => {
+  const scrollRef = useRef(null); // Table scroll pozitsiyasini saqlash uchun
+  const scrollPositionRef = useRef(0); // Table ichki scroll pozitsiyasi
 
   const dataIndex =
     transactionListData?.length > 0
@@ -15,44 +17,64 @@ const TransactionData = ({ transactionListData, showUserInfoModal }) => {
         }))
       : [];
 
+  // Table scroll pozitsiyasini saqlash
+  useEffect(() => {
+    const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+    if (tableBody) {
+      const handleScroll = () => {
+        scrollPositionRef.current = tableBody.scrollTop;
+        console.log('Table scroll position:', scrollPositionRef.current);
+      };
+      tableBody.addEventListener('scroll', handleScroll);
+      return () => tableBody.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
+
   const columns = [
     {
-      title: "№",
-      dataIndex: "id",
-      key: "id",
-      align: "center",
+      title: '№',
+      dataIndex: 'id',
+      key: 'id',
+      align: 'center',
     },
     {
-      title: "Phone Brand",
-      dataIndex: "phone_brand",
-      key: "phone_brand",
-      align: "center",
+      title: 'Phone Brand',
+      dataIndex: 'phone_brand',
+      key: 'phone_brand',
+      align: 'center',
     },
     {
-      title: "Platform",
-      dataIndex: "platform",
-      key: "platform",
-      align: "center",
+      title: 'Platform',
+      dataIndex: 'platform',
+      key: 'platform',
+      align: 'center',
     },
     {
-      title: "Phone Lang",
-      dataIndex: "phone_lang",
-      key: "phone_lang",
-      align: "center",
+      title: 'Phone Lang',
+      dataIndex: 'phone_lang',
+      key: 'phone_lang',
+      align: 'center',
     },
     {
-      title: "App Lang",
-      dataIndex: "app_lang",
-      key: "app_lang",
-      align: "center",
+      title: 'App Lang',
+      dataIndex: 'app_lang',
+      key: 'app_lang',
+      align: 'center',
     },
     {
-      title: "Action",
-      key: "actions",
+      title: 'Action',
+      key: 'actions',
       render: (_, record) => (
         <Button
           type="link"
-          onClick={() => showUserInfoModal(record.transactionId)}
+          onClick={() => {
+            // Table scroll pozitsiyasini saqlash
+            const tableBody = scrollRef.current?.querySelector('.ant-table-body');
+            if (tableBody) {
+              scrollPositionRef.current = tableBody.scrollTop;
+            }
+            showUserInfoModal(record.transactionId);
+          }}
         >
           <svg
             width={20}
@@ -70,18 +92,21 @@ const TransactionData = ({ transactionListData, showUserInfoModal }) => {
           </svg>
         </Button>
       ),
-      align: "center",
+      align: 'center',
     },
   ];
 
   return (
-    <Table
-      columns={columns}
-      dataSource={dataIndex}
-      pagination={false}
-      className="ant-border-space"
-    />
+    <div ref={scrollRef}>
+      <Table
+        columns={columns}
+        dataSource={dataIndex}
+        pagination={false}
+        className="ant-border-space"
+        scroll={{ y: 600 }} // Jadvalga ichki scroll qo‘shish
+      />
+    </div>
   );
 };
 
-export default TransactionData;
+export default DevicesData;

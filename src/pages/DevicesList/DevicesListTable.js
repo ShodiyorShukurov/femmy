@@ -1,10 +1,9 @@
-import React from "react";
-import { Row, Col, Card, Button, Space} from "antd";
-import useTransactionList from "../../hooks/UseDevicesList";
-import Main from "../../components/layout/Main";
-import DevicesData from "./data/DevicesData";
-import MoreInfoModal from "./components/MoreInfoModal";
-
+import React from 'react';
+import { Row, Col, Card, Button, Space } from 'antd';
+import useTransactionList from '../../hooks/UseDevicesList';
+import Main from '../../components/layout/Main';
+import DevicesData from './data/DevicesData';
+import MoreInfoModal from './components/MoreInfoModal';
 
 function DevicesListTable() {
   const {
@@ -22,7 +21,7 @@ function DevicesListTable() {
     <Main>
       <div className="tabled">
         <Row gutter={[24, 0]}>
-          <Col xs="24" xl={24}>
+          <Col xs={24} xl={24}>
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
@@ -34,16 +33,12 @@ function DevicesListTable() {
                   showUserInfoModal={showUserInfoModal}
                 />
               </div>
-              <Space style={{ padding: "10px" }}>
-                {next > 1 ? (
+              <Space style={{ padding: '10px' }}>
+                {next > 1 && (
                   <Button onClick={() => setNext(next - 1)}>Previous</Button>
-                ) : (
-                  ""
                 )}
                 {transactionListData?.length >= 50 ? (
-                  <Button onClick={() => setNext(next + 1)}>
-                   Next
-                  </Button>
+                  <Button onClick={() => setNext(next + 1)}>Next</Button>
                 ) : (
                   <Button disabled>Next</Button>
                 )}
@@ -51,14 +46,14 @@ function DevicesListTable() {
             </Card>
           </Col>
         </Row>
-      </div>
 
-      <MoreInfoModal
-        isModalUserInfo={isModalUserInfo}
-        setIsModalUserInfo={setIsModalUserInfo}
-        selectedUser={selectedUser}
-        setSelectedUser={setSelectedUser}
-      />
+        <MoreInfoModal
+          isModalUserInfo={isModalUserInfo}
+          setIsModalUserInfo={setIsModalUserInfo}
+          selectedUser={selectedUser}
+          setSelectedUser={setSelectedUser}
+        />
+      </div>
     </Main>
   );
 }

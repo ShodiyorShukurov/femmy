@@ -183,7 +183,7 @@ function Sidenav({ color }) {
                 />
               </svg>
             </span>
-            <span className="label"> Price List</span>
+            <span className="label">Banner List</span>
           </NavLink>
         </Menu.Item>
       </Menu>

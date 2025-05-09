@@ -30,17 +30,17 @@ function UsersListTable() {
     <Main>
       <div className="tabled">
         <Row gutter={[24, 0]}>
-          <Col xs="24" xl={24}>
+          <Col xs={24} xl={24}>
             <Card
               bordered={false}
               className="criclebox tablespace mb-24"
               title={'Users Information'}
             >
               <form
-                style={{margin: '20px'}}
+                style={{ margin: '20px' }}
                 onSubmit={(e) => {
                   e.preventDefault();
-                  fetchUserListData(value, phoneValue)
+                  fetchUserListData(value, phoneValue);
                 }}
               >
                 <Input
@@ -55,7 +55,7 @@ function UsersListTable() {
                   name="search"
                   onChange={(e) => setPhoneValue(e.target.value)}
                   value={phoneValue}
-                  style={{ width: '300px', marginLeft: "20px" }}
+                  style={{ width: '300px', marginLeft: '20px' }}
                 />
                 <Button
                   type="primary"
@@ -66,7 +66,11 @@ function UsersListTable() {
                 </Button>
                 <Button
                   type="default"
-                  onClick={() =>  {fetchUserListData(); setValue('')}}
+                  onClick={() => {
+                    fetchUserListData();
+                    setValue('');
+                    setPhoneValue('');
+                  }}
                   style={{ marginLeft: '10px' }}
                 >
                   Reset
@@ -89,13 +93,10 @@ function UsersListTable() {
                     Previous
                   </Button>
                 )}
-
                 {userListData?.length >= 50 ? (
-                  <Button color="dark" onClick={() => setNext(next + 1)}>
-                    Next
-                  </Button>
+                  <Button onClick={() => setNext(next + 1)}>Next</Button>
                 ) : (
-                  <Button variant="text" color="dark" disabled>
+                  <Button variant="text" disabled>
                     Next
                   </Button>
                 )}
@@ -104,7 +105,6 @@ function UsersListTable() {
           </Col>
         </Row>
 
-        {/*More Info User*/}
         <MoreInfoModal
           isModalUserInfo={isModalUserInfo}
           setIsModalUserInfo={setIsModalUserInfo}

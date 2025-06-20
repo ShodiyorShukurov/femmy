@@ -12,6 +12,8 @@ import AiPages from './pages/Ai/AiPages';
 import UserEdit from './pages/UserList/components/UserEdit';
 import PricePage from './pages/Price/PricePage';
 import Banner from './pages/BannerPage/Banner';
+import AllaCategoryList from './pages/AllaCategoryList/AllaCategoryList';
+import AllaAudio from './pages/AllaAudio/AllaAudio';
 
 function DeepLinkPage() {
   const { id } = useParams();
@@ -29,7 +31,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<LoginPage />} />
 
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to='/login'/>} />
 
         <Route path="/article_details_page/:id" element={<DeepLinkPage />} />
 
@@ -42,6 +44,8 @@ function App() {
           <Route path="user-edit" element={<UserEdit />} />
           <Route path="price-list" element={<PricePage />} />
           <Route path="banner" element={<Banner />} />
+          <Route path="alla-category-list" element={<AllaCategoryList/>} />
+          <Route path="alla-audio" element={<AllaAudio />} />
         </Route>
       </Routes>
     </div>

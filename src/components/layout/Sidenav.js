@@ -186,6 +186,50 @@ function Sidenav({ color }) {
             <span className="label">Banner List</span>
           </NavLink>
         </Menu.Item>
+
+        <Menu.Item key="8">
+          <NavLink to="/alla-category-list">
+            <span
+              className="icon"
+              style={{
+                background: page === 'alla-category-list' ? color : '',
+              }}
+            >
+              <svg
+                width={20}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="size-4"
+              >
+                <path d="M3 4.75a1 1 0 1 0 0-2 1 1 0 0 0 0 2ZM6.25 3a.75.75 0 0 0 0 1.5h7a.75.75 0 0 0 0-1.5h-7ZM6.25 7.25a.75.75 0 0 0 0 1.5h7a.75.75 0 0 0 0-1.5h-7ZM6.25 11.5a.75.75 0 0 0 0 1.5h7a.75.75 0 0 0 0-1.5h-7ZM4 12.25a1 1 0 1 1-2 0 1 1 0 0 1 2 0ZM3 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" />
+              </svg>
+            </span>
+            <span className="label">Alla Categories List</span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item key="9">
+          <NavLink to="/alla-audio">
+            <span
+              className="icon"
+              style={{
+                background: page === 'alla-audio' ? color : '',
+              }}
+            >
+              <svg
+                width={20}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="size-4"
+              >
+                <path d="M8 1a7 7 0 1 0 7 7A7.008 7.008 0 0 0 8 1Zm0 12a5 5 0 1 1 5-5 5.006 5.006 0 0 1-5 5Z" />
+                <path d="M10.5 6a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM8.25 6a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+              </svg>
+            </span>
+            <span className="label">Alla Audio</span>
+          </NavLink>
+        </Menu.Item>
       </Menu>
     </>
   );

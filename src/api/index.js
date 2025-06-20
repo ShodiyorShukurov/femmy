@@ -3,7 +3,7 @@ import { API_PATH, API_TOKEN } from "../utils/constants";
 
 // Axios instansini yaratish
 const Api = axios.create({
-  baseURL: API_PATH,
+  baseURL: localStorage.getItem('apiPath') || API_PATH,
 });
 
 Api.interceptors.request.use(

@@ -1,17 +1,9 @@
-import { useState, useEffect } from "react";
-import {
-  Row,
-  Col,
-  Breadcrumb,
-  Button,
-  Drawer,
-  Typography,
-} from "antd";
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
-import './header.css'
-
-
+import { useState, useEffect } from 'react';
+import { Row, Col, Breadcrumb, Button, Drawer, Typography } from 'antd';
+import { NavLink, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import './header.css';
+import { LogoutOutlined } from '@ant-design/icons';
 
 const ButtonContainer = styled.div`
   .ant-btn-primary {
@@ -33,7 +25,6 @@ const ButtonContainer = styled.div`
     background-color: #1890ff;
   }
 `;
-
 
 const toggler = [
   <svg
@@ -73,17 +64,21 @@ function Header({
   handleSidenavColor,
   handleSidenavType,
 }) {
-
-
   const { Title, Text } = Typography;
+  const navigate = useNavigate();
 
   const [visible, setVisible] = useState(false);
-  const [sidenavType, setSidenavType] = useState("transparent");
+  const [sidenavType, setSidenavType] = useState('transparent');
 
   useEffect(() => window.scrollTo(0, 0));
 
   const showDrawer = () => setVisible(true);
   const hideDrawer = () => setVisible(false);
+
+  const handleLogout = () => {
+    localStorage.removeItem('api-token'); // yoki auth ma'lumotlaringizni
+    navigate('/');
+  };
 
   return (
     <>
@@ -96,16 +91,16 @@ function Header({
             <Breadcrumb.Item>
               <NavLink to="/dashboard">Pages</NavLink>
             </Breadcrumb.Item>
-            <Breadcrumb.Item style={{ textTransform: "capitalize" }}>
-              {name.replace("-", " ")}
+            <Breadcrumb.Item style={{ textTransform: 'capitalize' }}>
+              {name.replace('-', ' ')}
             </Breadcrumb.Item>
           </Breadcrumb>
           <div className="ant-page-header-heading">
             <span
               className="ant-page-header-heading-title"
-              style={{ textTransform: "capitalize" }}
+              style={{ textTransform: 'capitalize' }}
             >
-              {subName.replace("-", " ")}
+              {subName.replace('-', ' ')}
             </span>
           </div>
         </Col>
@@ -117,6 +112,15 @@ function Header({
             onClick={() => onPress()}
           >
             {toggler}
+          </Button>
+
+          <Button
+            type="primary"
+            // danger
+            // icon={<LogoutOutlined />}
+            onClick={handleLogout}
+          >
+            Logout
           </Button>
 
           <Drawer
@@ -141,32 +145,32 @@ function Header({
                   <ButtonContainer>
                     <Button
                       type="primary"
-                      onClick={() => handleSidenavColor("#1890ff")}
+                      onClick={() => handleSidenavColor('#1890ff')}
                     >
                       1
                     </Button>
                     <Button
                       type="success"
-                      onClick={() => handleSidenavColor("#52c41a")}
+                      onClick={() => handleSidenavColor('#52c41a')}
                     >
                       1
                     </Button>
                     <Button
                       type="danger"
-                      onClick={() => handleSidenavColor("#d9363e")}
+                      onClick={() => handleSidenavColor('#d9363e')}
                     >
                       1
                     </Button>
                     <Button
                       type="yellow"
-                      onClick={() => handleSidenavColor("#fadb14")}
+                      onClick={() => handleSidenavColor('#fadb14')}
                     >
                       1
                     </Button>
 
                     <Button
                       type="black"
-                      onClick={() => handleSidenavColor("#111")}
+                      onClick={() => handleSidenavColor('#111')}
                     >
                       1
                     </Button>
@@ -178,26 +182,26 @@ function Header({
                   <Text>Choose between 2 different sidenav types.</Text>
                   <ButtonContainer className="trans">
                     <Button
-                      type={sidenavType === "transparent" ? "primary" : "white"}
+                      type={sidenavType === 'transparent' ? 'primary' : 'white'}
                       onClick={() => {
-                        handleSidenavType("transparent");
-                        setSidenavType("transparent");
+                        handleSidenavType('transparent');
+                        setSidenavType('transparent');
                       }}
                     >
                       TRANSPARENT
                     </Button>
                     <Button
-                      type={sidenavType === "white" ? "primary" : "white"}
+                      type={sidenavType === 'white' ? 'primary' : 'white'}
                       onClick={() => {
-                        handleSidenavType("#fff");
-                        setSidenavType("white");
+                        handleSidenavType('#fff');
+                        setSidenavType('white');
                       }}
                     >
                       WHITE
                     </Button>
                   </ButtonContainer>
                 </div>
-               {/* <div className="fixed-nav mb-2">
+                {/* <div className="fixed-nav mb-2">
                   <Title level={5}>Navbar Fixed </Title>
                   <div className="language-btns">
                     <button

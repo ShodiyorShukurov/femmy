@@ -26,6 +26,7 @@ const AllaAudioModal = ({
   handleCancel,
 }) => {
   const [fileList, setFileList] = React.useState([]);
+  const [fileListPhoto, setFileListPhoto] = React.useState([]);
   const [form] = Form.useForm();
   const { allaCategoryData } = useAllaCategory();
   const [byId, setById] = React.useState(null);
@@ -68,6 +69,7 @@ const AllaAudioModal = ({
           description_uz: byId?.description_uz || '',
           description_ru: byId?.description_ru || '',
           description_en: byId?.description_en || '',
+          arabic_title: byId?.arabic_title || '',
           category_id: byId?.category?.id || '0',
           lyrics: byId?.lyrics || [
             { text_uz: '', text_ru: '', text_en: '', time: '' },
@@ -93,6 +95,8 @@ const AllaAudioModal = ({
     formData.append('category_id', Number(values.category_id) || '0');
     formData.append('lyrics', JSON.stringify(values.lyrics));
     formData.append('audio', values?.audio?.file ? values.audio.file : null);
+    formData.append('arabic_title', values.arabic_title || '');
+    formData.append('image', values?.photo?.file ? values.photo.file : null);
 
     try {
       if (selectItem) {
@@ -128,12 +132,28 @@ const AllaAudioModal = ({
   const handleUploadChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
     if (newFileList.length === 0) {
-      form.setFieldsValue({ photo: null });
+      form.setFieldsValue({ audio: null });
     }
   };
 
   const beforeUpload = (file) => {
     const isImageOrVideo = file.type.startsWith('audio/');
+    if (!isImageOrVideo) {
+      message.error('');
+      return Upload.LIST_IGNORE;
+    }
+    return false;
+  };
+
+  const handleUploadChangePhoto = ({ fileList: newFileList }) => {
+    setFileListPhoto(newFileList);
+    if (newFileList.length === 0) {
+      form.setFieldsValue({ photo: null });
+    }
+  };
+
+  const beforeUploadPhoto = (file) => {
+    const isImageOrVideo = file.type.startsWith('image/');
     if (!isImageOrVideo) {
       message.error('');
       return Upload.LIST_IGNORE;
@@ -198,27 +218,23 @@ const AllaAudioModal = ({
           </Col>
         </Row>
 
-        <Form.Item
-          name="description_uz"
-          label="Description Uz"
-          rules={[{ required: true, message: 'Description UZ required' }]}
-        >
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item name="arabic_title" label="Arabic Title">
+              <Input placeholder="Arabic title" />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Form.Item name="description_uz" label="Description Uz">
           <Input.TextArea placeholder="Description Uz" />
         </Form.Item>
 
-        <Form.Item
-          name="description_ru"
-          label="Description Ru"
-          rules={[{ required: true, message: 'Description RU required' }]}
-        >
+        <Form.Item name="description_ru" label="Description Ru">
           <Input.TextArea placeholder="Description Ru" />
         </Form.Item>
 
-        <Form.Item
-          name="description_en"
-          label="Description Eng"
-          rules={[{ required: true, message: 'Description ENG required' }]}
-        >
+        <Form.Item name="description_en" label="Description Eng">
           <Input.TextArea placeholder="Description Eng" />
         </Form.Item>
 
@@ -239,6 +255,17 @@ const AllaAudioModal = ({
             maxCount={1}
           >
             <Button icon={<UploadOutlined />}>Upload</Button>
+          </Upload>
+        </Form.Item>
+
+        <Form.Item name="photo" label="Photo">
+          <Upload
+            fileList={fileListPhoto}
+            beforeUpload={beforeUploadPhoto}
+            onChange={handleUploadChangePhoto}
+            maxCount={1}
+          >
+            <Button icon={<UploadOutlined />}>Photo yuklash</Button>
           </Upload>
         </Form.Item>
 

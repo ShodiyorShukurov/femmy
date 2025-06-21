@@ -1,4 +1,4 @@
-import { Button, Table } from 'antd';
+import { Button, Image, Table } from 'antd';
 
 const AllaAudioData = ({ allaAudio, openAuidoModal, openDeleteModal }) => {
   const dataIndex =
@@ -11,6 +11,14 @@ const AllaAudioData = ({ allaAudio, openAuidoModal, openDeleteModal }) => {
           description_uz: alla.description_uz?.length > 10 ? alla.description_uz.slice(0, 10) + '...' : alla.description_uz,
           description_en: alla.description_en?.length > 10 ? alla.description_en.slice(0, 10) + '...' : alla.description_en, 
           description_ru: alla.description_ru?.length > 10 ? alla.description_ru.slice(0, 10) + '...' : alla.description_ru,
+          photo: (
+            alla.image_url ?
+            <Image
+              src={alla.image_url}
+              alt="Audio"
+              style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+            />: 'No Image'
+          ),
           category: alla.category?.id,
           duration: alla.duration,
           audio: (
@@ -66,6 +74,13 @@ const AllaAudioData = ({ allaAudio, openAuidoModal, openDeleteModal }) => {
       dataIndex: 'description_en',
       key: 'description_en',
       align: 'center',
+    },
+    {
+      title: 'Photo',
+      dataIndex: 'photo',
+      key: 'photo',
+      align: 'center',
+      render: (photo) => <div style={{ width: '50px', height: '50px' }}>{photo}</div>,
     },
     {
       title: 'Category',

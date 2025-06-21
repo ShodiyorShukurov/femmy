@@ -1,12 +1,10 @@
-import { Form, Input, Button, notification } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import Api from "../../api";
-import { API_TOKEN } from "../../utils/constants";
-
+import { Form, Input, Button, notification } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import Api from '../../api';
+import { API_TOKEN } from '../../utils/constants';
 
 const LoginPage = () => {
-
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
@@ -14,25 +12,25 @@ const LoginPage = () => {
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
-      const res = await Api.post("/admin/login", {
+      const res = await Api.post('/admin/login', {
         admin_email: values.admin_email.trim(),
         admin_password: values.admin_password.trim(),
       });
 
       if (res.data.status === 401 || res.data.status === 404) {
         notification.error({
-          message: "Xato",
-          description: "Kodni xato kiritdingiz!",
+          message: 'Xato',
+          description: 'Kodni xato kiritdingiz!',
         });
       } else if (res.data.token) {
         localStorage.setItem(API_TOKEN, res.data.token);
-        navigate("/users-list");
+        navigate('/users-list');
       }
       setLoading(false);
     } catch (error) {
       console.log(error);
       notification.error({
-        message: "Xato",
+        message: 'Xato',
         description: error.message,
       });
       setLoading(false);
@@ -43,18 +41,18 @@ const LoginPage = () => {
     try {
       handleSubmit(values);
     } catch (error) {
-      notification.error({ message: error.errors.join(", ") });
+      notification.error({ message: error.errors.join(', ') });
     }
   };
 
   return (
     <div
       className="container d-flex align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}
+      style={{ minHeight: '100vh' }}
     >
       <div
         className="card shadow p-4"
-        style={{ width: "100%", maxWidth: "400px" }}
+        style={{ width: '100%', maxWidth: '400px' }}
       >
         <h2 className="text-center mb-4">Login</h2>
 
@@ -70,7 +68,7 @@ const LoginPage = () => {
             rules={[
               {
                 required: true,
-                message: "Required Email ",
+                message: 'Required Email ',
               },
             ]}
           >
@@ -83,7 +81,7 @@ const LoginPage = () => {
             rules={[
               {
                 required: true,
-                message: "Required Password",
+                message: 'Required Password',
               },
             ]}
           >
@@ -91,7 +89,7 @@ const LoginPage = () => {
           </Form.Item>
 
           <Button type="primary" htmlType="submit" loading={loading} block>
-            {loading ? "Login" : "Login in..."}
+            {loading ? 'Login in...' : 'Login'}
           </Button>
         </Form>
       </div>

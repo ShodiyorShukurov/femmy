@@ -8,16 +8,27 @@ const AllaAudioData = ({ allaAudio, openAuidoModal, openDeleteModal }) => {
           title_uz: alla.title_uz,
           title_ru: alla.title_ru,
           title_en: alla.title_en,
-          description_uz: alla.description_uz?.length > 10 ? alla.description_uz.slice(0, 10) + '...' : alla.description_uz,
-          description_en: alla.description_en?.length > 10 ? alla.description_en.slice(0, 10) + '...' : alla.description_en, 
-          description_ru: alla.description_ru?.length > 10 ? alla.description_ru.slice(0, 10) + '...' : alla.description_ru,
-          photo: (
-            alla.image_url ?
+          arabic_title: alla.arabic_title,
+          description_uz:
+            alla.description_uz?.length > 10
+              ? alla.description_uz.slice(0, 10) + '...'
+              : alla.description_uz,
+          description_en:
+            alla.description_en?.length > 10
+              ? alla.description_en.slice(0, 10) + '...'
+              : alla.description_en,
+          description_ru:
+            alla.description_ru?.length > 10
+              ? alla.description_ru.slice(0, 10) + '...'
+              : alla.description_ru,
+          photo: alla.image_url ? (
             <Image
               src={alla.image_url}
               alt="Audio"
               style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-            />: 'No Image'
+            />
+          ) : (
+            'No Image'
           ),
           category: alla.category?.id,
           duration: alla.duration,
@@ -56,7 +67,12 @@ const AllaAudioData = ({ allaAudio, openAuidoModal, openDeleteModal }) => {
       key: 'title_en',
       align: 'center',
     },
-
+    {
+      title: 'Arabic Title',
+      dataIndex: 'arabic_title',
+      key: 'arabic_title',
+      align: 'center',
+    },
     {
       title: 'Description Uz',
       dataIndex: 'description_uz',
@@ -80,7 +96,9 @@ const AllaAudioData = ({ allaAudio, openAuidoModal, openDeleteModal }) => {
       dataIndex: 'photo',
       key: 'photo',
       align: 'center',
-      render: (photo) => <div style={{ width: '50px', height: '50px' }}>{photo}</div>,
+      render: (photo) => (
+        <div style={{ width: '50px', height: '50px' }}>{photo}</div>
+      ),
     },
     {
       title: 'Category',

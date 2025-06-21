@@ -187,6 +187,31 @@ function Sidenav({ color }) {
           </NavLink>
         </Menu.Item>
 
+        <Menu.Item key="user-prompt">
+          <NavLink to="/user-prompt">
+            <span
+              className="icon"
+              style={{
+                background: page === 'user-prompt' ? color : '',
+              }}
+            >
+              <svg
+                width={20}
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 16 16"
+                fill="currentColor"
+                className="size-4"
+              >
+                <path d="M8 1a7 7 0 1 0 7 7A7.008 7.008 0 0 0 8 1Zm0 12a5 5 0 1 1 5-5 5.006 5.006 0 0 1-5 5Z" />
+                <path d="M10.5 6a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM8.25 6a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+              </svg>
+            </span>
+            <span className="label">User Prompt Data</span>
+          </NavLink>
+        </Menu.Item>
+
+        <Menu.Divider />
+
         <Menu.Item key="8">
           <NavLink to="/alla-category-list">
             <span
@@ -230,6 +255,8 @@ function Sidenav({ color }) {
             <span className="label">Alla Audio</span>
           </NavLink>
         </Menu.Item>
+
+
       </Menu>
     </>
   );

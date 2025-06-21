@@ -14,6 +14,7 @@ import PricePage from './pages/Price/PricePage';
 import Banner from './pages/BannerPage/Banner';
 import AllaCategoryList from './pages/AllaCategoryList/AllaCategoryList';
 import AllaAudio from './pages/AllaAudio/AllaAudio';
+import UserPromptDataList from './pages/UserPromptData/UserPromptDataList';
 
 function DeepLinkPage() {
   const { id } = useParams();
@@ -46,6 +47,7 @@ function App() {
           <Route path="banner" element={<Banner />} />
           <Route path="alla-category-list" element={<AllaCategoryList/>} />
           <Route path="alla-audio" element={<AllaAudio />} />
+          <Route path="user-prompt" element={<UserPromptDataList />} />
         </Route>
       </Routes>
     </div>

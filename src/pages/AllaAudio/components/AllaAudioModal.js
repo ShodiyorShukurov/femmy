@@ -43,7 +43,7 @@ const AllaAudioModal = ({
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
-         setById(data);
+        setById(data);
       } catch (error) {
         console.error('Error fetching audio:', error);
       }
@@ -65,6 +65,9 @@ const AllaAudioModal = ({
           title_uz: byId?.title_uz || '',
           title_ru: byId?.title_ru || '',
           title_en: byId?.title_en || '',
+          description_uz: byId?.description_uz || '',
+          description_ru: byId?.description_ru || '',
+          description_en: byId?.description_en || '',
           category_id: byId?.category?.id || '0',
           lyrics: byId?.lyrics || [
             { text_uz: '', text_ru: '', text_en: '', time: '' },
@@ -84,6 +87,9 @@ const AllaAudioModal = ({
     formData.append('title_uz', values.title_uz);
     formData.append('title_ru', values.title_ru);
     formData.append('title_en', values.title_en);
+    formData.append('description_uz', values.description_uz || '');
+    formData.append('description_ru', values.description_ru || '');
+    formData.append('description_en', values.description_en || '');
     formData.append('category_id', Number(values.category_id) || '0');
     formData.append('lyrics', JSON.stringify(values.lyrics));
     formData.append('audio', values?.audio?.file ? values.audio.file : null);
@@ -191,6 +197,30 @@ const AllaAudioModal = ({
             </Form.Item>
           </Col>
         </Row>
+
+        <Form.Item
+          name="description_uz"
+          label="Description Uz"
+          rules={[{ required: true, message: 'Description UZ required' }]}
+        >
+          <Input.TextArea placeholder="Description Uz" />
+        </Form.Item>
+
+        <Form.Item
+          name="description_ru"
+          label="Description Ru"
+          rules={[{ required: true, message: 'Description RU required' }]}
+        >
+          <Input.TextArea placeholder="Description Ru" />
+        </Form.Item>
+
+        <Form.Item
+          name="description_en"
+          label="Description Eng"
+          rules={[{ required: true, message: 'Description ENG required' }]}
+        >
+          <Input.TextArea placeholder="Description Eng" />
+        </Form.Item>
 
         <Form.Item
           name="audio"

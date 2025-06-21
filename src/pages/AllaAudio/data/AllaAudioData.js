@@ -8,6 +8,9 @@ const AllaAudioData = ({ allaAudio, openAuidoModal, openDeleteModal }) => {
           title_uz: alla.title_uz,
           title_ru: alla.title_ru,
           title_en: alla.title_en,
+          description_uz: alla.description_uz?.length > 10 ? alla.description_uz.slice(0, 10) + '...' : alla.description_uz,
+          description_en: alla.description_en?.length > 10 ? alla.description_en.slice(0, 10) + '...' : alla.description_en, 
+          description_ru: alla.description_ru?.length > 10 ? alla.description_ru.slice(0, 10) + '...' : alla.description_ru,
           category: alla.category?.id,
           duration: alla.duration,
           audio: (
@@ -45,6 +48,25 @@ const AllaAudioData = ({ allaAudio, openAuidoModal, openDeleteModal }) => {
       key: 'title_en',
       align: 'center',
     },
+
+    {
+      title: 'Description Uz',
+      dataIndex: 'description_uz',
+      key: 'description_uz',
+      align: 'center',
+    },
+    {
+      title: 'Description Ru',
+      dataIndex: 'description_ru',
+      key: 'description_ru',
+      align: 'center',
+    },
+    {
+      title: 'Description En',
+      dataIndex: 'description_en',
+      key: 'description_en',
+      align: 'center',
+    },
     {
       title: 'Category',
       dataIndex: 'category',
@@ -71,10 +93,7 @@ const AllaAudioData = ({ allaAudio, openAuidoModal, openDeleteModal }) => {
       key: 'actions',
       render: (_, record) => (
         <>
-          <Button
-            type="link"
-            onClick={() => openAuidoModal(record.allaId)}
-          >
+          <Button type="link" onClick={() => openAuidoModal(record.allaId)}>
             <svg
               width={16}
               xmlns="http://www.w3.org/2000/svg"

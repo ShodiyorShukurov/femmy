@@ -1,12 +1,12 @@
-import React from "react";
-import { Row, Col, Card, Button } from "antd";
-import Main from "../../components/layout/Main";
-import ArticlesData from "./data/ArticlesData";
-import ArticlesModal from "./components/ArticlesModal";
-import useArticles from "../../hooks/UseArticles";
-import VideoModal from "./components/VideoModal";
-import ArticleMoreInfo from "./components/ArticleMoreInfo";
-import DeleteModal from "./components/DeleteModal";
+import React from 'react';
+import { Row, Col, Card, Button, Space } from 'antd';
+import Main from '../../components/layout/Main';
+import ArticlesData from './data/ArticlesData';
+import ArticlesModal from './components/ArticlesModal';
+import useArticles from '../../hooks/UseArticles';
+import VideoModal from './components/VideoModal';
+import ArticleMoreInfo from './components/ArticleMoreInfo';
+import DeleteModal from './components/DeleteModal';
 
 function ArticlesListTable() {
   const {
@@ -26,6 +26,8 @@ function ArticlesListTable() {
     openArticleMoreInfoModal,
     closeArticleMoreInfoModal,
     articleMoreInfoModal,
+    setNext,
+    next,
   } = useArticles();
 
   return (
@@ -41,11 +43,11 @@ function ArticlesListTable() {
               <Button
                 type="primary"
                 style={{
-                  display: "block",
-                  marginLeft: "auto",
-                  marginTop: "20px",
-                  marginRight: "20px",
-                  marginBottom: "20px",
+                  display: 'block',
+                  marginLeft: 'auto',
+                  marginTop: '20px',
+                  marginRight: '20px',
+                  marginBottom: '20px',
                 }}
                 onClick={() => openCategoryModal()}
               >
@@ -60,6 +62,21 @@ function ArticlesListTable() {
                   openArticleMoreInfoModal={openArticleMoreInfoModal}
                 />
               </div>
+
+              <Space style={{ padding: '10px' }}>
+                {next > 1 && (
+                  <Button className="me-4" onClick={() => setNext(next - 1)}>
+                    Previous
+                  </Button>
+                )}
+                {articlesData?.length >= 50 ? (
+                  <Button onClick={() => setNext(next + 1)}>Next</Button>
+                ) : (
+                  <Button variant="text" disabled>
+                    Next
+                  </Button>
+                )}
+              </Space>
             </Card>
           </Col>
         </Row>

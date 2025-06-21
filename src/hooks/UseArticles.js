@@ -12,6 +12,7 @@ const useArticles = () => {
   const [id, setId] = React.useState();
   const [selectItem, setSelectItem] = React.useState({});
   const [form] = Form.useForm();
+  const [next, setNext] = React.useState(1);
 
   const openCategoryModal = (item) => {
     setSelectItem(item);
@@ -27,7 +28,7 @@ const useArticles = () => {
   /*Get data function start*/
   const fetchArticlesData = async () => {
     try {
-      const res = await Api.get(`/articles/list?limit=50&page=1`);
+      const res = await Api.get(`/articles/list?limit=50&page=${next}`);
       setArticlesData(res.data.data);
     } catch (error) {
       console.log(error);
@@ -97,7 +98,7 @@ const useArticles = () => {
 
   React.useEffect(() => {
     fetchArticlesData();
-  }, []);
+  }, [next]);
 
   return {
     articlesData,
@@ -119,6 +120,8 @@ const useArticles = () => {
     openArticleMoreInfoModal,
     closeArticleMoreInfoModal,
     articleMoreInfoModal,
+    setNext,
+    next,
   };
 };
 

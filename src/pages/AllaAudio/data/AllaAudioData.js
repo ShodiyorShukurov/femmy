@@ -21,6 +21,11 @@ const AllaAudioData = ({ allaAudio, openAuidoModal, openDeleteModal }) => {
             alla.description_ru?.length > 10
               ? alla.description_ru.slice(0, 10) + '...'
               : alla.description_ru,
+              author_uz: alla.author_uz,
+              author_ru: alla.author_ru,
+              author_en: alla.author_en,
+              sort_order: alla.sort_order,
+              is_free: alla.is_free ? 'True' : 'False',
           photo: alla.image_url ? (
             <Image
               src={alla.image_url}
@@ -89,6 +94,36 @@ const AllaAudioData = ({ allaAudio, openAuidoModal, openDeleteModal }) => {
       title: 'Description En',
       dataIndex: 'description_en',
       key: 'description_en',
+      align: 'center',
+    },
+    {
+      title: 'Author Uz',
+      dataIndex: 'author_uz',
+      key: 'author_uz',
+      align: 'center',
+    },
+    {
+      title: 'Author Ru',
+      dataIndex: 'author_ru',
+      key: 'author_ru',
+      align: 'center',
+    },
+    {
+      title: 'Author En',
+      dataIndex: 'author_en',
+      key: 'author_en',
+      align: 'center',
+    },
+    {
+      title: 'Sort Order',
+      dataIndex: 'sort_order',
+      key: 'sort_order',
+      align: 'center',
+    },
+    {
+      title: 'Is Free',
+      dataIndex: 'is_free',
+      key: 'is_free',
       align: 'center',
     },
     {

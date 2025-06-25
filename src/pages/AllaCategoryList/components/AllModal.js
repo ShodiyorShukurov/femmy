@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Form, Input, message, Modal, Row, Upload } from 'antd';
+import { Button, Col, Form, Input, message, Modal, Row, Select, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import Api from '../../../api';
 import { API_PATH1 } from '../../../utils/constants';
@@ -20,6 +20,7 @@ const AllModal = ({
         title_ru: selectItem.title_ru || '',
         title_en: selectItem.title_en || '',
         type: selectItem.type || '0',
+        is_free: selectItem.is_free || false,
       });
     }
   }, [isModalVisible, selectItem, form]);
@@ -32,6 +33,9 @@ const AllModal = ({
     formData.append('title_en', values.title_en);
     formData.append('type', values.type);
     formData.append('image', values?.image?.file ? values.image.file : null);
+    formData.append('is_free', values.is_free);
+
+    console.log('Form Data:', ...formData);
 
     try {
       if (selectItem && selectItem.id) {
@@ -129,6 +133,29 @@ const AllModal = ({
             </Form.Item>
           </Col>
         </Row>
+
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="is_free"
+              label="Is Free"
+              valuePropName="checked"
+            >
+              
+              <Select
+                placeholder="Select Free Status"
+                options={[
+                  { label: 'True', value: true },
+                  { label: 'False', value: false },
+                ]}
+                style={{ width: '100%' }}
+                defaultValue={selectItem?.is_free ? true : false}
+              />
+
+            </Form.Item>
+          </Col>
+          
+          </Row>
 
         <Form.Item
           name="image"

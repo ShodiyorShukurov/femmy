@@ -57,8 +57,6 @@ const AllaAudioModal = ({
     }
   }, [selectItem]);
 
-  console.log('byId', byId);
-
   React.useEffect(() => {
     if (isModalVisible) {
       if (selectItem) {
@@ -74,6 +72,11 @@ const AllaAudioModal = ({
           lyrics: byId?.lyrics || [
             { text_uz: '', text_ru: '', text_en: '', time: '' },
           ],
+          author_uz: byId?.author_uz || '',
+          author_ru: byId?.author_ru || '',
+          author_en: byId?.author_en || '',
+          sort_order: byId?.sort_order || '',
+          is_free: byId?.is_free || false,
         });
       } else {
         form.setFieldsValue({
@@ -97,6 +100,11 @@ const AllaAudioModal = ({
     formData.append('audio', values?.audio?.file ? values.audio.file : null);
     formData.append('arabic_title', values.arabic_title || '');
     formData.append('image', values?.photo?.file ? values.photo.file : null);
+    formData.append('author_uz', values.author_uz || '');
+    formData.append('author_ru', values.author_ru || '');
+    formData.append('author_en', values.author_en || '');
+    formData.append('sort_order', values.sort_order || '');
+    formData.append('is_free', values.is_free);
 
     try {
       if (selectItem) {
@@ -214,6 +222,60 @@ const AllaAudioModal = ({
                   value: item.id,
                 }))}
               ></Select>
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="author_uz"
+              label="Author Uz"
+              rules={[{ required: true, message: 'Author Uz required' }]}
+            >
+              <Input placeholder="Author Uz" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item
+              name="author_ru"
+              label="Author Ru"
+              rules={[{ required: true, message: 'Author Ru required' }]}
+            >
+              <Input placeholder="Author Ru" />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item
+              name="author_en"
+              label="Author Eng"
+              rules={[{ required: true, message: 'Author Eng required' }]}
+            >
+              <Input placeholder="Author Eng" />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item name="sort_order" label="Sort Order">
+              <Input placeholder="Sort Order" type="number" min={0} />
+            </Form.Item>
+          </Col>
+        </Row>
+
+        <Row gutter={16}>
+          <Col span={12}>
+            <Form.Item name="is_free" label="Is Free" valuePropName="checked">
+              <Select
+                placeholder="Select Free Status"
+                options={[
+                  { label: 'True', value: true },
+                  { label: 'False', value: false },
+                ]}
+                style={{ width: '100%' }}
+                defaultValue={selectItem?.is_free ? true : false}
+              />
             </Form.Item>
           </Col>
         </Row>

@@ -13,6 +13,7 @@ const AllaCategoryData = ({
           title_ru: alla.title_ru,
           title_en: alla.title_en,
           type: alla.type,
+          is_free: alla.is_free ? "True" : "False",
           image: (
             <Image
               src={alla.image_url}
@@ -58,6 +59,13 @@ const AllaCategoryData = ({
       align: 'center',
     },
     {
+      title: 'Is Free',
+      dataIndex: 'is_free',
+      key: 'is_free',
+      align: 'center',
+    },
+
+    {
       title: 'Image',
       dataIndex: 'image',
       key: 'image',
@@ -86,10 +94,7 @@ const AllaCategoryData = ({
             </svg>
           </Button>
 
-          <Button
-            type="link"
-              onClick={() => openDeleteModal(record.allaId)}
-          >
+          <Button type="link" onClick={() => openDeleteModal(record.allaId)}>
             <svg
               width={16}
               xmlns="http://www.w3.org/2000/svg"

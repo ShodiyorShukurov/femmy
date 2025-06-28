@@ -134,6 +134,8 @@ const AllaAudioModal = ({
       message.error('Xatolik');
     } finally {
       fetchAllaAudio();
+      setFileList([]);
+      setFileListPhoto([]);
     }
   };
 

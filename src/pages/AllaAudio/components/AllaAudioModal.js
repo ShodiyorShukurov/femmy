@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Button,
   Col,
@@ -10,14 +10,14 @@ import {
   Select,
   Space,
   Upload,
-} from 'antd';
+} from "antd";
 import {
   MinusCircleOutlined,
   PlusOutlined,
   UploadOutlined,
-} from '@ant-design/icons';
-import { API_PATH1 } from '../../../utils/constants';
-import useAllaCategory from '../../../hooks/UseAllaCategory';
+} from "@ant-design/icons";
+import { API_PATH1 } from "../../../utils/constants";
+import useAllaCategory from "../../../hooks/UseAllaCategory";
 
 const AllaAudioModal = ({
   isModalVisible,
@@ -34,19 +34,19 @@ const AllaAudioModal = ({
   const getAudioById = async () => {
     if (selectItem) {
       try {
-        const response = await fetch(API_PATH1 + '/audios/' + selectItem, {
-          method: 'GET',
+        const response = await fetch(API_PATH1 + "/audios/" + selectItem, {
+          method: "GET",
           headers: {
             Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGxhIiwicm9sZSI6InN1cGVyYWRtaW4iLCJjcmVhdGVfYXQiOiIyMDI1LTA2LTE5VDA2OjU5OjE2LjI1M1oiLCJpYXQiOjE3NTAzMjU4MDJ9.uoXZt1Tg7ugIoAZo_4-7hHzD3cJT8zTYZvabZg8RCzU`,
           },
         });
         if (!response.ok) {
-          throw new Error('Network response was not ok');
+          throw new Error("Network response was not ok");
         }
         const data = await response.json();
         setById(data);
       } catch (error) {
-        console.error('Error fetching audio:', error);
+        console.error("Error fetching audio:", error);
       }
     }
   };
@@ -57,69 +57,87 @@ const AllaAudioModal = ({
     }
   }, [selectItem]);
 
+  const parseLrc = (lrcText) => {
+    return lrcText
+      .split("\n")
+      .map((line) => {
+        const match = line.match(/\[(\d{2}:\d{2}(?:\.\d{1,2})?)\](.*)/);
+        return match
+          ? {
+              time: match[1].trim(),
+              text: match[2].trim(),
+            }
+          : null;
+      })
+      .filter(Boolean);
+  };
+
   React.useEffect(() => {
     if (isModalVisible) {
       if (selectItem) {
         form.setFieldsValue({
-          title_uz: byId?.title_uz || '',
-          title_ru: byId?.title_ru || '',
-          title_en: byId?.title_en || '',
-          description_uz: byId?.description_uz || '',
-          description_ru: byId?.description_ru || '',
-          description_en: byId?.description_en || '',
-          arabic_title: byId?.arabic_title || '',
-          category_id: byId?.category?.id || '0',
-          lyrics: byId?.lyrics || [
-            { text_uz: '', text_ru: '', text_en: '', time: '' },
-          ],
-          author_uz: byId?.author_uz || '',
-          author_ru: byId?.author_ru || '',
-          author_en: byId?.author_en || '',
-          sort_order: byId?.sort_order || '',
+          title_uz: byId?.title_uz || "",
+          title_ru: byId?.title_ru || "",
+          title_en: byId?.title_en || "",
+          description_uz: byId?.description_uz || "",
+          description_ru: byId?.description_ru || "",
+          description_en: byId?.description_en || "",
+          arabic_title: byId?.arabic_title || "",
+          category_id: byId?.category?.id || "0",
+          lyrics: byId?.lyrics || [{ text: "", time: "" }],
+          author_uz: byId?.author_uz || "",
+          author_ru: byId?.author_ru || "",
+          author_en: byId?.author_en || "",
+          sort_order: byId?.sort_order || "",
           is_free: byId?.is_free || false,
         });
       } else {
         form.setFieldsValue({
-          lyrics: [{ text_uz: '', text_ru: '', text_en: '', time: '' }],
+          lyrics: [{ text: "", time: "" }],
         });
       }
     }
   }, [isModalVisible, byId, form]);
 
   const handleSubmitTrial = async (values) => {
+    let parsedLyrics = values.lyrics;
+    if (typeof values.lyrics === "string") {
+      parsedLyrics = parseLrc(values.lyrics);
+    }
+
     const formData = new FormData();
 
-    formData.append('title_uz', values.title_uz);
-    formData.append('title_ru', values.title_ru);
-    formData.append('title_en', values.title_en);
-    formData.append('description_uz', values.description_uz || '');
-    formData.append('description_ru', values.description_ru || '');
-    formData.append('description_en', values.description_en || '');
-    formData.append('category_id', Number(values.category_id) || '0');
-    formData.append('lyrics', JSON.stringify(values.lyrics));
-    formData.append('audio', values?.audio?.file ? values.audio.file : null);
-    formData.append('arabic_title', values.arabic_title || '');
-    formData.append('image', values?.photo?.file ? values.photo.file : null);
-    formData.append('author_uz', values.author_uz || '');
-    formData.append('author_ru', values.author_ru || '');
-    formData.append('author_en', values.author_en || '');
-    formData.append('sort_order', values.sort_order || '');
-    formData.append('is_free', values.is_free);
+    formData.append("title_uz", values.title_uz);
+    formData.append("title_ru", values.title_ru);
+    formData.append("title_en", values.title_en);
+    formData.append("description_uz", values.description_uz || "");
+    formData.append("description_ru", values.description_ru || "");
+    formData.append("description_en", values.description_en || "");
+    formData.append("category_id", Number(values.category_id) || "0");
+    formData.append("lyrics", JSON.stringify(parsedLyrics));
+    formData.append("audio", values?.audio?.file ? values.audio.file : null);
+    formData.append("arabic_title", values.arabic_title || "");
+    formData.append("image", values?.photo?.file ? values.photo.file : null);
+    formData.append("author_uz", values.author_uz || "");
+    formData.append("author_ru", values.author_ru || "");
+    formData.append("author_en", values.author_en || "");
+    formData.append("sort_order", values.sort_order || "");
+    formData.append("is_free", values.is_free ? "true" : "false");
 
     try {
       if (selectItem) {
-        await fetch(API_PATH1 + '/audios/' + selectItem, {
-          method: 'PUT',
+        await fetch(API_PATH1 + "/audios/" + selectItem, {
+          method: "PUT",
           headers: {
             Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGxhIiwicm9sZSI6InN1cGVyYWRtaW4iLCJjcmVhdGVfYXQiOiIyMDI1LTA2LTE5VDA2OjU5OjE2LjI1M1oiLCJpYXQiOjE3NTAzMjU4MDJ9.uoXZt1Tg7ugIoAZo_4-7hHzD3cJT8zTYZvabZg8RCzU`,
           },
 
           body: formData,
         });
-        message.success('Muvaffaqiyatli tahrirlandi');
+        message.success("Muvaffaqiyatli tahrirlandi");
       } else {
-        await fetch(API_PATH1 + '/audios', {
-          method: 'POST',
+        await fetch(API_PATH1 + "/audios", {
+          method: "POST",
           headers: {
             Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGxhIiwicm9sZSI6InN1cGVyYWRtaW4iLCJjcmVhdGVfYXQiOiIyMDI1LTA2LTE5VDA2OjU5OjE2LjI1M1oiLCJpYXQiOjE3NTAzMjU4MDJ9.uoXZt1Tg7ugIoAZo_4-7hHzD3cJT8zTYZvabZg8RCzU`,
           },
@@ -131,7 +149,7 @@ const AllaAudioModal = ({
       form.resetFields();
     } catch (error) {
       console.error(error);
-      message.error('Xatolik');
+      message.error("Xatolik");
     } finally {
       fetchAllaAudio();
       setFileList([]);
@@ -147,9 +165,9 @@ const AllaAudioModal = ({
   };
 
   const beforeUpload = (file) => {
-    const isImageOrVideo = file.type.startsWith('audio/');
+    const isImageOrVideo = file.type.startsWith("audio/");
     if (!isImageOrVideo) {
-      message.error('');
+      message.error("");
       return Upload.LIST_IGNORE;
     }
     return false;
@@ -163,9 +181,9 @@ const AllaAudioModal = ({
   };
 
   const beforeUploadPhoto = (file) => {
-    const isImageOrVideo = file.type.startsWith('image/');
+    const isImageOrVideo = file.type.startsWith("image/");
     if (!isImageOrVideo) {
-      message.error('');
+      message.error("");
       return Upload.LIST_IGNORE;
     }
     return false;
@@ -173,7 +191,7 @@ const AllaAudioModal = ({
 
   return (
     <Modal
-      title={selectItem?.id ? 'Tahrirlash' : "Qo'shish"}
+      title={selectItem?.id ? "Tahrirlash" : "Qo'shish"}
       open={isModalVisible}
       onCancel={handleCancel}
       footer={null}
@@ -185,7 +203,7 @@ const AllaAudioModal = ({
             <Form.Item
               name="title_uz"
               label="Title uz"
-              rules={[{ required: true, message: 'Title UZ required' }]}
+              rules={[{ required: true, message: "Title UZ required" }]}
             >
               <Input placeholder="Title Uz" />
             </Form.Item>
@@ -194,7 +212,7 @@ const AllaAudioModal = ({
             <Form.Item
               name="title_ru"
               label="Title ru"
-              rules={[{ required: true, message: 'Title RU required' }]}
+              rules={[{ required: true, message: "Title RU required" }]}
             >
               <Input placeholder="Title Ru" />
             </Form.Item>
@@ -206,7 +224,7 @@ const AllaAudioModal = ({
             <Form.Item
               name="title_en"
               label="Title eng"
-              rules={[{ required: true, message: 'Title ENG required' }]}
+              rules={[{ required: true, message: "Title ENG required" }]}
             >
               <Input placeholder="Title Eng" />
             </Form.Item>
@@ -215,7 +233,7 @@ const AllaAudioModal = ({
             <Form.Item
               name="category_id"
               label="Category"
-              rules={[{ required: true, message: 'Category required' }]}
+              rules={[{ required: true, message: "Category required" }]}
             >
               <Select
                 placeholder="Select Category"
@@ -233,7 +251,7 @@ const AllaAudioModal = ({
             <Form.Item
               name="author_uz"
               label="Author Uz"
-              rules={[{ required: true, message: 'Author Uz required' }]}
+              rules={[{ required: true, message: "Author Uz required" }]}
             >
               <Input placeholder="Author Uz" />
             </Form.Item>
@@ -242,7 +260,7 @@ const AllaAudioModal = ({
             <Form.Item
               name="author_ru"
               label="Author Ru"
-              rules={[{ required: true, message: 'Author Ru required' }]}
+              rules={[{ required: true, message: "Author Ru required" }]}
             >
               <Input placeholder="Author Ru" />
             </Form.Item>
@@ -254,14 +272,17 @@ const AllaAudioModal = ({
             <Form.Item
               name="author_en"
               label="Author Eng"
-              rules={[{ required: true, message: 'Author Eng required' }]}
+              rules={[{ required: true, message: "Author Eng required" }]}
             >
               <Input placeholder="Author Eng" />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name="sort_order" label="Sort Order">
-              <Input placeholder="Sort Order" type="number" min={0} />
+            <Form.Item
+            
+            rules={[{ required: true, message: "Sort Order required" }]}
+            name="sort_order" label="Sort Order">
+              <Input placeholder="Sort Order" type="number" min={1} />
             </Form.Item>
           </Col>
         </Row>
@@ -272,10 +293,10 @@ const AllaAudioModal = ({
               <Select
                 placeholder="Select Free Status"
                 options={[
-                  { label: 'True', value: true },
-                  { label: 'False', value: false },
+                  { label: "True", value: true },
+                  { label: "False", value: false },
                 ]}
-                style={{ width: '100%' }}
+                style={{ width: "100%" }}
                 defaultValue={selectItem?.is_free ? true : false}
               />
             </Form.Item>
@@ -308,7 +329,7 @@ const AllaAudioModal = ({
           rules={[
             {
               required: byId?.audio_url ? false : true,
-              message: 'audio required',
+              message: "audio required",
             },
           ]}
         >
@@ -333,59 +354,9 @@ const AllaAudioModal = ({
           </Upload>
         </Form.Item>
 
-        <Form.List name="lyrics">
-          {(fields, { add, remove }) => (
-            <>
-              {fields.map(({ key, name, ...restField }) => (
-                <Space
-                  key={key}
-                  style={{ display: 'flex', marginBottom: 8 }}
-                  align="baseline"
-                >
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'text_uz']}
-                    rules={[{ required: true, message: 'Text is required' }]}
-                  >
-                    <Input placeholder="Matn (text) Uz" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'text_ru']}
-                    rules={[{ required: true, message: 'Text is required' }]}
-                  >
-                    <Input placeholder="Matn (text) Ru" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'text_en']}
-                    rules={[{ required: true, message: 'Text is required' }]}
-                  >
-                    <Input placeholder="Matn (text) En" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'time']}
-                    rules={[{ required: true, message: 'Time is required' }]}
-                  >
-                    <Input placeholder="Vaqt (masalan: 00:30)" />
-                  </Form.Item>
-                  <MinusCircleOutlined onClick={() => remove(name)} />
-                </Space>
-              ))}
-              <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => add()}
-                  block
-                  icon={<PlusOutlined />}
-                >
-                  Lyrics qo'shish
-                </Button>
-              </Form.Item>
-            </>
-          )}
-        </Form.List>
+        <Form.Item name="lyrics" label="LRC Lyrics Input">
+          <Input.TextArea rows={8} placeholder="[00:00.65]Matn..." />
+        </Form.Item>
 
         <Form.Item>
           <Button type="primary" htmlType="submit" block>

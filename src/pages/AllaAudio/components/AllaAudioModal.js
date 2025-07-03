@@ -8,14 +8,9 @@ import {
   Modal,
   Row,
   Select,
-  Space,
   Upload,
 } from "antd";
-import {
-  MinusCircleOutlined,
-  PlusOutlined,
-  UploadOutlined,
-} from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 import { API_PATH1 } from "../../../utils/constants";
 import useAllaCategory from "../../../hooks/UseAllaCategory";
 
@@ -65,7 +60,9 @@ const AllaAudioModal = ({
         return match
           ? {
               time: match[1].trim(),
-              text: match[2].trim(),
+              text_uz: match[2].trim(),
+              text_ru: match[2].trim(),
+              text_en: match[2].trim(),
             }
           : null;
       })
@@ -73,31 +70,34 @@ const AllaAudioModal = ({
   };
 
   React.useEffect(() => {
-    if (isModalVisible) {
-      if (selectItem) {
-        form.setFieldsValue({
-          title_uz: byId?.title_uz || "",
-          title_ru: byId?.title_ru || "",
-          title_en: byId?.title_en || "",
-          description_uz: byId?.description_uz || "",
-          description_ru: byId?.description_ru || "",
-          description_en: byId?.description_en || "",
-          arabic_title: byId?.arabic_title || "",
-          category_id: byId?.category?.id || "0",
-          lyrics: byId?.lyrics || [{ text: "", time: "" }],
-          author_uz: byId?.author_uz || "",
-          author_ru: byId?.author_ru || "",
-          author_en: byId?.author_en || "",
-          sort_order: byId?.sort_order || "",
-          is_free: byId?.is_free || false,
-        });
-      } else {
-        form.setFieldsValue({
-          lyrics: [{ text: "", time: "" }],
-        });
-      }
+  if (isModalVisible) {
+    if (selectItem && byId) {
+      form.setFieldsValue({
+        title_uz: byId?.title_uz || "",
+        title_ru: byId?.title_ru || "",
+        title_en: byId?.title_en || "",
+        description_uz: byId?.description_uz || "",
+        description_ru: byId?.description_ru || "",
+        description_en: byId?.description_en || "",
+        arabic_title: byId?.arabic_title || "",
+        category_id: byId?.category?.id || "0",
+        lyrics: byId?.lyrics
+          ? byId.lyrics.map((line) => `[${line.time}]${line.text_uz}`).join("\n")
+          : "",
+        author_uz: byId?.author_uz || "",
+        author_ru: byId?.author_ru || "",
+        author_en: byId?.author_en || "",
+        sort_order: byId?.sort_order || "",
+        is_free: byId?.is_free || false,
+      });
+    } else {
+      form.setFieldsValue({
+        lyrics: "",
+      });
     }
-  }, [isModalVisible, byId, form]);
+  }
+}, [isModalVisible, byId, form, selectItem]);
+
 
   const handleSubmitTrial = async (values) => {
     let parsedLyrics = values.lyrics;
@@ -123,6 +123,8 @@ const AllaAudioModal = ({
     formData.append("author_en", values.author_en || "");
     formData.append("sort_order", values.sort_order || "");
     formData.append("is_free", values.is_free ? "true" : "false");
+
+
 
     try {
       if (selectItem) {
@@ -279,9 +281,10 @@ const AllaAudioModal = ({
           </Col>
           <Col span={12}>
             <Form.Item
-            
-            rules={[{ required: true, message: "Sort Order required" }]}
-            name="sort_order" label="Sort Order">
+              rules={[{ required: true, message: "Sort Order required" }]}
+              name="sort_order"
+              label="Sort Order"
+            >
               <Input placeholder="Sort Order" type="number" min={1} />
             </Form.Item>
           </Col>

@@ -53,7 +53,7 @@ const AllaCategoryData = ({
       align: 'center',
     },
     {
-      title: 'Type',
+      title: 'Order',
       dataIndex: 'type',
       key: 'type',
       align: 'center',
